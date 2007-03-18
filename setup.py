@@ -38,8 +38,8 @@ def main():
                                   library_dirs=['/Users/jjlee/local/src/xpalib/xpa-2.1.6'],
                                   libraries=['xpa']),
                         ],
-          cmdclass = {'build_ext': build_ext}
-
+          cmdclass = {'build_ext': build_ext},
+          #test_suite = "test.saods9_test",
           )
 
 if __name__ == "__main__":
