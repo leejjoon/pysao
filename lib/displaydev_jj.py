@@ -35,7 +35,8 @@ $Id: displaydev.py,v 1.7 2003/10/28 15:19:07 hack Exp $
 
 import os, socket, struct
 
-import numarray
+#import numarray
+import numpy
 import string
 
 try:
@@ -174,9 +175,9 @@ class ImageDisplay:
 
         """Write request to image display"""
         
-        a = numarray.array([tid,thingct,subunit,0,x,y,z,t]).astype(numarray.UInt16)
+        a = numpy.array([tid,thingct,subunit,0,x,y,z,t]).astype(numpy.uint16)
         # Compute the checksum
-        sum = numarray.add.reduce(a)
+        sum = numpy.add.reduce(a)
         sum = 0xffff - (sum & 0xffff)
         a[3] = sum
         self._write(a.tostring())
