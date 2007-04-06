@@ -170,7 +170,7 @@ class ds9(object):
         try:
             img.shape = img.shape[-2:]
         except:
-            raise UnsupportedImageShapeException, repr(hdu.data.shape)
+            raise UnsupportedImageShapeException, repr(img.shape)
             
         (ydim, xdim) = img.shape
         arr_str = img.tostring()
