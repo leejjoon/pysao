@@ -8,6 +8,18 @@
 
 from pyfits2string import fits2string
 
+import pyfits
+
+if hasattr(pyfits, "ImageBaseHDU"):
+    ImageBaseHDU = pyfits.ImageBaseHDU
+elif hasattr(pyfits, "_ImageBaseHDU"):
+    ImageBaseHDU = pyfits._ImageBaseHDU
+elif hasattr(pyfits.core, "_ImageBaseHDU"):
+    ImageBaseHDU = pyfits.core._ImageBaseHDU
+else:
+    raise ImportError
+
+
 import re
 
 wcs_key_pattern = re.compile(r'^(NAXIS|CD|CDELT|CRPIX|CRVAL|CTYPE|LONGPOLE|LATPOLE|PV2|DISTORT|OBJECT|BUNIT|EPOCH|EQUINOX)')

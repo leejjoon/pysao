@@ -21,7 +21,7 @@ import displaydev_jj as displaydev
 
 import xpa
 
-
+import ds9_xpa_help
 
 class UnsupportedDatatypeException(Exception):
     pass
@@ -70,6 +70,10 @@ class ds9(object):
         os.rmdir(self._tmpd_name)
         
 
+    def xpa_help(self, xpa_command=None):
+        ds9_xpa_help.help(xpa_command)
+
+        
     def run_unixonly_ds9_v2(self, wait_time):
         """ start ds9 """
     

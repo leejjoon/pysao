@@ -1,0 +1,532 @@
+(dp0
+Vorient
+p1
+(dp2
+S'short'
+p3
+VControls the orientation of the current frame.
+p4
+sS'long'
+p5
+S'    Controls the current zoom value for the current frame.\n\n    Syntax:\n    zoom [<value>]\n         [<value> <value>]\n         [to <value>]\n         [to <value> <value>]\n         [to fit]\n\n    Example:\n    $xpaget ds9 zoom\n\n    $xpaset -p ds9 zoom 2\n    $xpaset -p ds9 zoom 2 4\n    $xpaset -p ds9 zoom to 4\n    $xpaset -p ds9 zoom to 2 4\n    $xpaset -p ds9 zoom to fit\n\n'
+p6
+ssVpreserve
+p7
+(dp8
+g3
+VPreserve the follow attributes while loading a new image.
+p9
+sg5
+g6
+ssVheight
+p10
+(dp11
+g3
+VSet the height of the image display window.
+p12
+sg5
+g6
+ssVlock
+p13
+(dp14
+g3
+VLock frames.
+p15
+sg5
+g6
+ssVframe
+p16
+(dp17
+g3
+VControls frame functions. Frames may be created, deleted, reset, and centered. While return the current frame number. If you goto a frame that does not exists, it will be created. If the frame is hidden, it will be shown. The 'frameno' option is available for backward compatibility.
+p18
+sg5
+g6
+ssVpage setup
+p19
+(dp20
+g3
+VControls Page Setup options.
+p21
+sg5
+g6
+ssVblink
+p22
+(dp23
+g3
+VSelect Blink Display Mode
+p24
+sg5
+g6
+ssVsingle
+p25
+(dp26
+g3
+VSelect Single Display mode
+p27
+sg5
+g6
+ssVdsseso
+p28
+(dp29
+g3
+VSupport for Digital Sky Survey at ESO. The first three options will download an image based on the name or specified
+p30
+sg5
+g6
+ssViconify
+p31
+(dp32
+g3
+VToggles iconification.
+p33
+sg5
+g6
+ssVfile
+p34
+(dp35
+g3
+V
+p36
+sg5
+g6
+ssVminmax
+p37
+(dp38
+g3
+VThis is how DS9 determines  the min and max data values from the data.
+p39
+sg5
+g6
+ssVdssstsci
+p40
+(dp41
+g3
+VSupport for Digital Sky Survey at STSCI. The first three options will download an image based on the name or specified
+p42
+sg5
+g6
+ssVsavefits
+p43
+(dp44
+g3
+VSave current frame data as FITS. This differs from SAVEIMAGE in that the entire image of the current frame is saved as a FITS, without graphics.
+p45
+sg5
+g6
+ssVarray
+p46
+(dp47
+g3
+VLoad raw data array from stdin. If new is specified, a new frame is created first, before loading.
+p48
+sg5
+g6
+ssVsaveimage
+p49
+(dp50
+g3
+VSave visible image(s) as a raster. If image is a data cube, the mpeg option will cycle thru each slice creating a mpeg movie.
+p51
+sg5
+g6
+ssVplot
+p52
+(dp53
+g3
+VDisplay and configure data plots. All plot commands take an optional second command, the plot name. Use
+p54
+sg5
+g6
+ssVwcs
+p55
+(dp56
+g3
+VControls the World Coordinate System for the current frame. If the wcs system, skyframe, or skyformat is modified, the info panel, compass, grid, and alignment will be modified accordingly. Also, using this access point, a new WCS specification can be loaded and used by the current image regardless of the WCS that was contained in the image file. WCS specification can be sent to DS9 as an ASCII file . Please see
+p57
+sg5
+g6
+ssVscale
+p58
+(dp59
+g3
+VControls the limits, color scale distribution, and use of
+p60
+sg5
+g6
+ssVraise
+p61
+(dp62
+g3
+VRaise ds9 in the window stacking order.
+p63
+sg5
+g6
+ssVwidth
+p64
+(dp65
+g3
+VSet the width of the image display window.
+p66
+sg5
+g6
+ssVsmooth
+p67
+(dp68
+g3
+VSmooth current image or set smooth parameters.
+p69
+sg5
+g6
+ssVdss
+p70
+(dp71
+g3
+VSupport for Digital Sky Survey at SAO. The first three options will download an image based on the name or specified
+p72
+sg5
+g6
+ssVcontour
+p73
+(dp74
+g3
+VControls contours in the current frame.
+p75
+sg5
+g6
+ssVregions
+p76
+(dp77
+g3
+VControls regions in the current frame.
+p78
+sg5
+g6
+ssVsource
+p79
+(dp80
+g3
+VSource tcl code from a file.
+p81
+sg5
+g6
+ssVrgb
+p82
+(dp83
+g3
+VCreate RGB frame and control RGB frame parameters.
+p84
+sg5
+g6
+ssVversion
+p85
+(dp86
+g3
+VReturns the current version of DS9.
+p87
+sg5
+g6
+ssVexit
+p88
+(dp89
+g3
+VQuits DS9.
+p90
+sg5
+g6
+ssVpan
+p91
+(dp92
+g3
+VControls the current image cursor location for the current frame.
+p93
+sg5
+g6
+ssVprint
+p94
+(dp95
+g3
+VControls printing. Use
+p96
+sg5
+g6
+ssVimexam
+p97
+(dp98
+g3
+VInteractive examine function. A blinking cursor will indicate to the user to click on a point on an image. The specified information will be returned at that time.
+p99
+sg5
+g6
+ssVpixeltable
+p100
+(dp101
+g3
+VDisplay/Hide the pixel table.
+p102
+sg5
+g6
+ssVmatch
+p103
+(dp104
+g3
+VMatch all other frames to the current frame.
+p105
+sg5
+g6
+ssV2mass
+p106
+(dp107
+g3
+VSupport for 2MASS Digital Sky Survey. The first three options will download an image based on the name or specified
+p108
+sg5
+g6
+ssVbin
+p109
+(dp110
+g3
+VControls binning factor, binning buffer size, and  binning function for binning FITS bin tables. The access point
+p111
+sg5
+g6
+ssViis
+p112
+(dp113
+g3
+VSet/Get IIS Filename.
+p114
+sg5
+g6
+ssVweb
+p115
+(dp116
+g3
+VDisplay specified URL in the web display.
+p117
+sg5
+g6
+ssVskyview
+p118
+(dp119
+g3
+VSupport for SkyView image server at HEASARC. The first three options will download an image based on the name or specified
+p120
+sg5
+g6
+ssVvo
+p121
+(dp122
+g3
+VInvoke an connection to a Virtual Observatory site.
+p123
+sg5
+g6
+ssVlower
+p124
+(dp125
+g3
+VLower ds9 in the window stacking order.
+p126
+sg5
+g6
+ssVupdate
+p127
+(dp128
+g3
+VUpdates the current frame or region of frame. In the second form, the first argument is the number of the fits HDU (starting with 1) and the remaining args are a bounding box in IMAGE coordinates. By default, the screen is updated the next available idle cycle. However, you may force an immediate update by specifying the
+p129
+sg5
+g6
+ssVsavempeg
+p130
+(dp131
+g3
+VSave all active frames as a mpeg movie.
+p132
+sg5
+g6
+ssVtile
+p133
+(dp134
+g3
+VControls the tile display mode.
+p135
+sg5
+g6
+ssVcatalog
+p136
+(dp137
+g3
+VSupport for catalogs. The first three commands will create a new catalog search. All other commands operated on the last search created, unless indicated otherwise.
+p138
+sg5
+g6
+ssVrotate
+p139
+(dp140
+g3
+VControls the rotation angle (in degrees) of the current frame.
+p141
+sg5
+g6
+ssVgrid
+p142
+(dp143
+g3
+g36
+sg5
+g6
+ssVzoom
+p144
+(dp145
+g3
+VControls the current zoom value for the current frame.
+p146
+sg5
+g6
+ssVdatacube
+p147
+(dp148
+g3
+VControls FITS datacube.
+p149
+sg5
+g6
+ssVfits
+p150
+(dp151
+g3
+VLoad a FITS image from stdin into the current frame. Options can include the FITS extension or binning instructions.
+p152
+sg5
+g6
+ssVcd
+p153
+(dp154
+g3
+VSets/Returns the current working directory.
+p155
+sg5
+g6
+ssVdata
+p156
+(dp157
+g3
+VReturn an array of data values given a lower left corner and a width and height in specified coordinate system. The last argument indicates if the coordinates are listed or just the data values.
+p158
+sg5
+g6
+ssVnameserver
+p159
+(dp160
+g3
+VSupport Name Server functions. Coordinates are in
+p161
+sg5
+g6
+ssVabout
+p162
+(dp163
+g3
+VGet DS9 credits.
+p164
+sg5
+g6
+ssVprefs
+p165
+(dp166
+g3
+VControls various preference settings.
+p167
+sg5
+g6
+ssVmask
+p168
+(dp169
+g3
+VControls mask parameters.
+p170
+sg5
+g6
+ssVtcl
+p171
+(dp172
+g3
+VExecute one tcl command.
+p173
+sg5
+g6
+ssVanalysis
+p174
+(dp175
+g3
+VControl external analysis tasks. Tasks are numbered as they are loaded, starting with 1. Can also be used to display a message and display text in the text dialog window. To plot data, use the
+p176
+sg5
+g6
+ssVcursor
+p177
+(dp178
+g3
+VMove mouse pointer or crosshair in image pixels in the current frame. Note, this will move selected Regions also.
+p179
+sg5
+g6
+ssVzscale
+p180
+(dp181
+g3
+VSet Scale Limits based  on the
+p182
+sg5
+g6
+ssVcmap
+p183
+(dp184
+g3
+VControls the colormap for the current frame. The colormap name is not case sensitive. A valid contrast value is  from 0 to 10 and bias value from 0 to 1.
+p185
+sg5
+g6
+ssVcrosshair
+p186
+(dp187
+g3
+VControls the current position of the crosshair in the current frame. DS9 is placed in crosshair mode when the crosshair is set.
+p188
+sg5
+g6
+ssVmode
+p189
+(dp190
+g3
+VControls the first mouse button mode.
+p191
+sg5
+g6
+ssVview
+p192
+(dp193
+g3
+VControls the GUI.
+p194
+sg5
+g6
+ssVshm
+p195
+(dp196
+g3
+VLoad a shared memory segment into the current frame.
+p197
+sg5
+g6
+ssVfirst
+p198
+(dp199
+g3
+VSupport for VLA First Sky Survey. The first three options will download an image based on the name or specified
+p200
+sg5
+g6
+ss.
