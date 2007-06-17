@@ -129,6 +129,10 @@ class ds9(object):
         return xpaname, iraf_unix
 
 
+    def set_iraf_display(self):
+        os.environ["IMTDEV"] = "unix:%s" % (self.ds9_unix_name)
+
+
     def set(self, param, buf=None):
         """ XPA set method to ds9 instance
 
