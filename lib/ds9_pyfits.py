@@ -22,7 +22,7 @@ else:
 
 import re
 
-wcs_key_pattern = re.compile(r'^(NAXIS|CD|CDELT|CRPIX|CRVAL|CTYPE|LONGPOLE|LATPOLE|PV2|DISTORT|OBJECT|BUNIT|EPOCH|EQUINOX)')
+wcs_key_pattern = re.compile(r'^(NAXIS|CD|CDELT|CRPIX|CRVAL|CTYPE|CROTA|LONGPOLE|LATPOLE|PV2|DISTORT|OBJECT|BUNIT|EPOCH|EQUINOX)')
 
 def get_wcs_headers(h):
     """ gien fits header, select only wcs related items and return them
