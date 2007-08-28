@@ -61,7 +61,11 @@ class ds9(ds9_basic.ds9):
                         header = img.header
                     self.view_array(img.data, header)
             else:
-                self.view_array(img, header)
+                if asFits:
+                    hdu=ImageBaseHDU(img, header)
+                    self.view_fits(hdu)
+                else:
+                    self.view_array(img, header)
 
         finally:
             self.frame(_frame_num)

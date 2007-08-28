@@ -100,7 +100,11 @@ class ds9(object):
         iraf_unix = "%s/.IMT" % self._tmpd_name
 
         try:
-            p = Popen("ds9 -xpa local -xpa noxpans -unix_only -unix %s &" % iraf_unix,
+            p = Popen(" ".join([self.path,
+                                "-xpa local",
+                                "-xpa noxpans",
+                                "-unix_only",
+                                "-unix %s &" % iraf_unix]),
                       shell=True, env=env)
 
             sts = os.waitpid(p.pid, 0)
