@@ -1,5 +1,6 @@
 import pyfits
 import numpy
+import os
 import os.path
 
 def make_mask_from_region(img, region, header=None):
@@ -28,7 +29,6 @@ def make_mask_from_region(img, region, header=None):
     maskname = os.path.join(temp_path, "mask.fits")
     #maskname = "./mask.fits"
 
-    import os
     import shutil
     try:
         hdul.writeto(fitsname)

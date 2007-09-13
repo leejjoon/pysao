@@ -183,9 +183,25 @@ class ds9(object):
             img.shape = img.shape[-2:]
         except:
             raise UnsupportedImageShapeException, repr(img.shape)
+
+
+        if img.dtype.byteorder in ["=", "|"]:
+            dt=img.dtype.newbyteorder(">")
+            img=numpy.array(img, dtype=dt)
+            #img=img.astype(dt)
+            byteorder=">"
+        else:
+            byteorder=img.dtype.byteorder
+            
+        endianness = {">":",arch=bigendian",
+                      "<":",arch=littleendian"}[byteorder]
+        #,
+        #              "=":"",
+        #              "|":""}
             
         (ydim, xdim) = img.shape
         arr_str = img.tostring()
+
          
 
         itemsize = img.itemsize * 8
@@ -196,10 +212,6 @@ class ds9(object):
         except KeyError, a:
             raise UnsupportedDatatypeException(a)
 
-        endianness = {">":",arch=bigendian",
-                      "<":",arch=littleendian",
-                      "=":"",
-                      "|":""}[img.dtype.byteorder]
 
         #print endianness
 
