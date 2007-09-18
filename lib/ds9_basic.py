@@ -52,7 +52,7 @@ class ds9(object):
             wait_time : waiting time before error"""
 
         # determine whther to quit ds9 also when object deleted.
-        self.quit_ds9_on_close = quit_ds9_on_del
+        self.quit_ds9_on_del = quit_ds9_on_del
         
         self.path = path
         self.xpa_name, self.ds9_unix_name = self.run_unixonly_ds9_v2(wait_time)
