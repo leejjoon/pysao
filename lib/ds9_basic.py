@@ -73,7 +73,7 @@ class ds9(object):
             
             self.set("quit")
             
-        os.rmdir(self._tmpd_name)
+            os.rmdir(self._tmpd_name)
         
 
     def xpa_help(self, xpa_command=None):
