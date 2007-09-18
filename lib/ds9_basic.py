@@ -47,9 +47,12 @@ class ds9(object):
                 'int64': 64,
                 'uint8': 8}
 
-    def __init__(self, path="ds9", wait_time=10):
+    def __init__(self, path="ds9", wait_time=10, quit_ds9_on_del=True):
         """ path :path of the ds9
             wait_time : waiting time before error"""
+
+        # determine whther to quit ds9 also when object deleted.
+        self.quit_ds9_on_close = quit_ds9_on_del
         
         self.path = path
         self.xpa_name, self.ds9_unix_name = self.run_unixonly_ds9_v2(wait_time)
@@ -63,10 +66,13 @@ class ds9(object):
 
 
     def __del__(self):
-        if self.numdisp:
-            self.numdisp.close()
+        if self.quit_ds9_on_del:
+
+            if self.numdisp:
+                self.numdisp.close()
             
-        self.set("quit")
+            self.set("quit")
+            
         os.rmdir(self._tmpd_name)
         
 
