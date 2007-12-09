@@ -1,7 +1,8 @@
-"""displaydev_jj.py: 
-    strip-down version of numdisplay module
+"""displaydev_lite.py: 
+    strip-down version of displaydev.py from numdisplay module
+"""
 
-   displaydev : Interact with IRAF-compatible image display
+"""displaydev.py: Interact with IRAF-compatible image display
 
 Modeled after the NOAO Client Display Library (CDL)
 
@@ -29,14 +30,13 @@ This could be used to maintain references to multiple display servers.
 Ultimately more functionality may be added to make this a complete
 replacement for CDL.
 
-$Id: displaydev.py,v 1.7 2003/10/28 15:19:07 hack Exp $
+$Id: displaydev.py 639 2007-02-12 20:17:14Z chanley $
 
 """
 
 import os, socket, struct
 
-#import numarray
-import numpy
+import numpy as n
 import string
 
 try:
@@ -63,9 +63,11 @@ except AttributeError, error:
 
 SZ_BLOCK = 16384
 
+_default_imtdev = ("unix:/tmp/.IMT%d", "fifo:/dev/imt1i:/dev/imt1o","inet:5137")
+_default_fbconfig = 3
+   
 
-    
-def _open(imtdev):
+def _open(imtdev=None):
 
     """Open connection to the image display server
 
@@ -106,6 +108,17 @@ def _open(imtdev):
     user's UID will be substituted (e.g. "unix:/tmp/.IMT%d").
     """
 
+    if not imtdev:
+        # try defaults
+        defaults = list(_default_imtdev)
+        if os.environ.has_key('IMTDEV'):
+            defaults.insert(0,os.environ['IMTDEV'])
+        for imtdev in defaults:
+            try:
+                return _open(imtdev)
+            except:
+                pass
+        raise IOError("Cannot attach to display program. Verify that one is running...")
     # substitute user id in name (multiple times) if necessary
     nd = len(imtdev.split("%d"))
     if nd > 1:
@@ -116,7 +129,18 @@ def _open(imtdev):
     domain = fields[0]
     if domain == "unix" and len(fields) == 2:
         return UnixImageDisplay(fields[1])
-
+    elif domain == "fifo" and len(fields) == 3:
+        return FifoImageDisplay(fields[1],fields[2])
+    elif domain == "inet" and (2 <= len(fields) <= 3):
+        try:
+            port = int(fields[1])
+            if len(fields) == 3:
+                hostname = fields[2]
+            else:
+                hostname = None
+            return InetImageDisplay(port, hostname)
+        except ValueError:
+            pass
     raise ValueError("Illegal image device specification `%s'"
                                     % imtdev)
 
@@ -148,6 +172,7 @@ class ImageDisplay:
         # leave image display in a bad state.
         self._inCursorMode = 0
 
+        
         self.frame = 1        
         
         
@@ -171,13 +196,21 @@ class ImageDisplay:
         # only part up to newline is real data
         return s.split("\n")[0]
 
+
+    def setCursor(self,x,y,wcs):
+    
+        """ Moves cursor to specified position in frame. """
+    
+        self._writeHeader(self._IIS_WRITE, self._IMCURSOR,0,x,y,wcs,0)
+
+            
     def _writeHeader(self,tid,subunit,thingct,x,y,z,t):
 
         """Write request to image display"""
         
-        a = numpy.array([tid,thingct,subunit,0,x,y,z,t]).astype(numpy.uint16)
+        a = n.array([tid,thingct,subunit,0,x,y,z,t],dtype=n.uint16)
         # Compute the checksum
-        sum = numpy.add.reduce(a)
+        sum = n.add.reduce(a)
         sum = 0xffff - (sum & 0xffff)
         a[3] = sum
         self._write(a.tostring())
@@ -255,13 +288,13 @@ class ImageDisplayProxy(ImageDisplay):
     """
 
     def __init__(self, imtdev=None):
-        if imtdev:
-            self._display = None
-            self.open(imtdev)
-        else:
-            self._display = None
 
-    def open(self, imtdev):
+        self._display = None
+
+        if imtdev:
+            self.open(imtdev)
+
+    def open(self, imtdev=None):
 
         """Open image display connection, closing any active connection"""
 
@@ -302,20 +335,15 @@ class ImageDisplayProxy(ImageDisplay):
         self.open()
         return self._display.readCursor(sample)
 
+    def setCursor(self,x,y,wcs):
+        if not self._display:
+            self.open()
+            
+        self._display.setCursor(x,y,wcs)
  
 
 # Print help information
 def help():
     print __doc__
 
-
-"""                
-_display = ImageDisplayProxy()
-
-# create aliases for _display methods
-
-readCursor = _display.readCursor
-open = _display.open
-close = _display.close
-setCursor = _display.setCursor
-"""
+                
