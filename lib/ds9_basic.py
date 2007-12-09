@@ -15,7 +15,7 @@ from sets import Set
 #except ImportError:
 #    pass
 
-import displaydev_jj as displaydev
+import displaydev_lite as displaydev
 
 #displaydev=None
 

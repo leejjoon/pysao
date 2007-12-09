@@ -10,7 +10,6 @@ cdef extern from "Python.h":
     object PyString_FromString(char *s)
     int PyString_Size(object s)
 
-#ctypedef struct XPA
 
 cdef extern from "xpa.h":
 
