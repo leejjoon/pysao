@@ -48,3 +48,11 @@ def make_mask_from_region(img, region, header=None):
 
     return m
 
+
+def ds9_get_mask_from_curent_region(ds9):
+    shape = map(int, ds9.get("fits size").split())
+    reg = ds9.get("regions -format ds9 -system image")
+
+    m = make_mask_from_region((shape[1], shape[0]), reg)
+    return m
+

@@ -22,7 +22,10 @@ else:
 
 import re
 
-wcs_key_pattern = re.compile(r'^(NAXIS|CD|CDELT|CRPIX|CRVAL|CTYPE|CROTA|LONGPOLE|LATPOLE|PV2|DISTORT|OBJECT|BUNIT|EPOCH|EQUINOX)')
+# LTV,LTV seems to be related with physical coordinates
+# DTV, DTM?
+
+wcs_key_pattern = re.compile(r'^(NAXIS|CD|CDELT|CRPIX|CRVAL|CTYPE|CROTA|LONGPOLE|LATPOLE|PV|DISTORT|OBJECT|BUNIT|EPOCH|EQUINOX|LTV|LTM|DTV|DTM)')
 
 def get_wcs_headers(h):
     """ gien fits header, select only wcs related items and return them
@@ -37,12 +40,10 @@ def get_wcs_headers(h):
 
 import ds9_basic
 
-import funtools
-
 class ds9(ds9_basic.ds9):
 
 
-    def view(self, img, header=None, frame=None, asFits=False):
+    def view(self, img, header=None, frame=None, asFits=True):
         """ Display image which can be either numarray instance
         or pyfits HDU
         """
@@ -99,12 +100,6 @@ class ds9(ds9_basic.ds9):
         """ra, dec in degree"""
         self.set("pan to %10.8f %10.8f wcs fk5" % coord.fk5()) # (ra, dec))
 
-    def mask_from_curent_region(self):
-        shape = map(int, self.get("fits size").split())
-        reg = self.get("regions -system image")
-
-        m = funtools.make_mask_from_region((shape[1], shape[0]), reg)
-        return m
         
 
 def test():

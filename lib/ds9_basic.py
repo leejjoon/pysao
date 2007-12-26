@@ -49,7 +49,12 @@ class ds9(object):
         self.numdisp_dev = "unix:%s" % self.ds9_unix_name
         self.numdisp = displaydev.ImageDisplayProxy(self.numdisp_dev)
 
+        self._ds9_version = self.get("version").strip()
+        self._helper = ds9_xpa_help.get(self)
 
+    def __str__(self):
+        pass
+    
     def __del__(self):
         if self.quit_ds9_on_del:
 
@@ -66,8 +71,8 @@ class ds9(object):
 
 
     def xpa_help(self, xpa_command=None):
-        ds9_xpa_help.help(xpa_command)
-
+        #ds9_xpa_help.help(xpa_command)
+        self._helper(xpa_command)
         
     def run_unixonly_ds9_v2(self, wait_time):
         """ start ds9 """
@@ -276,6 +281,7 @@ class ds9(object):
 
     def zoomto(self, zoom):
         self.set("zoom to %e" % (zoom))
+
 
 
 def _load_logo():
