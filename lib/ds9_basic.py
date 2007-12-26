@@ -1,26 +1,13 @@
 
-
-
-
-########## TODO
-### ds9 need an option to be initialized with currently running ds9, e.g., give xpa name
-
-
 import os
 import time
 from sets import Set
 
-#try:
-#    import numdisplay.displaydev as displaydev
-#except ImportError:
-#    pass
 
 import displaydev_lite as displaydev
 
-#displaydev=None
 
 import xpa
-
 import ds9_xpa_help
 
 class UnsupportedDatatypeException(Exception):
@@ -62,8 +49,6 @@ class ds9(object):
         self.numdisp_dev = "unix:%s" % self.ds9_unix_name
         self.numdisp = displaydev.ImageDisplayProxy(self.numdisp_dev)
 
-        self.xpa.set("fits", _ds9_python_logo)
-
 
     def __del__(self):
         if self.quit_ds9_on_del:
@@ -75,6 +60,10 @@ class ds9(object):
             
             os.rmdir(self._tmpd_name)
         
+
+    def show_logo(self):
+        self.xpa.set("fits", _ds9_python_logo)
+
 
     def xpa_help(self, xpa_command=None):
         ds9_xpa_help.help(xpa_command)
@@ -301,13 +290,13 @@ _ds9_python_logo = _load_logo()
 
 
 def test():
-    dd9 = ds9()
+    ds9 = ds9()
     import time
     time.sleep(1)
     d = reshape(numpy.arange(100), (10,10))
-    dd9.view(d)
+    ds9.view(d)
     time.sleep(1)
-    del dd9
+    del ds9
 
     
 if __name__ == "__main__":

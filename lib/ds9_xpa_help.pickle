@@ -2,596 +2,808 @@
 Vorient
 p1
 (dp2
-S'short'
+S'short_expl'
 p3
-VControls the orientation of the current frame.
+VControls the orientationof the current frame
 p4
-sS'long'
+sS'syntax'
 p5
-S'    Controls the orientation of the current frame.\n\n    Syntax:\n    orient [none|x|y|xy]\n\n    Example:\n    $xpaget ds9 orient\n\n    $xpaset -p ds9 orient xy\n\n'
+S'Syntax:\norient [none|x|y|xy]\n\nExample:\n$xpaget ds9 orient\n\n$xpaset -p ds9 orient xy\n'
 p6
-ssVpreserve
+sS'expl'
 p7
-(dp8
-g3
-VPreserve the follow attributes while loading a new image.
+VControls the orientationof the current frame.
+p8
+ssVpreserve
 p9
-sg5
-S'    Preserve the follow attributes while loading a new image.\n\n    Syntax:\n    preserve [scale yes|no]\n             [pan yes|no]\n             [regions yes|no]\n\n    Example:\n    $xpaget ds9 preserve scale\n    $xpaget ds9 preserve pan\n    $xpaget ds9 preserve regions\n\n    $xpaset -p ds9 preserve scale yes\n    $xpaset -p ds9 preserve pan yes\n    $xpaset -p ds9 preserve regions yes\n\n'
-p10
-ssVheight
+(dp10
+g3
+VPreserve the follow attributes while loading a new image
 p11
-(dp12
-g3
-VSet the height of the image display window.
+sg5
+S'Syntax:\npreserve [scale yes|no]\n         [pan yes|no]\n         [regions yes|no]\n\nExample:\n$xpaget ds9 preserve scale\n$xpaget ds9 preserve pan\n$xpaget ds9 preserve regions\n\n$xpaset -p ds9 preserve scale yes\n$xpaset -p ds9 preserve pan yes\n$xpaset -p ds9 preserve regions yes\n'
+p12
+sg7
+VPreserve the follow attributes while loading a new image.
 p13
-sg5
-S'    Set the height of the image display window.\n\n    Syntax:\n    height [<value>]\n\n    Example:\n    $xpaget ds9 height\n    $xpaset -p ds9 height 512\n\n'
+ssVheight
 p14
-ssVlock
-p15
-(dp16
+(dp15
 g3
-VLock frames.
-p17
+VSet the height of the image display window
+p16
 sg5
-S'    Lock frames.\n\n    Syntax:\n    lock [crosshairs none|wcs|wcsa...wcsz|physical|image]\n\n    Example:\n    $xpaset -p ds9 lock crosshairs wcs\n\n'
+S'Syntax:\nheight [<value>]\n\nExample:\n$xpaget ds9 height\n$xpaset -p ds9 height 512\n'
+p17
+sg7
+VSet the height of the image display window.
 p18
-ssVframe
+ssVlock
 p19
 (dp20
 g3
-VControls frame functions. Frames may be created, deleted, reset, and centered. While return the current frame number. If you goto a frame that does not exists, it will be created. If the frame is hidden, it will be shown. The 'frameno' option is available for backward compatibility.
+VLock frames
 p21
 sg5
-S"    Controls frame functions. Frames may be created, deleted, reset, and\n    centered. While return the current frame number. If you goto a frame that\n    does not exists, it will be created. If the frame is hidden, it will be\n    shown. The 'frameno' option is available for backward compatibility.\n\n    Syntax:\n    frame [center [#|all]]\n          [clear [#|all]]\n          [new [rgb]]\n          [delete [#|all]]\n          [reset [#|all]]\n          [refresh [#|all]]\n          [hide [#|all]]\n          [show [#|all]]\n          [first]\n          [next]\n          [prev]\n          [last]\n          [frameno #]\n          [#]\n\n    Example:\n    $xpaget ds9 frame # returns the id of the current frame\n    $xpaget ds9 frame frameno # returns the id of the current frame\n    $xpaget ds9 frame all # returns the id of all frames\n    $xpaget ds9 frame active # returns the id of all active frames\n\n    $xpaset -p ds9 frame center # center current frame\n    $xpaset -p ds9 frame center 1 # center 'Frame1'\n    $xpaset -p ds9 frame center all # center all frames\n    $xpaset -p ds9 frame clear # clear current frame\n    $xpaset -p ds9 frame new # create new frame\n    $xpaset -p ds9 frame new rgb # create new rgb frame\n    $xpaset -p ds9 frame delete # delete current frame\n    $xpaset -p ds9 frame reset # reset current frame\n    $xpaset -p ds9 frame refresh # refresh current frame\n    $xpaset -p ds9 frame hide # hide current frame\n    $xpaset -p ds9 frame show 1 # show frame 'Frame1'\n    $xpaset -p ds9 frame first # goto first frame\n    $xpaset -p ds9 frame next # goto next frame\n    $xpaset -p ds9 frame prev # goto prev frame\n    $xpaset -p ds9 frame last # goto last frame\n    $xpaset -p ds9 frame frameno 4 # goto frame 'Frame4', create if needed\n    $xpaset -p ds9 frame 3 # goto frame 'Frame3', create if needed\n\n"
+S'Syntax:\nlock [crosshairs none|wcs|wcsa...wcsz|physical|image]\n\nExample:\n$xpaset -p ds9 lock crosshairs wcs\n'
 p22
-ssVpage setup
+sg7
+VLock frames.
 p23
-(dp24
+ssVframe
+p24
+(dp25
 g3
-VControls Page Setup options.
-p25
-sg5
-S'    Controls Page Setup options.\n\n    Syntax:\n    page setup [orientation portrait|landscape]\n               [pagescale scaled|fixed]\n               [pagesize letter|legal|tabloid|poster|a4]\n\n    Example:\n    $xpaget ds9 page setup orientation\n    $xpaget ds9 page setup pagescale\n    $xpaget ds9 page setup pagesize\n\n    $xpaset -p ds9 page setup orientation portrait\n    $xpaset -p ds9 page setup pagescale scaled\n    $xpaset -p ds9 page setup pagesize poster\n\n'
+VControls frame functions
 p26
-ssVblink
+sg5
+S"Syntax:\nframe [center [#|all]]\n      [clear [#|all]]\n      [new [rgb]]\n      [delete [#|all]]\n      [reset [#|all]]\n      [refresh [#|all]]\n      [hide [#|all]]\n      [show [#|all]]\n      [first]\n      [next]\n      [prev]\n      [last]\n      [frameno #]\n      [#]\n\nExample:\n$xpaget ds9 frame # returns the id of the current frame\n$xpaget ds9 frame frameno # returns the id of the current frame\n$xpaget ds9 frame all # returns the id of all frames\n$xpaget ds9 frame active # returns the id of all active frames\n\n$xpaset -p ds9 frame center # center current frame\n$xpaset -p ds9 frame center 1 # center 'Frame1'\n$xpaset -p ds9 frame center all # center all frames\n$xpaset -p ds9 frame clear # clear current frame\n$xpaset -p ds9 frame new # create new frame\n$xpaset -p ds9 frame new rgb # create new rgb frame\n$xpaset -p ds9 frame delete # delete current frame\n$xpaset -p ds9 frame reset # reset current frame\n$xpaset -p ds9 frame refresh # refresh current frame\n$xpaset -p ds9 frame hide # hide current frame\n$xpaset -p ds9 frame show 1 # show frame 'Frame1'\n$xpaset -p ds9 frame first # goto first frame\n$xpaset -p ds9 frame next # goto next frame\n$xpaset -p ds9 frame prev # goto prev frame\n$xpaset -p ds9 frame last # goto last frame\n$xpaset -p ds9 frame frameno 4 # goto frame 'Frame4', create if needed\n$xpaset -p ds9 frame 3 # goto frame 'Frame3', create if needed\n"
 p27
-(dp28
+sg7
+VControls frame functions. Frames may be created, deleted, reset, andcentered. While return the current frame number. If you goto a framethat does not exists, it will be created. If the frame is hidden, itwill be shown. The 'frameno' option is available for backwardcompatibility.
+p28
+ssVpage setup
+p29
+(dp30
+g3
+VControls Page Setup options
+p31
+sg5
+S'Syntax:\npage setup [orientation portrait|landscape]\n           [pagescale scaled|fixed]\n           [pagesize letter|legal|tabloid|poster|a4]\n\nExample:\n$xpaget ds9 page setup orientation\n$xpaget ds9 page setup pagescale\n$xpaget ds9 page setup pagesize\n\n$xpaset -p ds9 page setup orientation portrait\n$xpaset -p ds9 page setup pagescale scaled\n$xpaset -p ds9 page setup pagesize poster\n'
+p32
+sg7
+VControls Page Setup options.
+p33
+ssVblink
+p34
+(dp35
 g3
 VSelect Blink Display Mode
-p29
+p36
 sg5
-S'    Select Blink Display Mode\n\n    Syntax:\n    blink\n\n    Example:\n    $xpaget ds9 blink\n    $xpaset -p ds9 blink\n\n'
-p30
-ssVsingle
-p31
-(dp32
-g3
-VSelect Single Display mode
-p33
-sg5
-S'    Select Single Display mode\n\n    Syntax:\n    single\n\n    Example:\n    $xpaget ds9 single\n\n    $xpaset -p ds9 single\n\n'
-p34
-ssVdsseso
-p35
-(dp36
-g3
-VSupport for Digital Sky Survey at ESO. The first three options will download an image based on the name or specified
+S'\nSyntax:\nblink\n\nExample:\n$xpaget ds9 blink\n$xpaset -p ds9 blink\n'
 p37
-sg5
-S'    Support for Digital Sky Survey at ESO. The first three options will\n    download an image based on the name or specified fk5 coordinate. The\n    remaining options are used to configure downloads.\n\n    Syntax:\n    dsseso [<object>]\n           [name <object>]\n           [coord <ra> <dec>] # in wcs fk5\n           [size <width> <height>] # in arcmin\n           [survey dss|dss2red|dss2blue]\n\n    Example:\n    $xpaget ds9 dsseso name\n    $xpaget ds9 dsseso coord\n    $xpaget ds9 dsseso survey\n    $xpaget ds9 dsseso size\n\n    $xpaset -p ds9 dsseso m31\n    $xpaset -p ds9 dsseso name m31\n    $xpaset -p ds9 dsseso coord 00:42:44.404 +41:16:08.78\n    $xpaset -p ds9 dsseso survey dss2red\n    $xpaset -p ds9 dsseso size 10 10\n\n'
+sg7
+VSelect Blink Display Mode
 p38
-ssViconify
+ssVheader
 p39
 (dp40
 g3
-VToggles iconification.
+VDisplay current fits header dialog
 p41
 sg5
-S'    Toggles iconification.\n\n    Syntax:\n    iconify []\n            [yes|no]\n\n    Example:\n    $xpaget ds9 iconify\n\n    $xpaset -p ds9 iconify\n    $xpaset -p ds9 iconify yes\n\n'
+S'Syntax:\nheader [<value>]\n\nExample:\n$xpaget ds9 header\n$xpaget ds9 header 2\n'
 p42
-ssVfile
+sg7
+VDisplay current fits header dialog. Optional extension number maybespecified. Please note, this differs from xpa fits header.
 p43
-(dp44
+ssVsingle
+p44
+(dp45
 g3
-V
-p45
-sg5
-S"    Load a FITS image, FITS Mosaic image(s), or array from a file into the\n    current frame, or return the current file name(s) loaded for the current\n    frame.\n\n    Syntax:\n    file [new|mask][<filename>]\n         [new|mask][fits <filename>]\n         [new|mask][sfits <filename> <filename>]\n         [new|mask][medatacube <filename>]\n         [new|mask][mosaicimage [iraf|wcs|wcsa...wcsz|wfpc2] <filename>]\n         [new|mask][mosaic [iraf|wcs|wcsa...wcsz] <filename>]\n         [new|mask][smosaic [iraf|wcs|wcsa...wcsz] <filename> <filename>]\n         [new][rgbcube <filename>]\n         [new][srgbcube <filename> <filename>]\n         [new][rgbimage <filename>]\n         [new][rgbarray <filename>[[xdim=<x>,ydim=<y>|dim=<dim>],zdim=3,bitpix=\n    <b>,[skip=<s>]]]\n         [new|mask][array <file>[[xdim=<x>,ydim=<y>|dim=<dim>],zdim=<z>,bitpix=\n    <b>,[skip=<s>]]\n         [new][url <url>]\n         [save <filename>]\n         [save gz <filename>]\n         [save resample <filename>]\n         [save resample gz <filename>]\n\n    Example:\n    $xpaget ds9 file\n\n    $xpaset -p ds9 file foo.fits\n    $xpaset -p ds9 file mask foo.fits\n    $xpaset -p ds9 file fits foo.fits\n    $xpaset -p ds9 file sfits foo.hdr foo.arr\n    $xpaset -p ds9 file medatacube foo.fits\n    $xpaset -p ds9 file mosaicimage iraf bar.fits\n    $xpaset -p ds9 file mosaicimage wcs bar.fits\n    $xpaset -p ds9 file mosaicimage wcsa bar.fits\n    $xpaset -p ds9 file mosaicimage wfpc2 hst.fits\n    $xpaset -p ds9 file mosaic iraf foo.fits\n    $xpaset -p ds9 file mosaic wcs bar.fits\n    $xpaset -p ds9 file smosaic iraf foo.hdr foo.arr\n    $xpaset -p ds9 file smosaic wcs bar.hdr bar.arr\n    $xpaset -p ds9 file rgbcube rgb.fits\n    $xpaset -p ds9 file srgbcube rgb.hdr rgb.arr\n    $xpaset -p ds9 file rgbimage rgb.fits\n    $xpaset -p ds9 file rgbarray rgb.arr[dim=200,zdim=3,bitpix=-32]\n    $xpaset -p ds9 file array array.arr[dim=512,bitpix=-32]\n    $xpaset -p ds9 file url 'ftp://foo.bar.edu/img.fits'\n    $xpaset -p ds9 file save foo.fits # save the current frame as FITS Image\n    $xpaset -p ds9 file save gz foo.fits.gz # save as compressed FITS Image\n    $xpaset -p ds9 file save resample foo.fits # save current pan/zoom/rotate\n    as FITS Image\n    $xpaset -p ds9 file save resample gz foo.fits.gz # save as compressed FITS\n    Image\n\n"
+VSelect Single Display mode
 p46
-ssVminmax
+sg5
+S'Syntax:\nsingle\n\nExample:\n$xpaget ds9 single\n\n$xpaset -p ds9 single\n'
 p47
-(dp48
-g3
-VThis is how DS9 determines  the min and max data values from the data.
+sg7
+VSelect Single Display mode
+p48
+ssVdsseso
 p49
-sg5
-S'    This is how DS9 determines  the min and max data values from the data. SCAN\n    will scan all data. SAMPLE will sample the data every n samples. DATAMIN\n    and IRAFMIN will use the values of the keywords if present. In general, it\n    is recommended to use SCAN unless your computer is slow or your data files\n    are very large. Select the increment  interval for determining the min and\n    max data values during sampling. The larger the interval, the quicker the\n    process.\n\n    Syntax:\n    minmax []\n           [scan|sample|datamin|irafmin]\n           [mode auto|scan|sample|datamin|irafmin]\n           [interval <value>]\n\n    Example:\n    $xpaget ds9 minmax mode\n    $xpaget ds9 minmax interval\n\n    $xpaset -p ds9 minmax\n    $xpaset -p ds9 minmax scan\n    $xpaset -p ds9 minmax mode sample\n    $xpaset -p ds9 minmax interval 10\n\n'
-p50
-ssVdssstsci
+(dp50
+g3
+VSupport for Digital Sky Survey at ESO
 p51
-(dp52
-g3
-VSupport for Digital Sky Survey at STSCI. The first three options will download an image based on the name or specified
+sg5
+S'Syntax:\ndsseso [<object>]\n       [name <object>]\n       [coord <ra> <dec>] # in wcs fk5\n       [size <width> <height>] # in arcmin\n       [survey DSS1|DSS2-red|DSS2-blue|DSS2-infrared]\n\nExample:\n$xpaget ds9 dsseso name\n$xpaget ds9 dsseso coord\n$xpaget ds9 dsseso survey\n$xpaget ds9 dsseso size\n\n$xpaset -p ds9 dsseso m31\n$xpaset -p ds9 dsseso name m31\n$xpaset -p ds9 dsseso coord 00:42:44.404 +41:16:08.78\n$xpaset -p ds9 dsseso survey DSS2-red\n$xpaset -p ds9 dsseso size 10 10\n'
+p52
+sg7
+VSupport for Digital Sky Survey at ESO. The first three options willdownloadan image based on the name or specified fk5 coordinate. Theremaining options are used to configure downloads.
 p53
-sg5
-S'    Support for Digital Sky Survey at STSCI. The first three options will\n    download an image based on the name or specified fk5 coordinate. The\n    remaining options are used to configure downloads.\n\n    Syntax:\n    dssstsci [<object>]\n             [name <object>]\n             [coord <ra> <dec>] # in wcs fk5\n             [size <width> <height>] # in arcmin\n             [survey poss2ukstu_red|poss2ukstu_ir|poss2ukstu_blue]\n             [survey poss1_blue|poss1_red]\n             [survey all|quickv|phase2_gsc2|phase2_gsc1]\n\n    Example:\n    $xpaget ds9 dssstsci name\n    $xpaget ds9 dssstsci coord\n    $xpaget ds9 dssstsci survey\n    $xpaget ds9 dssstsci size\n\n    $xpaset -p ds9 dssstsci m31\n    $xpaset -p ds9 dssstsci name m31\n    $xpaset -p ds9 dssstsci coord 00:42:44.404 +41:16:08.78\n    $xpaset -p ds9 dssstsci survey all\n    $xpaset -p ds9 dssstsci size 10 10\n\n'
+ssViconify
 p54
-ssVsavefits
-p55
-(dp56
+(dp55
 g3
-VSave current frame data as FITS. This differs from SAVEIMAGE in that the entire image of the current frame is saved as a FITS, without graphics.
-p57
+VToggles iconification
+p56
 sg5
-S'    Save current frame data as FITS. This differs from SAVEIMAGE in that the\n    entire image of the current frame is saved as a FITS, without graphics.\n\n    Syntax:\n    savefits [<filename>]\n\n    Example:\n    $xpaset -p ds9 savefits ds9.fits\n\n'
+S'Syntax:\niconify []\n        [yes|no]\n\nExample:\n$xpaget ds9 iconify\n\n$xpaset -p ds9 iconify\n$xpaset -p ds9 iconify yes\n'
+p57
+sg7
+VToggles iconification.
 p58
-ssVarray
+ssVfile
 p59
 (dp60
 g3
-VLoad raw data array from stdin. If new is specified, a new frame is created first, before loading.
+VLoad a FITS image, FITS Mosaic image(s), or arrayfroma file intothe current frame, or return the current file name(s) loaded for thecurrent frame
 p61
 sg5
-S'    Load raw data array from stdin. If new is specified, a new frame is created\n    first, before loading.\n\n    Syntax:\n    array [new|mask][[xdim=<x>,ydim=<y>|dim=<dim>],zdim=<z>,bitpix=<b>,skip=\n    <s>,\n        arch=[littleendian|bigendian]]\n    array [new] rgb [[xdim=<x>,ydim=<y>|dim=<dim>],zdim=<z>,bitpix=<b>,skip=\n    <s>,\n        arch=[littleendian|bigendian]]\n\n    Example:\n    $xpaget ds9 array\n\n    $cat foo.arr | xpaset ds9 array [dim=512,bitpix=16]\n    $cat foo.arr | xpaset ds9 array mask [dim=512,bitpix=16]\n    $cat rgb.arr | xpaset ds9 array rgb [dim=200,zdim=3,bitpix=8]\n    $cat bar.arr | xpaset ds9 array [xdim=512,ydim=512,zdim=1,bitpix=16] # load\n    512x512 short\n    $cat bar.arr | xpaset ds9 array [dim=256,bitpix=-32,skip=4] # 256x256 float\n    with 4 byte head\n    $cat bar.arr | xpaset ds9 array [dim=512,bitpix=32,arch=littleendian] #\n    512x512 long, intel\n\n'
+S"Syntax:\nfile [new|mask][<filename>]\n     [new|mask][fits <filename>]\n     [new|mask][sfits <filename> <filename>]\n     [new|mask][medatacube <filename>]\n     [new|mask][mosaicimage [iraf|wcs|wcsa...wcsz|wfpc2] <filename>]\n     [new|mask][mosaic [iraf|wcs|wcsa...wcsz] <filename>]\n     [new|mask][smosaic [iraf|wcs|wcsa...wcsz] <filename> <filename>]\n     [new][rgbcube <filename>]\n     [new][srgbcube <filename> <filename>]\n     [new][rgbimage <filename>]\n     [new][rgbarray <filename>[[xdim=<x>,ydim=<y>|dim=<dim>],zdim=3,bitpix=<b>,\n[skip=<s>]]]\n     [new|mask][array <file>[[xdim=<x>,ydim=<y>|dim=<dim>],zdim=<z>,bitpix=<b>,\n[skip=<s>]]\n     [new][url <url>]\n     [save <filename>]\n     [save gz <filename>]\n     [save resample <filename>]\n     [save resample gz <filename>]\n\nExample:\n$xpaget ds9 file\n\n$xpaset -p ds9 file foo.fits\n$xpaset -p ds9 file mask foo.fits\n$xpaset -p ds9 file fits foo.fits\n$xpaset -p ds9 file sfits foo.hdr foo.arr\n$xpaset -p ds9 file medatacube foo.fits\n$xpaset -p ds9 file mosaicimage iraf bar.fits\n$xpaset -p ds9 file mosaicimage wcs bar.fits\n$xpaset -p ds9 file mosaicimage wcsa bar.fits\n$xpaset -p ds9 file mosaicimage wfpc2 hst.fits\n$xpaset -p ds9 file mosaic iraf foo.fits\n$xpaset -p ds9 file mosaic wcs bar.fits\n$xpaset -p ds9 file smosaic iraf foo.hdr foo.arr\n$xpaset -p ds9 file smosaic wcs bar.hdr bar.arr\n$xpaset -p ds9 file rgbcube rgb.fits\n$xpaset -p ds9 file srgbcube rgb.hdr rgb.arr\n$xpaset -p ds9 file rgbimage rgb.fits\n$xpaset -p ds9 file rgbarray rgb.arr[dim=200,zdim=3,bitpix=-32]\n$xpaset -p ds9 file array array.arr[dim=512,bitpix=-32]\n$xpaset -p ds9 file url 'ftp://foo.bar.edu/img.fits'\n$xpaset -p ds9 file save foo.fits # save the current frame as FITS Image\n$xpaset -p ds9 file save gz foo.fits.gz # save as compressed FITS Image\n$xpaset -p ds9 file save resample foo.fits # save current pan/zoom/rotate as\nFITS Image\n$xpaset -p ds9 file save resample gz foo.fits.gz # save as compressed FITS\nImage\n"
 p62
-ssVsaveimage
+sg7
+VLoad a FITS image, FITS Mosaic image(s), or arrayfroma file intothe current frame, or return the current file name(s) loaded for thecurrent frame.
 p63
-(dp64
+ssVminmax
+p64
+(dp65
 g3
-VSave visible image(s) as a raster. If image is a data cube, the mpeg option will cycle thru each slice creating a mpeg movie.
-p65
-sg5
-S'    Save visible image(s) as a raster. If image is a data cube, the mpeg option\n    will cycle thru each slice creating a mpeg movie.\n\n    Syntax:\n    saveimage [fits|jpeg|tiff|png|ppm|mpeg <filename>]\n\n    Example:\n    $xpaset -p ds9 saveimage jpeg ds9.jpg\n\n'
+VThis is how DS9 determines the min and max data values from thedata
 p66
-ssVplot
+sg5
+S'Syntax:\nminmax []\n       [scan|sample|datamin|irafmin]\n       [mode auto|scan|sample|datamin|irafmin]\n       [interval <value>]\n\nExample:\n$xpaget ds9 minmax mode\n$xpaget ds9 minmax interval\n\n$xpaset -p ds9 minmax\n$xpaset -p ds9 minmax scan\n$xpaset -p ds9 minmax mode sample\n$xpaset -p ds9 minmax interval 10\n'
 p67
-(dp68
-g3
-VDisplay and configure data plots. All plot commands take an optional second command, the plot name. Use
+sg7
+VThis is how DS9 determines the min and max data values from thedata. SCAN will scan all data. SAMPLE will samplethe data every n samples. DATAMIN and IRAFMIN willuse the values of the keywords if present. In general,it is recommended to use SCAN unless your computeris slow or your data files are very large. Select the increment interval for determining the min and max data values during sampling.The larger the interval, the quicker the process.
+p68
+ssVdssstsci
 p69
-sg5
-S'    Display and configure data plots. All plot commands take an optional second\n    command, the plot name. Use xpaget plot to retreive all plot names. If no\n    plot name is specified, the last plot created is assumed. Plot data is\n    assumed to be a pair of coordinates, with optional error values. The follow\n    are valid data descriptions:\n\n        xy        x and y coordinates\n        xyex      x,y coordinates with x errors\n        xyey      x,y coordinates with y errors\n        xyexey    x,y coordinates with both x and y errors\n\n    To create a new plot, use the plot new command. If the second arg is stdin,\n    the title, x axis title, y axis title, and dimension are assumed to be on\n    the first line of the data.\n\n    Syntax:\n    # create new empty plot window\n    plot []\n         [new [name <plotname>]]\n\n    # create new plot with data\n    plot [new [name <plotname>] stdin]\n         [new [name <plotname>] <title> <xaxis label> <yaxis label>  xy|xyex|\n    xyey|xyexey]\n\n    # load additional dataset into an existing plot\n    plot [<plotname>] [data xy|xyex|xyey|xyexey]\n\n    # edit existing plot\n    plot [<plotname>] [close]\n         [<plotname>] [clear]\n\n         [<plotname>] [load <filename> xy|xyex|xyey|xyexey]\n         [<plotname>] [save <filename>]\n         [<plotname>] [loadconfig <filename>]\n         [<plotname>] [saveconfig <filename>]\n\n         [<plotname>] [print]\n         [<plotname>] [print destination printer|file]\n         [<plotname>] [print command <command>]\n         [<plotname>] [print filename <filename>]\n         [<plotname>] [print palette color|gray|mono]\n         [<plotname>] [page orientation portrait|landscape]\n         [<plotname>] [page pagescale scaled|fixed]\n         [<plotname>] [page pagesize letter|legal|tabloid|poster|a4]\n\n         [<plotname>] [graph grid yes|no]\n         [<plotname>] [graph scale linearlinear|linearlog|loglinear|loglog]\n         [<plotname>] [graph range x|y auto yes|no]\n         [<plotname>] [graph range x|y min <value>]\n         [<plotname>] [graph range x|y max <value>]\n         [<plotname>] [graph labels title|xaxis|yaxis <value>]\n\n         [<plotname>] [font numbers|labels|title font times|helvetica|symbol|\n    courier]\n         [<plotname>] [font numbers|labels|title size <value>]\n         [<plotname>] [font numbers|labels|title style plain|bold|italic]\n\n    # edit current dataset\n    plot [<plotname>] [dataset #]\n         [<plotname>] [view discrete|line|step|quadratic|errorbar yes|no]\n         [<plotname>] [color discrete|line|step|quadratic|errorbar <color>]\n         [<plotname>] [line discrete circle|diamond|plus|cross]\n         [<plotname>] [line line|step|quadratic|errorbar width <value>]\n         [<plotname>] [line line|step|quadratic dash yes|no]\n         [<plotname>] [line errorbar style 1|2]\n\n    Example:\n    $xpaget ds9 plot # return all plotnames\n\n    # create new empty plot window\n    $xpaset -p ds9 plot\n    $xpaset -p ds9 plot new\n    $xpaset -p ds9 plot new name foo\n\n    # create new plot with data\n    $cat foo.dat | xpaset ds9 plot new stdin\n    $cat foo.dat | xpaset ds9 plot new name foo stdin\n    $cat bar.dat | xpaset ds9 plot new "{The Title}" "{X}" "{Y}" xy\n    $cat bar.dat | xpaset ds9 plot new name foo "{The Title}" "{X}" "{Y}" xy\n\n    # load additional dataset into an existing plot\n    $cat bar.dat | xpaset ds9 plot data xy # plot additional data\n    $cat bar.dat | xpaset ds9 plot foo data xy # plot additional data\n\n    # edit existing plot\n    $xpaset -p ds9 plot close # close last plot\n    $xpaset -p ds9 plot foo close # close plot foo\n    $xpaset -p ds9 plot clear # clear all datasets\n\n    $xpaset -p ds9 plot load foo.dat xy # load new dataset with dimension xy\n    $xpaset -p ds9 plot save bar.dat # save current dataset\n    $xpaset -p ds9 plot loadconfig foo.plt # load plot configuration\n    $xpaset -p ds9 plot saveconfig bar.plt # save current plot configuration\n\n    $xpaset -p ds9 plot print\n    $xpaset -p ds9 plot print destination file\n    $xpaset -p ds9 plot print command "lp"\n    $xpaset -p ds9 plot print filename "foo.ps"\n    $xpaset -p ds9 plot print palette gray\n    $xpaset -p ds9 plot page orientation portrait\n    $xpaset -p ds9 plot page pagescale scaled\n    $xpaset -p ds9 plot page pagesize letter\n\n    $xpaset -p ds9 plot graph grid yes\n    $xpaset -p ds9 plot graph scale loglog\n    $xpaset -p ds9 plot graph range x auto yes\n    $xpaset -p ds9 plot graph range x min 0\n    $xpaset -p ds9 plot graph range x max 100\n    $xpaset -p ds9 plot graph range y auto yes\n    $xpaset -p ds9 plot graph range y min 0\n    $xpaset -p ds9 plot graph range y max 100\n    $xpaset -p ds9 plot graph labels title {The Title}\n    $xpaset -p ds9 plot graph labels xaxis {X}\n    $xpaset -p ds9 plot graph labels yaxis {Y}\n\n    $xpaset -p ds9 plot font numbers font times\n    $xpaset -p ds9 plot font numbers size 12\n    $xpaset -p ds9 plot font numbers style bold\n    $xpaset -p ds9 plot font labels font times\n    $xpaset -p ds9 plot font title font times\n\n    # edit current dataset\n    $xpaset -p ds9 plot dataset 2 # set current dataset to the second dataset\n    loaded\n    $xpaset -p ds9 plot view discrete yes\n    $xpaset -p ds9 plot color discrete red\n    $xpaset -p ds9 plot line discrete cross\n    $xpaset -p ds9 plot line step width 2\n    $xpaset -p ds9 plot line step dash yes\n    $xpaset -p ds9 plot line errorbar style 2\n\n'
-p70
-ssVwcs
+(dp70
+g3
+VSupport for Digital Sky Survey at STSCI
 p71
-(dp72
-g3
-VControls the World Coordinate System for the current frame. If the wcs system, skyframe, or skyformat is modified, the info panel, compass, grid, and alignment will be modified accordingly. Also, using this access point, a new WCS specification can be loaded and used by the current image regardless of the WCS that was contained in the image file. WCS specification can be sent to DS9 as an ASCII file . Please see
+sg5
+S'Syntax:\ndssstsci [<object>]\n         [name <object>]\n         [coord <ra> <dec>] # in wcs fk5\n         [size <width> <height>] # in arcmin\n         [survey poss2ukstu_red|poss2ukstu_ir|poss2ukstu_blue]\n         [survey poss1_blue|poss1_red]\n         [survey all|quickv|phase2_gsc2|phase2_gsc1]\n\nExample:\n$xpaget ds9 dssstsci name\n$xpaget ds9 dssstsci coord\n$xpaget ds9 dssstsci survey\n$xpaget ds9 dssstsci size\n\n$xpaset -p ds9 dssstsci m31\n$xpaset -p ds9 dssstsci name m31\n$xpaset -p ds9 dssstsci coord 00:42:44.404 +41:16:08.78\n$xpaset -p ds9 dssstsci survey all\n$xpaset -p ds9 dssstsci size 10 10\n'
+p72
+sg7
+VSupport for Digital Sky Survey at STSCI. The first three options willdownloadan image based on the name or specified fk5 coordinate. Theremaining options are used to configure downloads.
 p73
-sg5
-S'    Controls the World Coordinate System for the current frame. If the wcs\n    system, skyframe, or skyformat is modified, the info panel, compass, grid,\n    and alignment will be modified accordingly. Also, using this access point,\n    a new WCS specification can be loaded and used by the current image\n    regardless of the WCS that was contained in the image file. WCS\n    specification can be sent to DS9 as an ASCII file . Please see WCS for more\n    information.\n\n    Syntax:\n    wcs [wcs|wcsa...wcsz]\n        [system wcs|wcsa...wcsz]\n        [sky fk4|fk5|icrs|galactic|ecliptic]\n        [skyformat degrees|sexagesimal]\n        [align yes|no]\n        [reset]\n        [replace file <filename>]\n        [append file <filename>]\n        [replace]\n        [append]\n\n    Example:\n    $xpaget ds9 wcs\n    $xpaget ds9 wcs system\n    $xpaget ds9 wcs sky\n    $xpaget ds9 wcs skyformat\n    $xpaget ds9 wcs align\n\n    $xpaset -p ds9 wcs wcs\n    $xpaset -p ds9 wcs system wcs\n    $xpaset -p ds9 wcs wcsa\n    $xpaset -p ds9 wcs sky fk5\n    $xpaset -p ds9 wcs skyformat sexagesimal\n    $xpaset -p ds9 wcs align yes\n    $xpaset -p ds9 wcs reset\n    $xpaset -p ds9 wcs replace file foo.wcs\n    $xpaset -p ds9 wcs append file foo.wcs\n    $cat foo.wcs | xpaset ds9 wcs replace\n    $cat foo.wcs | xpaset ds9 wcs append\n    $echo "OBJECT = \'foobar\'" | xpaset ds9 wcs append\n\n'
+ssVsavefits
 p74
-ssVscale
-p75
-(dp76
+(dp75
 g3
-VControls the limits, color scale distribution, and use of
-p77
+VSave current frame data as FITS
+p76
 sg5
-S'    Controls the limits, color scale distribution, and use of DATASEC keyword.\n\n    Syntax:\n    scale [linear|log|pow|sqrt|squared|histequ]\n          [datasec yes|no]\n          [limits <minvalue> <maxvalue>]\n          [mode minmax|<value>|zscale|zmax]\n          [scope local|global]\n\n    Example:\n    $xpaget ds9 scale\n    $xpaget ds9 scale datasec\n    $xpaget ds9 scale limits\n    $xpaget ds9 scale mode\n    $xpaget ds9 scale scope\n\n    $xpaset -p ds9 scale datasec yes\n    $xpaset -p ds9 scale histequ\n    $xpaset -p ds9 scale limits 1 100\n    $xpaset -p ds9 scale mode zscale\n    $xpaset -p ds9 scale mode 99.5\n    $xpaset -p ds9 scale scope local\n\n'
+S'Syntax:\nsavefits [<filename>]\n\nExample:\n$xpaset -p ds9 savefits ds9.fits\n'
+p77
+sg7
+VSave current frame data as FITS. This differs from SAVEIMAGE in thattheentire image of the current frame is saved as a FITS, without graphics.
 p78
-ssVraise
+ssVarray
 p79
 (dp80
 g3
-VRaise ds9 in the window stacking order.
+VLoad raw data array fromstdin
 p81
 sg5
-S'    Raise ds9 in the window stacking order.\n\n    Syntax:\n    raise\n\n    Example:\n    $xpaset -p ds9 raise\n\n'
+S'Syntax:\narray [new|mask][[xdim=<x>,ydim=<y>|dim=<dim>],zdim=<z>,bitpix=<b>,skip=<s>,\n    arch=[littleendian|bigendian]]\narray [new] rgb [[xdim=<x>,ydim=<y>|dim=<dim>],zdim=<z>,bitpix=<b>,skip=<s>,\n    arch=[littleendian|bigendian]]\n\nExample:\n$xpaget ds9 array\n\n$cat foo.arr | xpaset ds9 array [dim=512,bitpix=16]\n$cat foo.arr | xpaset ds9 array mask [dim=512,bitpix=16]\n$cat rgb.arr | xpaset ds9 array rgb [dim=200,zdim=3,bitpix=8]\n$cat bar.arr | xpaset ds9 array [xdim=512,ydim=512,zdim=1,bitpix=16] # load\n512x512 short\n$cat bar.arr | xpaset ds9 array [dim=256,bitpix=-32,skip=4] # 256x256 float\nwith 4 byte head\n$cat bar.arr | xpaset ds9 array [dim=512,bitpix=32,arch=littleendian] # 512x512\nlong, intel\n'
 p82
-ssVwidth
+sg7
+VLoad raw data array fromstdin. If new is specified, a new frame is created first,before loading.
 p83
-(dp84
+ssVsaveimage
+p84
+(dp85
 g3
-VSet the width of the image display window.
-p85
-sg5
-S'    Set the width of the image display window.\n\n    Syntax:\n    width [<value>]\n\n    Example:\n    $xpaget ds9 width\n    $xpaset -p ds9 width 512\n\n'
+VSave visible image(s) as a raster
 p86
-ssVsmooth
+sg5
+S'Syntax:\nsaveimage [fits|jpeg|tiff|png|ppm|mpeg <filename>]\n\nExample:\n$xpaset -p ds9 saveimage jpeg ds9.jpg\n'
 p87
-(dp88
-g3
-VSmooth current image or set smooth parameters.
+sg7
+VSave visible image(s) as a raster.If image is a data cube, the mpeg option will cycle thru each slicecreating a mpeg movie.
+p88
+ssVplot
 p89
-sg5
-S'    Smooth current image or set smooth parameters.\n\n    Syntax:\n    smooth []\n           [yes|no]\n           [function boxcar|tophat|gaussian]\n           [radius <int>]\n\n    Example:\n    $xpaget ds9 smooth\n    $xpaget ds9 smooth function\n    $xpaget ds9 smooth radius\n\n    $xpaset -p ds9 smooth\n    $xpaset -p ds9 smooth yes\n    $xpaset -p ds9 smooth function tophat\n    $xpaset -p ds9 smooth radius 4\n\n'
-p90
-ssVdss
+(dp90
+g3
+VDisplay and configure data plots
 p91
-(dp92
-g3
-VSupport for Digital Sky Survey at SAO. The first three options will download an image based on the name or specified
+sg5
+S'Syntax:\n# create new empty plot window\nplot []\n     [new [name <plotname>]]\n\n# create new plot with data\nplot [new [name <plotname>] stdin]\n     [new [name <plotname>] <title> <xaxis label> <yaxis label>  xy|xyex|xyey|\nxyexey]\n\n# load additional dataset into an existing plot\nplot [<plotname>] [data xy|xyex|xyey|xyexey]\n\n# edit existing plot\nplot [<plotname>] [close]\n     [<plotname>] [clear]\n\n     [<plotname>] [load <filename> xy|xyex|xyey|xyexey]\n     [<plotname>] [save <filename>]\n     [<plotname>] [loadconfig <filename>]\n     [<plotname>] [saveconfig <filename>]\n\n     [<plotname>] [print]\n     [<plotname>] [print destination printer|file]\n     [<plotname>] [print command <command>]\n     [<plotname>] [print filename <filename>]\n     [<plotname>] [print palette color|gray|mono]\n     [<plotname>] [page orientation portrait|landscape]\n     [<plotname>] [page pagescale scaled|fixed]\n     [<plotname>] [page pagesize letter|legal|tabloid|poster|a4]\n\n     [<plotname>] [graph grid yes|no]\n     [<plotname>] [graph scale linearlinear|linearlog|loglinear|loglog]\n     [<plotname>] [graph range x|y auto yes|no]\n     [<plotname>] [graph range x|y min <value>]\n     [<plotname>] [graph range x|y max <value>]\n     [<plotname>] [graph labels title|xaxis|yaxis <value>]\n\n     [<plotname>] [font numbers|labels|title font times|helvetica|symbol|\ncourier]\n     [<plotname>] [font numbers|labels|title size <value>]\n     [<plotname>] [font numbers|labels|title style plain|bold|italic]\n\n# edit current dataset\nplot [<plotname>] [dataset #]\n     [<plotname>] [view discrete|linear|step|quadratic|error yes|no]\n     [<plotname>] [color discrete|linear|step|quadratic|error <color>]\n     [<plotname>] [line discrete circle|diamond|plus|cross]\n     [<plotname>] [line linear|step|quadratic|error width <value>]\n     [<plotname>] [line linear|step|quadratic dash yes|no]\n     [<plotname>] [line error style 1|2]\n\nExample:\n$xpaget ds9 plot # return all plotnames\n\n# create new empty plot window\n$xpaset -p ds9 plot\n$xpaset -p ds9 plot new\n$xpaset -p ds9 plot new name foo\n\n# create new plot with data\n$cat foo.dat | xpaset ds9 plot new stdin\n$cat foo.dat | xpaset ds9 plot new name foo stdin\n$cat bar.dat | xpaset ds9 plot new "{The Title}" "{X}" "{Y}" xy\n$cat bar.dat | xpaset ds9 plot new name foo "{The Title}" "{X}" "{Y}" xy\n\n# load additional dataset into an existing plot\n$cat bar.dat | xpaset ds9 plot data xy # plot additional data\n$cat bar.dat | xpaset ds9 plot foo data xy # plot additional data\n\n# edit existing plot\n$xpaset -p ds9 plot close # close last plot\n$xpaset -p ds9 plot foo close # close plot foo\n$xpaset -p ds9 plot clear # clear all datasets\n\n$xpaset -p ds9 plot load foo.dat xy # load new dataset with dimension xy\n$xpaset -p ds9 plot save bar.dat # save current dataset\n$xpaset -p ds9 plot loadconfig foo.plt # load plot configuration\n$xpaset -p ds9 plot saveconfig bar.plt # save current plot configuration\n\n$xpaset -p ds9 plot print\n$xpaset -p ds9 plot print destination file\n$xpaset -p ds9 plot print command "lp"\n$xpaset -p ds9 plot print filename "foo.ps"\n$xpaset -p ds9 plot print palette gray\n$xpaset -p ds9 plot page orientation portrait\n$xpaset -p ds9 plot page pagescale scaled\n$xpaset -p ds9 plot page pagesize letter\n\n$xpaset -p ds9 plot graph grid yes\n$xpaset -p ds9 plot graph scale loglog\n$xpaset -p ds9 plot graph range x auto yes\n$xpaset -p ds9 plot graph range x min 0\n$xpaset -p ds9 plot graph range x max 100\n$xpaset -p ds9 plot graph range y auto yes\n$xpaset -p ds9 plot graph range y min 0\n$xpaset -p ds9 plot graph range y max 100\n$xpaset -p ds9 plot graph labels title {The Title}\n$xpaset -p ds9 plot graph labels xaxis {X}\n$xpaset -p ds9 plot graph labels yaxis {Y}\n\n$xpaset -p ds9 plot font numbers font times\n$xpaset -p ds9 plot font numbers size 12\n$xpaset -p ds9 plot font numbers style bold\n$xpaset -p ds9 plot font labels font times\n$xpaset -p ds9 plot font title font times\n\n# edit current dataset\n$xpaset -p ds9 plot dataset 2 # set current dataset to the second dataset\nloaded\n$xpaset -p ds9 plot view discrete yes\n$xpaset -p ds9 plot color discrete red\n$xpaset -p ds9 plot line discrete cross\n$xpaset -p ds9 plot line step width 2\n$xpaset -p ds9 plot line step dash yes\n$xpaset -p ds9 plot line error style 2\n'
+p92
+sg7
+VDisplay and configure data plots. All plot commands take an optionalsecond command, the plot name. Use xpaget plot to retreiveall plot names. If no plot name is specified, the last plot created isassumed. Plot data is assumed to be a pair of coordinates, withoptionalerror values. The follow are valid data descriptions: \u000a  xy     x and y coordinates \u000a  xyex    x,y coordinates with x errors \u000a  xyey    x,y coordinates with y errors \u000a  xyexey   x,y coordinates with both x and yerrors \u000a To create a new plot, use the plot new command. If the secondarg is stdin, the title,x axis title, y axis title, and dimension are assumed to be on thefirst line of the data.
 p93
-sg5
-S'    Support for Digital Sky Survey at SAO. The first three options will\n    download an image based on the name or specified fk5 coordinate. The\n    remaining options are used to configure downloads.\n\n    Syntax:\n    dsssao [<object>]\n           [name <object>]\n           [coord <ra> <dec>] # in wcs fk5\n           [size <width> <height>] # in arcmin\n\n    Example:\n    $xpaget ds9 dsssao name\n    $xpaget ds9 dsssao coord\n    $xpaget ds9 dsssao size\n\n    $xpaset -p ds9 dsssao m31\n    $xpaset -p ds9 dsssao name m31\n    $xpaset -p ds9 dsssao coord 00:42:44.404 +41:16:08.78\n    $xpaset -p ds9 dsssao size 10 10\n\n'
+ssVwcs
 p94
-ssVcontour
-p95
-(dp96
+(dp95
 g3
-VControls contours in the current frame.
-p97
+VControls the World Coordinate System for the current frame
+p96
 sg5
-S'    Controls contours in the current frame.\n\n    Syntax:\n    contour []\n            [yes|no]\n            [<coordinate system> [<sky frame>]]\n            [clear]\n            [load <filename> <coordinate system> <sky frame> <color> <width>]\n            [save <filename> <coordinate system> <sky frame>]\n            [convert]\n            [loadlevels <filename>]\n            [savelevels <filename>]\n            [copy]\n            [paste <coordinate system> <sky frame> <color> <width>]\n            [color <color>]\n            [width <width>]\n            [smooth <smooth>]\n            [method block|smooth]\n            [nlevels <number of levels>]\n            [scale linear|log|squared|sqrt|histequ]\n            [mode minmax|<value>|zscale|zmax]\n            [limits <min> <max>]\n            [levels <value value value...>]\n        \n    Example:\n    $xpaget ds9 contour\n    $xpaget ds9 contour wcs fk5\n    $xpaget ds9 contour color\n    $xpaget ds9 contour width\n    $xpaget ds9 contour smooth\n    $xpaget ds9 contour method\n    $xpaget ds9 contour nlevels\n    $xpaget ds9 contour scale\n    $xpaget ds9 contour mode\n    $xpaget ds9 contour limits\n    $xpaget ds9 contour levels\n\n    $xpaset -p ds9 contour\n    $xpaset -p ds9 contour yes\n    $xpaset -p ds9 contour clear\n    $xpaset -p ds9 contour load ds9.con wcs fk5 yellow 2\n    $xpaset -p ds9 contour save ds9.con wcs fk5\n    $xpaset -p ds9 contour convert\n    $xpaset -p ds9 contour loadlevels ds9.lev\n    $xpaset -p ds9 contour savelevels ds9.lev\n    $xpaset -p ds9 contour copy\n    $xpaset -p ds9 contour paste wcs fk5 red 2\n    $xpaset -p ds9 contour color yellow\n    $xpaset -p ds9 contour width 2\n    $xpaset -p ds9 contour smooth 5\n    $xpaset -p ds9 contour method smooth\n    $xpaset -p ds9 contour nlevels 10\n    $xpaset -p ds9 contour scale sqrt\n    $xpaset -p ds9 contour mode zscale\n    $xpaset -p ds9 contour limits 1 100\n    $xpaset -p ds9 contour levels "{1 10 100 1000}"\n\n'
+S'Syntax:\nwcs [wcs|wcsa...wcsz]\n    [system wcs|wcsa...wcsz]\n    [sky fk4|fk5|icrs|galactic|ecliptic]\n    [skyformat degrees|sexagesimal]\n    [align yes|no]\n    [reset]\n    [replace file <filename>]\n    [append file <filename>]\n    [replace]\n    [append]\n\nExample:\n$xpaget ds9 wcs\n$xpaget ds9 wcs system\n$xpaget ds9 wcs sky\n$xpaget ds9 wcs skyformat\n$xpaget ds9 wcs align\n\n$xpaset -p ds9 wcs wcs\n$xpaset -p ds9 wcs system wcs\n$xpaset -p ds9 wcs wcsa\n$xpaset -p ds9 wcs sky fk5\n$xpaset -p ds9 wcs skyformat sexagesimal\n$xpaset -p ds9 wcs align yes\n$xpaset -p ds9 wcs reset\n$xpaset -p ds9 wcs replace file foo.wcs\n$xpaset -p ds9 wcs append file foo.wcs\n$cat foo.wcs | xpaset ds9 wcs replace\n$cat foo.wcs | xpaset ds9 wcs append\n$echo "OBJECT = \'foobar\'" | xpaset ds9 wcs append\n\n'
+p97
+sg7
+VControls the World Coordinate System for the current frame. If the wcssystem, skyframe, or skyformat is modified, the info panel, compass,grid, and alignment will be modified accordingly. Also, using thisaccess point, a new WCS specification can be loaded and used by thecurrent image regardless of the WCS that was contained in theimage file. WCS specification can be sent to DS9 as an ASCII file .Please see WCS for more information.
 p98
-ssVregions
+ssVscale
 p99
 (dp100
 g3
-VControls regions in the current frame.
+VControls the limits, color scale distribution, and use of DATASECkeyword 
 p101
 sg5
-S'    Controls regions in the current frame.\n\n    Syntax:\n    regions [<filename>]\n            [load <filename>]\n            [save <filename>]\n            [getinfo]\n            [move front]\n            [move back]\n            [select all]\n            [select none]\n            [select group <groupname>]\n            [delete all]\n            [delete select]\n\n            [format ds9|ciao|saotng|saoimage|pros|xy]\n            [system image|physical|wcs|wcsa...wcsz]\n            [sky fk4|fk5|icrs|galactic|ecliptic]\n            [skyformat degrees|sexagesimal]\n            [strip yes|no]\n            [wcs yes|no]\n            [shape <shape>]\n            [color white|black|red|green|blue|cyan|magenta|yellow]\n            [width <width>]\n            [delim [nl|<char>]]\n            [command <marker command>]\n\n            [composite]\n            [dissolve]\n\n            [template <filename>]\n            [savetemplate <filename>]\n\n            [groups]\n            [group <tag>]\n            [group <tag> color [black|white|red|green|blue|cyan|magenta|\n    yellow]]\n            [group <tag> copy]\n            [group <tag> delete]\n            [group <tag> cut]\n            [group <tag> font <font>]\n            [group <tag> move <int> <int>]\n            [group <tag> movefront]\n            [group <tag> moveback]\n            [group <tag> property <property> yes|no]\n            [group <tag> select]\n\n            [copy]\n            [cut]\n            [paste image|physical|wcs|wcsa...wcsz fk4|fk5|icrs|galactic|\n    ecliptic]\n            [undo]\n\n            [include|exclude|source|background|selected]\n            [-format ds9|ciao|saotng|saoimage|pros|xy]\n            [-system image|physical|wcs|wcsa...wcsz]\n            [-sky fk4|fk5|icrs|galactic|ecliptic]\n            [-skyformat degrees|sexagesimal]\n            [-delim [nl|<char>]]\n            [-prop select|edit|move|rotate|delete|fixed|include|source 1|0]\n            [-group <tag>]\n            [-strip yes|no]\n            [-wcs yes|no]\n\n     Example:\n    $xpaget ds9 regions\n    $xpaget ds9 regions selected\n    $xpaget ds9 regions -format ds9 -system wcs -sky fk5 -skyformat sexagesimal\n    -prop edit 1 -group foo\n\n    $xpaget ds9 regions format\n    $xpaget ds9 regions system\n    $xpaget ds9 regions sky\n    $xpaget ds9 regions skyformat\n    $xpaget ds9 regions strip\n    $xpaget ds9 regions wcs\n    $xpaget ds9 regions shape\n    $xpaget ds9 regions color\n    $xpaget ds9 regions width\n    $xpaget ds9 regions delim\n    $xpaget ds9 regions source\n    $xpaget ds9 regions background\n    $xpaget ds9 regions include\n    $xpaget ds9 regions exclude\n    $xpaget ds9 regions selected\n    $xpaget ds9 regions groups\n\n    $echo "image; circle 100 100 20" | xpaset ds9 regions\n    $echo "image; circle 100 100 20" | xpaset ds9 regions\n    $echo "fk5; circle 13:29:55 47:11:50 .5\'" | xpaset ds9 regions\n    $echo "physical; ellipse 100 100 20 40" | xpaset ds9 regions\n    $echo "box 100 100 20 40 25" | xpaset ds9 regions\n    $echo "image; line 100 100 200 400" | xpaset ds9 regions\n    $echo "physical; ruler 200 300 200 400" | xpaset ds9 regions\n    $echo "image; text 100 100 # text={Hello, World}" | xpaset ds9 regions\n    $echo "fk4; boxcircle point 13:29:55 47:11:50" | xpaset ds9 regions\n\n    $xpaset -p ds9 regions foo.reg\n    $xpaset -p ds9 regions load foo.reg\n    $xpaset -p ds9 regions save foo.reg\n    $xpaset -p ds9 regions getinfo\n    $xpaset -p ds9 regions move back\n    $xpaset -p ds9 regions move front\n    $xpaset -p ds9 regions select all\n    $xpaset -p ds9 regions select none\n    $xpaset -p ds9 regions select group foo\n    $xpaset -p ds9 regions delete all\n    $xpaset -p ds9 regions delete select\n    $xpaset -p ds9 regions format ds9\n    $xpaset -p ds9 regions system wcs\n    $xpaset -p ds9 regions sky fk5\n    $xpaset -p ds9 regions skyformat degrees\n    $xpaset -p ds9 regions delim nl\n    $xpaset -p ds9 regions strip yes\n    $xpaset -p ds9 regions wcs yes\n    $xpaset -p ds9 regions shape ellipse\n    $xpaset -p ds9 regions color red\n    $xpaset -p ds9 regions width 3\n    $xpaset -p ds9 regions command {circle 100 100 20}\n\n    $xpaset -p ds9 regions composite\n    $xpaset -p ds9 regions dissolve\n\n    $xpaset -p ds9 regions template foo.tpl\n    $xpaset -p ds9 regions savetemplate foo.tpl\n\n    $xpaset -p ds9 regions group foo color red\n    $xpaset -p ds9 regions group foo copy\n    $xpaset -p ds9 regions group foo delete\n    $xpaset -p ds9 regions group foo cut\n    $xpaset -p ds9 regions group foo font {times 14 bold}\n    $xpaset -p ds9 regions group foo move 100 100\n    $xpaset -p ds9 regions group foo movefront\n    $xpaset -p ds9 regions group foo moveback\n    $xpaset -p ds9 regions group foo property delete no\n    $xpaset -p ds9 regions group foo select\n\n    $xpaset -p ds9 regions copy\n    $xpaset -p ds9 regions cut\n    $xpaset -p ds9 regions paste wcs fk5\n    $xpaset -p ds9 regions undo\n\n'
+S'Syntax:\nscale [linear|log|pow|sqrt|squared|histequ]\n      [datasec yes|no]\n      [limits <minvalue> <maxvalue>]\n      [mode minmax|<value>|zscale|zmax]\n      [scope local|global]\n\nExample:\n$xpaget ds9 scale\n$xpaget ds9 scale datasec\n$xpaget ds9 scale limits\n$xpaget ds9 scale mode\n$xpaget ds9 scale scope\n\n$xpaset -p ds9 scale datasec yes\n$xpaset -p ds9 scale histequ\n$xpaset -p ds9 scale limits 1 100\n$xpaset -p ds9 scale mode zscale\n$xpaset -p ds9 scale mode 99.5\n$xpaset -p ds9 scale scope local\n'
 p102
-ssVsource
+sg7
+VControls the limits, color scale distribution, and use of DATASECkeyword .
 p103
-(dp104
+ssVraise
+p104
+(dp105
 g3
-VSource tcl code from a file.
-p105
-sg5
-S'    Source tcl code from a file.\n\n    Syntax:\n    source [filename]\n\n    Example:\n    $xpaset -p ds9 source foo.tcl\n\n'
+VRaise ds9 in the window stacking order
 p106
-ssVrgb
+sg5
+S'Syntax:\nraise\n\nExample:\n$xpaset -p ds9 raise\n'
 p107
-(dp108
-g3
-VCreate RGB frame and control RGB frame parameters.
+sg7
+VRaise ds9 in the window stacking order.
+p108
+ssVwidth
 p109
-sg5
-S'    Create RGB frame and control RGB frame parameters.\n\n    Syntax:\n    rgb  # empty\n         [red|green|blue]\n         [channel [red|green|blue]]\n         [view [red|green|blue] [yes|no]]\n         [system <coordinate system>]\n         [lock scale|bin|colorbar [yes|no]]\n\n    Example:\n    $xpaget ds9 rgb channel\n    $xpaget ds9 rgb lock bin\n    $xpaget ds9 rgb lock scale\n    $xpaget ds9 rgb lock colorbar\n    $xpaget ds9 rgb system\n    $xpaget ds9 rgb view red\n    $xpaget ds9 rgb view green\n    $xpaget ds9 rgb view blue\n\n    $xpaset -p ds9 rgb # create new rgb frame\n    $xpaset -p ds9 rgb red # set current channel to red\n    $xpaset -p ds9 rgb channel red # set current channel to red\n    $xpaset -p ds9 rgb view blue no # turn off blue channel\n    $xpaset -p ds9 rgb system wcs # set rgb coordinate system\n    $xpaset -p ds9 rgb lock scale yes # lock rgb channels for scaling\n    $xpaset -p ds9 rgb lock bin yes # lock rgb channels for binning\n    $xpaset -p ds9 rgb lock colorbar yes # lock rgb colorbar channels\n\n'
-p110
-ssVversion
+(dp110
+g3
+VSet the width of the image display window
 p111
-(dp112
-g3
-VReturns the current version of DS9.
+sg5
+S'Syntax:\nwidth [<value>]\n\nExample:\n$xpaget ds9 width\n$xpaset -p ds9 width 512\n'
+p112
+sg7
+VSet the width of the image display window.
 p113
-sg5
-S'    Returns the current version of DS9.\n\n    Syntax:\n    version\n\n    Example:\n    $xpaget ds9 version\n\n'
+ssVsmooth
 p114
-ssVexit
-p115
-(dp116
+(dp115
 g3
-VQuits DS9.
-p117
+VSmooth current image or set smooth parameters
+p116
 sg5
-S'    Quits DS9.\n\n    Syntax:\n    exit\n    quit\n\n    Example:\n    $xpaset -p ds9 exit\n\n'
+S'Syntax:\nsmooth []\n       [yes|no]\n       [function boxcar|tophat|gaussian]\n       [radius <int>]\n\nExample:\n$xpaget ds9 smooth\n$xpaget ds9 smooth function\n$xpaget ds9 smooth radius\n\n$xpaset -p ds9 smooth\n$xpaset -p ds9 smooth yes\n$xpaset -p ds9 smooth function tophat\n$xpaset -p ds9 smooth radius 4\n'
+p117
+sg7
+VSmooth current image or set smooth parameters.
 p118
-ssVpan
+ssVdss
 p119
 (dp120
 g3
-VControls the current image cursor location for the current frame.
+VSupport for Digital Sky Survey at SAO
 p121
 sg5
-S'    Controls the current image cursor location for the current frame.\n\n    Syntax:\n    pan [x y <coordinate system> [<sky frame>][<sky format>]]\n        [to x y <coordinate system> [sky frame>][<sky format>]\n\n    Example:\n    $xpaget ds9 pan # get current image coords\n    $xpaget ds9 pan wcs fk4 sexagesimal # get current wcs coords\n\n    $xpaset -p ds9 pan 200 200 image # pan relative\n    $xpaset -p ds9 pan to 400 400 physical # pan to physical coords\n    $xpaset -p ds9 pan to 13:29:55 47:11:50 wcs fk5 # pan to wcs coords\n\n'
+S'Syntax:\ndsssao [<object>]\n       [name <object>]\n       [coord <ra> <dec>] # in wcs fk5\n       [size <width> <height>] # in arcmin\n\nExample:\n$xpaget ds9 dsssao name\n$xpaget ds9 dsssao coord\n$xpaget ds9 dsssao size\n\n$xpaset -p ds9 dsssao m31\n$xpaset -p ds9 dsssao name m31\n$xpaset -p ds9 dsssao coord 00:42:44.404 +41:16:08.78\n$xpaset -p ds9 dsssao size 10 10\n'
 p122
-ssVprint
+sg7
+VSupport for Digital Sky Survey at SAO. The first three options willdownloadan image based on the name or specified fk5 coordinate. Theremaining options are used to configure downloads.
 p123
-(dp124
+ssVcontour
+p124
+(dp125
 g3
-VControls printing. Use
-p125
-sg5
-S"    Controls printing. Use print option to set printing options. Use print to\n    actually print.\n\n    Syntax:\n    print [destination printer|file]\n          [command <command>]\n          [filename <filename>]\n          [palette rgb|cmyk|gray]\n          [level 1|2]\n          [resolution 53|72|75|150|300|600]\n\n    Example:\n    $xpaget ds9 print destination\n    $xpaget ds9 print command\n    $xpaget ds9 print filename\n    $xpaget ds9 print palette\n    $xpaget ds9 print level\n    $xpaget ds9 print resolution\n\n    $xpaset -p ds9 print\n    $xpaset -p ds9 print destination file\n    $xpaset -p ds9 print command '{gv -}'\n    $xpaset -p ds9 print filename foo.ps\n    $xpaset -p ds9 print palette cmyk\n    $xpaset -p ds9 print level 2\n    $xpaset -p ds9 print resolution 75\n\n"
+VControls contours in thecurrent frame
 p126
-ssVimexam
+sg5
+S'Syntax:\ncontour []\n        [yes|no]\n        [<coordinate system> [<sky frame>]]\n        [clear]\n        [load <filename> <coordinate system> <sky frame> <color> <width>]\n        [save <filename> <coordinate system> <sky frame>]\n        [convert]\n        [loadlevels <filename>]\n        [savelevels <filename>]\n        [copy]\n        [paste <coordinate system> <sky frame> <color> <width>]\n        [color <color>]\n        [width <width>]\n        [smooth <smooth>]\n        [method block|smooth]\n        [nlevels <number of levels>]\n        [scale linear|log|squared|sqrt|histequ]\n        [mode minmax|<value>|zscale|zmax]\n        [limits <min> <max>]\n        [levels <value value value...>]\n    \nExample:\n$xpaget ds9 contour\n$xpaget ds9 contour wcs fk5\n$xpaget ds9 contour color\n$xpaget ds9 contour width\n$xpaget ds9 contour smooth\n$xpaget ds9 contour method\n$xpaget ds9 contour nlevels\n$xpaget ds9 contour scale\n$xpaget ds9 contour mode\n$xpaget ds9 contour limits\n$xpaget ds9 contour levels\n\n$xpaset -p ds9 contour\n$xpaset -p ds9 contour yes\n$xpaset -p ds9 contour clear\n$xpaset -p ds9 contour load ds9.con wcs fk5 yellow 2\n$xpaset -p ds9 contour save ds9.con wcs fk5\n$xpaset -p ds9 contour convert\n$xpaset -p ds9 contour loadlevels ds9.lev\n$xpaset -p ds9 contour savelevels ds9.lev\n$xpaset -p ds9 contour copy\n$xpaset -p ds9 contour paste wcs fk5 red 2\n$xpaset -p ds9 contour color yellow\n$xpaset -p ds9 contour width 2\n$xpaset -p ds9 contour smooth 5\n$xpaset -p ds9 contour method smooth\n$xpaset -p ds9 contour nlevels 10\n$xpaset -p ds9 contour scale sqrt\n$xpaset -p ds9 contour mode zscale\n$xpaset -p ds9 contour limits 1 100\n$xpaset -p ds9 contour levels "{1 10 100 1000}"\n'
 p127
-(dp128
-g3
-VInteractive examine function. A blinking cursor will indicate to the user to click on a point on an image. The specified information will be returned at that time.
+sg7
+VControls contours in thecurrent frame.
+p128
+ssVregions
 p129
-sg5
-S'    Interactive examine function. A blinking cursor will indicate to the user\n    to click on a point on an image. The specified information will be returned\n    at that time.\n\n    Syntax:\n    imexam [coordinate <coordinate system> [<sky frame>] [<sky format>]]\n           [data [width][height]]\n\n    Example:\n    $xpaget ds9 imexam coordinate image\n    $xpaget ds9 imexam coordinate wcs fk5 degrees\n    $xpaget ds9 imexam coordinate wcs galactic sexagesimal\n    $xpaget ds9 imexam coordinate fk5\n    $xpaget ds9 imexam data # return data value\n    $xpaget ds9 imexam data 3 3 # return all data in 3x3 box about selected\n    point\n\n'
-p130
-ssVpixeltable
+(dp130
+g3
+VControls regions in the current frame
 p131
-(dp132
-g3
-VDisplay/Hide the pixel table.
+sg5
+S'Syntax:\nregions [<filename>]\n        [load <filename>]\n        [save <filename>]\n        [show yes|no]\n        [showtext yes|no]\n        [getinfo]\n        [move front]\n        [move back]\n        [select all]\n        [select none]\n        [select group <groupname>]\n        [delete all]\n        [delete select]\n\n        [format ds9|ciao|saotng|saoimage|pros|xy]\n        [system image|physical|wcs|wcsa...wcsz]\n        [sky fk4|fk5|icrs|galactic|ecliptic]\n        [skyformat degrees|sexagesimal]\n        [strip yes|no]\n        [wcs yes|no]\n        [shape <shape>]\n        [color white|black|red|green|blue|cyan|magenta|yellow]\n        [width <width>]\n        [delim [nl|<char>]]\n        [command <marker command>]\n\n        [composite]\n        [dissolve]\n\n        [template <filename>]\n        [savetemplate <filename>]\n\n        [groups]\n        [group <tag>]\n        [group <tag> color [black|white|red|green|blue|cyan|magenta|yellow]]\n        [group <tag> copy]\n        [group <tag> delete]\n        [group <tag> cut]\n        [group <tag> font <font>]\n        [group <tag> move <int> <int>]\n        [group <tag> movefront]\n        [group <tag> moveback]\n        [group <tag> property <property> yes|no]\n        [group <tag> select]\n\n        [copy]\n        [cut]\n        [paste image|physical|wcs|wcsa...wcsz fk4|fk5|icrs|galactic|ecliptic]\n        [undo]\n\n        [include|exclude|source|background|selected]\n        [-format ds9|ciao|saotng|saoimage|pros|xy]\n        [-system image|physical|wcs|wcsa...wcsz]\n        [-sky fk4|fk5|icrs|galactic|ecliptic]\n        [-skyformat degrees|sexagesimal]\n        [-delim [nl|<char>]]\n        [-prop select|edit|move|rotate|delete|fixed|include|source 1|0]\n        [-group <tag>]\n        [-strip yes|no]\n        [-wcs yes|no]\n\n Example:\n$xpaget ds9 regions\n$xpaget ds9 regions show\n$xpaget ds9 regions showtext\n$xpaget ds9 regions selected\n$xpaget ds9 regions -format ds9 -system wcs -sky fk5 -skyformat sexagesimal\n-prop edit 1 -group foo\n\n$xpaget ds9 regions format\n$xpaget ds9 regions system\n$xpaget ds9 regions sky\n$xpaget ds9 regions skyformat\n$xpaget ds9 regions strip\n$xpaget ds9 regions wcs\n$xpaget ds9 regions shape\n$xpaget ds9 regions color\n$xpaget ds9 regions width\n$xpaget ds9 regions delim\n$xpaget ds9 regions source\n$xpaget ds9 regions background\n$xpaget ds9 regions include\n$xpaget ds9 regions exclude\n$xpaget ds9 regions selected\n$xpaget ds9 regions groups\n\n$echo "image; circle 100 100 20" | xpaset ds9 regions\n$echo "image; circle 100 100 20" | xpaset ds9 regions\n$echo "fk5; circle 13:29:55 47:11:50 .5\'" | xpaset ds9 regions\n$echo "physical; ellipse 100 100 20 40" | xpaset ds9 regions\n$echo "box 100 100 20 40 25" | xpaset ds9 regions\n$echo "image; line 100 100 200 400" | xpaset ds9 regions\n$echo "physical; ruler 200 300 200 400" | xpaset ds9 regions\n$echo "image; text 100 100 # text={Hello, World}" | xpaset ds9 regions\n$echo "fk4; boxcircle point 13:29:55 47:11:50" | xpaset ds9 regions\n\n$xpaset -p ds9 regions foo.reg\n$xpaset -p ds9 regions load foo.reg\n$xpaset -p ds9 regions save foo.reg\n$xpaset -p ds9 regions show yes\n$xpaset -p ds9 regions showtext no\n$xpaset -p ds9 regions getinfo\n$xpaset -p ds9 regions move back\n$xpaset -p ds9 regions move front\n$xpaset -p ds9 regions select all\n$xpaset -p ds9 regions select none\n$xpaset -p ds9 regions select group foo\n$xpaset -p ds9 regions delete all\n$xpaset -p ds9 regions delete select\n$xpaset -p ds9 regions format ds9\n$xpaset -p ds9 regions system wcs\n$xpaset -p ds9 regions sky fk5\n$xpaset -p ds9 regions skyformat degrees\n$xpaset -p ds9 regions delim nl\n$xpaset -p ds9 regions strip yes\n$xpaset -p ds9 regions wcs yes\n$xpaset -p ds9 regions shape ellipse\n$xpaset -p ds9 regions color red\n$xpaset -p ds9 regions width 3\n$xpaset -p ds9 regions command {circle 100 100 20}\n\n$xpaset -p ds9 regions composite\n$xpaset -p ds9 regions dissolve\n\n$xpaset -p ds9 regions template foo.tpl\n$xpaset -p ds9 regions savetemplate foo.tpl\n\n$xpaset -p ds9 regions group foo color red\n$xpaset -p ds9 regions group foo copy\n$xpaset -p ds9 regions group foo delete\n$xpaset -p ds9 regions group foo cut\n$xpaset -p ds9 regions group foo font {times 14 bold}\n$xpaset -p ds9 regions group foo move 100 100\n$xpaset -p ds9 regions group foo movefront\n$xpaset -p ds9 regions group foo moveback\n$xpaset -p ds9 regions group foo property delete no\n$xpaset -p ds9 regions group foo select\n\n$xpaset -p ds9 regions copy\n$xpaset -p ds9 regions cut\n$xpaset -p ds9 regions paste wcs fk5\n$xpaset -p ds9 regions undo\n'
+p132
+sg7
+VControls regions in the current frame.
 p133
-sg5
-S'    Display/Hide the pixel table.\n\n    Syntax:\n    pixeltable [yes|no]\n\n    Example:\n    $xpaget ds9 pixeltable\n\n    $xpaset -p ds9 pixeltable\n    $xpaset -p ds9 pixeltable yes\n\n'
+ssVsource
 p134
-ssVmatch
-p135
-(dp136
+(dp135
 g3
-VMatch all other frames to the current frame.
-p137
+VSource tcl code from a file
+p136
 sg5
-S'    Match all other frames to the current frame.\n\n    Syntax:\n    match [frames wcs|physical|image]\n          [colorbars]\n          [scales]\n\n    Example:\n    $xpaset -p ds9 match frames wcs\n    $xpaset -p ds9 match colorbars\n    $xpaset -p ds9 match scales\n\n'
+S'Syntax:\nsource [filename]\n\nExample:\n$xpaset -p ds9 source foo.tcl\n'
+p137
+sg7
+VSource tcl code from a file.
 p138
-ssV2mass
+ssVrgb
 p139
 (dp140
 g3
-VSupport for 2MASS Digital Sky Survey. The first three options will download an image based on the name or specified
+VCreate RGB frame and control RGB frame parameters
 p141
 sg5
-S'    Support for 2MASS Digital Sky Survey. The first three options will download\n    an image based on the name or specified fk5 coordinate. The remaining\n    options are used to configure downloads.\n\n    Syntax:\n    2mass [<object>]\n           [name <object>]\n           [coord <ra> <dec>] # in wcs fk5\n           [survey j|h|k]\n           [size <radius>] # in arcsec\n\n    Example:\n    $xpaget ds9 2mass name\n    $xpaget ds9 2mass coord\n    $xpaget ds9 2mass survey\n    $xpaget ds9 2mass size\n\n    $xpaset -p ds9 2mass m31\n    $xpaset -p ds9 2mass name m31\n    $xpaset -p ds9 2mass coord 00:42:44.404 +41:16:08.78\n    $xpaset -p ds9 2mass survey j\n    $xpaset -p ds9 2mass size 600\n\n'
+S'Syntax:\nrgb  # empty\n     [red|green|blue]\n     [channel [red|green|blue]]\n     [view [red|green|blue] [yes|no]]\n     [system <coordinate system>]\n     [lock scale|bin|colorbar [yes|no]]\n\nExample:\n$xpaget ds9 rgb channel\n$xpaget ds9 rgb lock bin\n$xpaget ds9 rgb lock scale\n$xpaget ds9 rgb lock colorbar\n$xpaget ds9 rgb system\n$xpaget ds9 rgb view red\n$xpaget ds9 rgb view green\n$xpaget ds9 rgb view blue\n\n$xpaset -p ds9 rgb # create new rgb frame\n$xpaset -p ds9 rgb red # set current channel to red\n$xpaset -p ds9 rgb channel red # set current channel to red\n$xpaset -p ds9 rgb view blue no # turn off blue channel\n$xpaset -p ds9 rgb system wcs # set rgb coordinate system\n$xpaset -p ds9 rgb lock scale yes # lock rgb channels for scaling\n$xpaset -p ds9 rgb lock bin yes # lock rgb channels for binning\n$xpaset -p ds9 rgb lock colorbar yes # lock rgb colorbar channels\n'
 p142
-ssVbin
+sg7
+VCreate RGB frame and control RGB frame parameters.
 p143
-(dp144
+ssVversion
+p144
+(dp145
 g3
-VControls binning factor, binning buffer size, and  binning function for binning FITS bin tables. The access point
-p145
-sg5
-S"    Controls binning factor, binning buffer size, and  binning function for\n    binning FITS bin tables. The access point blocking is provided for backward\n    compatibility.\n\n    Syntax:\n    bin [about <x> <y>]\n        [buffersize <value>]\n        [cols <x> <y>]\n        [factor <value> [<vector>]]\n        [depth <value>]\n        [filter <string>]\n        [function average|sum]\n        [to fit]\n\n    Example:\n    $xpaget ds9 bin about\n    $xpaget ds9 bin buffersize\n    $xpaget ds9 bin cols\n    $xpaget ds9 bin factor\n    $xpaget ds9 bin depth\n    $xpaget ds9 bin filter\n    $xpaget ds9 bin function\n    $xpaget ds9 bin smooth\n    $xpaget ds9 bin smooth function\n    $xpaget ds9 bin smooth radius\n\n    $xpaset -p ds9 bin about 4096 4096\n    $xpaset -p ds9 bin buffersize 512\n    $xpaset -p ds9 bin cols detx dety\n    $xpaset -p ds9 bin factor 4\n    $xpaset -p ds9 bin factor 4 2\n    $xpaset -p ds9 bin depth 10\n    $xpaset -p ds9 bin filter '{pha > 5}'\n    $xpaset -p ds9 bin function sum\n    $xpaset -p ds9 bin to fit\n\n"
+VReturns the current version of DS9
 p146
-ssViis
+sg5
+S'Syntax:\nversion\n\nExample:\n$xpaget ds9 version\n'
 p147
-(dp148
-g3
-VSet/Get IIS Filename.
+sg7
+VReturns the current version of DS9.
+p148
+ssVexit
 p149
-sg5
-S'    Set/Get IIS Filename.\n\n    Syntax:\n    iis [filename <filename> [#]]\n\n    Example:\n    $xpaget ds9 iis filename\n    $xpaget ds9 iis filename 4\n\n    $xpaset -p ds9 iis filename foo.fits\n    $xpaset -p ds9 iis filename bar.fits 4\n\n'
-p150
-ssVweb
+(dp150
+g3
+VQuits DS9
 p151
-(dp152
-g3
-VDisplay specified URL in the web display.
+sg5
+S'\nSyntax:\nexit\nquit\n\nExample:\n$xpaset -p ds9 exit\n'
+p152
+sg7
+VQuits DS9.
 p153
-sg5
-S'    Display specified URL in the web display.\n\n    Syntax:\n    web <url>\n\n    Example:\n    $xpaget ds9 web\n    $xpaset -p ds9 web <url>\n\n'
+ssVpan
 p154
-ssVskyview
-p155
-(dp156
+(dp155
 g3
-VSupport for SkyView image server at HEASARC. The first three options will download an image based on the name or specified
-p157
+VControls the current image cursor location for the current frame
+p156
 sg5
-S'    Support for SkyView image server at HEASARC. The first three options will\n    download an image based on the name or specified fk5 coordinate. The\n    remaining options are used to configure downloads.\n\n\n    Syntax:\n    skyview [<object>]\n            [name <object>]\n            [coord <ra> <dec>] # in wcs fk5\n            [survey sdssi|sdssr|sdssg|sdssu|sdssg]\n            [size <width> <height>] # in pixels\n\n    Example:\n    $xpaset -p ds9 skyview m31\n    $xpaset -p ds9 skyview name m31\n    $xpaset -p ds9 skyview coord 00:42:44.404 +41:16:08.78\n    $xpaset -p ds9 skyview survey sdssi\n    $xpaset -p ds9 skyview size 300 300\n\n'
+S'Syntax:\npan [x y <coordinate system> [<sky frame>][<sky format>]]\n    [to x y <coordinate system> [sky frame>][<sky format>]\n\nExample:\n$xpaget ds9 pan # get current image coords\n$xpaget ds9 pan wcs fk4 sexagesimal # get current wcs coords\n\n$xpaset -p ds9 pan 200 200 image # pan relative\n$xpaset -p ds9 pan to 400 400 physical # pan to physical coords\n$xpaset -p ds9 pan to 13:29:55 47:11:50 wcs fk5 # pan to wcs coords\n'
+p157
+sg7
+VControls the current image cursor location for the current frame.
 p158
-ssVvo
+ssVprint
 p159
 (dp160
 g3
-VInvoke an connection to a Virtual Observatory site.
+VControls printing
 p161
 sg5
-S'    Invoke an connection to a Virtual Observatory site.\n\n    Syntax:\n    vo <url>\n\n    Example:\n    $xpaget ds9 vo\n    $xpaset -p ds9 vo chandra-ed.havard.edu\n\n'
+S"Syntax:\nprint [destination printer|file]\n      [command <command>]\n      [filename <filename>]\n      [palette rgb|cmyk|gray]\n      [level 1|2]\n      [resolution 53|72|75|150|300|600]\n\nExample:\n$xpaget ds9 print destination\n$xpaget ds9 print command\n$xpaget ds9 print filename\n$xpaget ds9 print palette\n$xpaget ds9 print level\n$xpaget ds9 print resolution\n\n$xpaset -p ds9 print\n$xpaset -p ds9 print destination file\n$xpaset -p ds9 print command '{gv -}'\n$xpaset -p ds9 print filename foo.ps\n$xpaset -p ds9 print palette cmyk\n$xpaset -p ds9 print level 2\n$xpaset -p ds9 print resolution 75\n"
 p162
-ssVlower
+sg7
+VControls printing. Use print option to set printing options.Use print to actually print.
 p163
-(dp164
+ssVimexam
+p164
+(dp165
 g3
-VLower ds9 in the window stacking order.
-p165
-sg5
-S'    Lower ds9 in the window stacking order.\n\n    Syntax:\n    lower\n\n    Example:\n    $xpaset -p ds9 lower\n    Controls mask parameters.\n\n    Syntax:\n    mask [yes|no]\n         [clear]\n         [color white|black|red|green|blue|cyan|magenta|yellow]\n\n    Example:\n    $xpaget mask\n    $xpaget mask color\n\n    $xpaset mask yes\n    $xpaset mask clear\n    $xpaset mask color red\n\n'
+VInteractive examine function
 p166
-ssVupdate
+sg5
+S'Syntax:\nimexam [coordinate <coordinate system> [<sky frame>] [<sky format>]]\n       [data [width][height]]\n\nExample:\n$xpaget ds9 imexam coordinate image\n$xpaget ds9 imexam coordinate wcs fk5 degrees\n$xpaget ds9 imexam coordinate wcs galactic sexagesimal\n$xpaget ds9 imexam coordinate fk5\n$xpaget ds9 imexam data # return data value\n$xpaget ds9 imexam data 3 3 # return all data in 3x3 box about selected point\n'
 p167
-(dp168
-g3
-VUpdates the current frame or region of frame. In the second form, the first argument is the number of the fits HDU (starting with 1) and the remaining args are a bounding box in IMAGE coordinates. By default, the screen is updated the next available idle cycle. However, you may force an immediate update by specifying the
+sg7
+VInteractive examine function. A blinking cursor will indicate to theuser to click on a point on an image. The specified information will bereturned at that time.
+p168
+ssVpixeltable
 p169
-sg5
-S'    Updates the current frame or region of frame. In the second form, the first\n    argument is the number of the fits HDU (starting with 1) and the remaining\n    args are a bounding box in IMAGE coordinates. By default, the screen is\n    updated the next available idle cycle. However, you may force an immediate\n    update by specifying the NOW option.\n\n    Syntax:\n    update []\n           [# x1 y1 x2 y2]\n           [now]\n           [now # x1 y1 x2 y2]\n           [on]\n           [off]\n\n    Example:\n    $xpaset -p ds9 update\n    $xpaset -p ds9 update 1 100 100 300 400\n    $xpaset -p ds9 update now\n    $xpaset -p ds9 update now 1 100 100 300 400\n    $xpaset -p ds9 update off # delay refreash of the screen while loading\n    files\n    $xpaset -p ds9 update on # be sure to turn it on when you are finished\n    loading\n\n'
-p170
-ssVsavempeg
+(dp170
+g3
+VDisplay/Hide the pixel table
 p171
-(dp172
-g3
-VSave all active frames as a mpeg movie.
+sg5
+S'Syntax:\npixeltable [yes|no]\n\nExample:\n$xpaget ds9 pixeltable\n\n$xpaset -p ds9 pixeltable\n$xpaset -p ds9 pixeltable yes\n'
+p172
+sg7
+VDisplay/Hide the pixel table.
 p173
-sg5
-S'    Save all active frames as a mpeg movie.\n\n    Syntax:\n    savempeg [<filename>]\n\n    Example:\n    $xpaset -p ds9 savempeg ds9.mpg\n\n'
+ssVmatch
 p174
-ssVtile
-p175
-(dp176
+(dp175
 g3
-VControls the tile display mode.
-p177
+VMatch all other frames to the current frame
+p176
 sg5
-S'    Controls the tile display mode.\n\n    Syntax:\n    tile []\n         [yes|no]\n         [mode grid|column|row]\n         [grid]\n         [grid mode [automatic|manual]]\n         [grid layout <row> <col>]\n         [grid gap <pixels>]\n         [row]\n         [column]\n\n    Example:\n    $xpaget ds9 tile\n    $xpaget ds9 tile mode\n    $xpaget ds9 tile grid mode\n    $xpaget ds9 tile grid layout\n    $xpaget ds9 tile grid gap\n\n    $xpaset -p ds9 tile\n    $xpaset -p ds9 tile yes\n    $xpaset -p ds9 tile mode row\n    $xpaset -p ds9 tile grid\n    $xpaset -p ds9 tile grid mode manual\n    $xpaset -p ds9 tile grid layout 5 5\n    $xpaset -p ds9 tile grid gap 10\n    $xpaset -p ds9 tile row\n    $xpaset -p ds9 tile column\n\n'
+S'Syntax:\nmatch [frames wcs|physical|image]\n      [colorbars]\n      [scales]\n\nExample:\n$xpaset -p ds9 match frames wcs\n$xpaset -p ds9 match colorbars\n$xpaset -p ds9 match scales\n'
+p177
+sg7
+VMatch all other frames to the current frame.
 p178
-ssVcatalog
+ssV2mass
 p179
 (dp180
 g3
-VSupport for catalogs. The first three commands will create a new catalog search. All other commands operated on the last search created, unless indicated otherwise.
+VSupport for 2MASS Digital Sky Survey
 p181
 sg5
-S'    Support for catalogs. The first three commands will create a new catalog\n    search. All other commands operated on the last search created, unless\n    indicated otherwise.\n\n    Syntax:\n    catalog [sdss|sao|hst|gsc|tycho|ac|ua2|ub1|ucac2|2mass|denis|rosat|rosf|\n    first]\n            [cds sao|hst|gsc|tycho|ac|ua2|ub1|ucac2|2mass|denis|rosat|rosf|\n    first]\n            [cds <catalogid>]\n            [load <filename>]\n            [load csv <filename>]\n\n            [<catname>] [name <object>]\n            [<catname>] [coordinate <ra> <dec> <coordinate system>]\n            [<catname>] [size <width> <height> degrees|arcmin|arcsec]\n\n            [<catname>] [save <filename>]\n            [<catname>] [header]\n            [<catname>] [filter <string>]\n            [<catname>] [filter load <filename>]\n            [<catname>] [clear]\n            [<catname>] [retrieve]\n            [<catname>] [cancel]\n            [<catname>] [print]\n            [<catname>] [close]\n\n            [<catname>] [server cds|sao|cadc|adac|iucaa|bejing|cambridge|ukirt]\n            [<catname>] [symbol shape {circle point}|{box point}|{diamond\n    point}|\n                        {cross point}|{x point}|{arrow point}|{boxcircle point}\n    |\n                        circle|ellipse|box|text]\n            [<catname>] [symbol [#] condition|shape|color|text|size|\n                        size2|units|angle <value>]\n            [<catname>] [symbol add| [#] remove]\n            [<catname>] [symbol save|load <filename>]\n            [<catname>] [sort <columnname> incr|decr]\n            [<catname>] [maxrows <number>]\n            [<catname>] [allrows]\n            [<catname>] [allcols]\n            [<catname>] [show|hide]\n            [<catname>] [ra <columnname>]\n            [<catname>] [dec <columnname>]\n\n    Example:\n    $xpaget ds9 catalog\n    $xpaget ds9 catalog header\n    $xpaget ds9 catalog cat2mass header\n\n    $xpaset -p ds9 catalog sdss\n    $xpaset -p ds9 catalog 2mass\n    $xpaset -p ds9 catalog cds 2mass\n    $xpaset -p ds9 catalog cds "I/252"\n    $xpaset -p ds9 catalog load foo.cat\n    $xpaset -p ds9 catalog cat2mass symbol color red\n    $xpaset -p ds9 catalog name m51\n    $xpaset -p ds9 catalog coordinate 202.48 47.21 fk5\n    $xpaset -p ds9 catalog size 22 22 arcmin\n    $xpaset -p ds9 catalog save bar.cat\n    $xpaset -p ds9 catalog filter "\\$Jmag>10"\n    $xpaset -p ds9 catalog filter load foo.flt\n    $xpaset -p ds9 catalog clear\n    $xpaset -p ds9 catalog retrieve\n    $xpaset -p ds9 catalog cancel\n    $xpaset -p ds9 catalog print\n    $xpaset -p ds9 catalog close\n    $xpaset -p ds9 catalog server sao\n    $xpaset -p ds9 catalog symbol condition "\\$Jmag>15"\n    $xpaset -p ds9 catalog symbol 2 shape "{boxcircle point}"\n    $xpaset -p ds9 catalog symbol color red\n    $xpaset -p ds9 catalog symbol add\n    $xpaset -p ds9 catalog symbol 2 remove\n    $xpaset -p ds9 catalog symbol load foo.sym\n    $xpaset -p ds9 catalog symbol save bar.sym\n    $xpaset -p ds9 catalog sort "Jmag" incr\n    $xpaset -p ds9 catalog maxrows 2000\n    $xpaset -p ds9 catalog allrows\n    $xpaset -p ds9 catalog allcols\n    $xpaset -p ds9 catalog show\n    $xpaset -p ds9 catalog hide\n    $xpaset -p ds9 catalog ra RA\n    $xpaset -p ds9 catalog dec DEC\n\n'
+S'\nSyntax:\n2mass [<object>]\n       [name <object>]\n       [coord <ra> <dec>] # in wcs fk5\n       [survey j|h|k]\n       [size <radius>] # in arcsec\n\nExample:\n$xpaget ds9 2mass name\n$xpaget ds9 2mass coord\n$xpaget ds9 2mass survey\n$xpaget ds9 2mass size\n\n$xpaset -p ds9 2mass m31\n$xpaset -p ds9 2mass name m31\n$xpaset -p ds9 2mass coord 00:42:44.404 +41:16:08.78\n$xpaset -p ds9 2mass survey j\n$xpaset -p ds9 2mass size 600\n'
 p182
-ssVrotate
+sg7
+VSupport for 2MASS Digital Sky Survey. The first three options willdownloadan image based on the name or specified fk5 coordinate. Theremaining options are used to configure downloads.
 p183
-(dp184
+ssVbin
+p184
+(dp185
 g3
-VControls the rotation angle (in degrees) of the current frame.
-p185
-sg5
-S'    Controls the rotation angle (in degrees) of the current frame.\n\n    Syntax:\n    rotate [<value>]\n           [to <value>]\n\n    Example:\n    $xpaget ds9 rotate\n\n    $xpaset -p ds9 rotate 45\n    $xpaset -p ds9 rotate to 30\n\n'
+VControls binning factor,binning buffer size, and binning function forbinning FITS bin tables
 p186
-ssVgrid
+sg5
+S"Syntax:\nbin [about <x> <y>]\n    [buffersize <value>]\n    [cols <x> <y>]\n    [factor <value> [<vector>]]\n    [depth <value>]\n    [filter <string>]\n    [function average|sum]\n    [to fit]\n\nExample:\n$xpaget ds9 bin about\n$xpaget ds9 bin buffersize\n$xpaget ds9 bin cols\n$xpaget ds9 bin factor\n$xpaget ds9 bin depth\n$xpaget ds9 bin filter\n$xpaget ds9 bin function\n$xpaget ds9 bin smooth\n$xpaget ds9 bin smooth function\n$xpaget ds9 bin smooth radius\n\n$xpaset -p ds9 bin about 4096 4096\n$xpaset -p ds9 bin buffersize 512\n$xpaset -p ds9 bin cols detx dety\n$xpaset -p ds9 bin factor 4\n$xpaset -p ds9 bin factor 4 2\n$xpaset -p ds9 bin depth 10\n$xpaset -p ds9 bin filter '{pha > 5}'\n$xpaset -p ds9 bin function sum\n$xpaset -p ds9 bin to fit\n"
 p187
-(dp188
-g3
-g45
-sg5
-S'    Controls coordinate grid.\n\n    Syntax:\n    grid []\n         [yes|no]\n         [load <filename>]\n         [save <filename>]\n         [system <coordinate system>]\n         [sky <sky frame>]\n         [skyformat <skyformat>]\n         [type analysis|publication]\n         [type axes interior|exterior]\n         [type numerics interior|exterior]\n         [view grid|axes|title|border|vertical yes|no]\n         [view axes numbers|tickmarks|label yes|no]\n\n    Example:\n    $xpaget ds9 grid\n    $xpaget ds9 grid system\n    $xpaget ds9 grid sky\n    $xpaget ds9 grid skyformat\n    $xpaget ds9 grid type\n    $xpaget ds9 grid type axes\n    $xpaget ds9 grid type numerics\n    $xpaget ds9 grid view grid\n    $xpaget ds9 grid view axes\n    $xpaget ds9 grid view axes numbers\n    $xpaget ds9 grid view axes tickmarks\n    $xpaget ds9 grid view axes label\n    $xpaget ds9 grid view title\n    $xpaget ds9 grid view border\n    $xpaget ds9 grid view vertical\n\n    $xpaset -p ds9 grid\n    $xpaset -p ds9 grid yes\n    $xpaset -p ds9 grid load foo.grd\n    $xpaset -p ds9 grid save foo.grd\n    $xpaset -p ds9 grid system wcs\n    $xpaset -p ds9 grid sky fk5\n    $xpaset -p ds9 grid skyformat degrees\n    $xpaset -p ds9 grid type analysis\n    $xpaset -p ds9 grid type axes interior\n    $xpaset -p ds9 grid type numerics interior\n    $xpaset -p ds9 grid view grid yes\n    $xpaset -p ds9 grid view axes yes\n    $xpaset -p ds9 grid view axes numbers yes\n    $xpaset -p ds9 grid view axes tickmarks yes\n    $xpaset -p ds9 grid view axes label yes\n    $xpaset -p ds9 grid view title yes\n    $xpaset -p ds9 grid view border yes\n    $xpaset -p ds9 grid view vertical no\n\n'
+sg7
+VControls binning factor,binning buffer size, and binning function forbinning FITS bin tables. The access point blocking isprovided for backward compatibility.
+p188
+ssViis
 p189
-ssVzoom
-p190
-(dp191
+(dp190
 g3
-VControls the current zoom value for the current frame.
-p192
+VSet/Get IIS Filename
+p191
 sg5
-S'    Controls the current zoom value for the current frame.\n\n    Syntax:\n    zoom [<value>]\n         [<value> <value>]\n         [to <value>]\n         [to <value> <value>]\n         [to fit]\n\n    Example:\n    $xpaget ds9 zoom\n\n    $xpaset -p ds9 zoom 2\n    $xpaset -p ds9 zoom 2 4\n    $xpaset -p ds9 zoom to 4\n    $xpaset -p ds9 zoom to 2 4\n    $xpaset -p ds9 zoom to fit\n\n'
+S'Syntax:\niis [filename <filename> [#]]\n\nExample:\n$xpaget ds9 iis filename\n$xpaget ds9 iis filename 4\n\n$xpaset -p ds9 iis filename foo.fits\n$xpaset -p ds9 iis filename bar.fits 4\n'
+p192
+sg7
+VSet/Get IIS Filename.
 p193
-ssVdatacube
+ssVweb
 p194
 (dp195
 g3
-VControls FITS datacube.
+VDisplay specified URL inthe web display
 p196
 sg5
-S'    Controls FITS datacube.\n\n    Syntax:\n    datacube [play|stop|next|prev|first|last]\n             [#]\n             [interval #]\n\n    Example:\n    $xpaget ds9 datacube\n    $xpaget ds9 datacube interval\n\n    $xpaset -p ds9 datacube play\n    $xpaset -p ds9 datacube last\n    $xpaset -p ds9 datacube 3\n    $xpaset -p ds9 datacube interval 2\n\n'
+S'Syntax:\nweb <url>\n\nExample:\n$xpaget ds9 web\n$xpaset -p ds9 web <url>\n'
 p197
-ssVfits
+sg7
+VDisplay specified URL inthe web display.
 p198
-(dp199
+ssVskyview
+p199
+(dp200
 g3
-VLoad a FITS image from stdin into the current frame. Options can include the FITS extension or binning instructions.
-p200
-sg5
-S'    Load a FITS image from stdin into the current frame. Options can include\n    the FITS extension or binning instructions. xpaget returns the FITS image\n    in the current frame. If new is specified, a new frame is created before\n    loading.\n\n    Syntax:\n    fits [size|width|height|depth|bitpix]\n         [size [image|physical|wcs|wcsa...wcsz] [degrees|arcmin|arcsecs]]\n         [type]\n         [header [#] [keyword <string>]]\n         [image|table|resample] [gz]\n         [new|mask][<options>]\n         [new|mask][medatacube <options>]\n         [new|mask][mosaicimage [iraf|wcs|wcsa...wcsz|wfpc2] <options>]\n         [new|mask][mosaic [iraf|wcs|wcsa...wcsz] <options>]\n         [new][rgbcube <options>]\n         [new][rgbimage <options>]\n         [save resample gz <filename>]\n\n    Example:\n    $xpaget ds9 fits > foo.fits\n    $xpaget ds9 fits size\n    $xpaget ds9 fits width\n    $xpaget ds9 fits height\n    $xpaget ds9 fits depth\n    $xpaget ds9 fits bitpix\n    $xpaget ds9 fits size wcs arcmin\n    $xpaget ds9 fits type\n    $xpaget ds9 fits header # primary\n    $xpaget ds9 fits header 2 # hdu 2\n    $xpaget ds9 fits header -2 # hdu 2 with inherit\n    $xpaget ds9 fits header keyword "\'BITPIX\'"\n    $xpaget ds9 fits header 1 keyword "\'BITPIX\'"\n    $xpaget ds9 fits image > foo.fits\n    $xpaget ds9 fits image gz > foo.fits.gz\n    $xpaget ds9 fits table > bar.fits\n    $xpaget ds9 fits table gz > bar.fits.gz\n    $xpaget ds9 fits resample > bar.fits\n    $xpaget ds9 fits resample gz > bar.fits.gz\n\n    $cat foo.fits | xpaset ds9 fits\n    $cat abc.fits | xpaset ds9 fits [2]\n    $cat bar.fits | xpaset ds9 fits new [bin=detx,dety]\n    $cat foo.fits | xpaset ds9 fits medatacube\n    $cat bar.fits | xpaset ds9 fits mosaicimage iraf\n    $cat bar.fits | xpaset ds9 fits mosaicimage wcs\n    $cat bar.fits | xpaset ds9 fits mosaicimage wcsa\n    $cat hst.fits | xpaset ds9 fits mosaicimage wfpc2\n    $cat bar.fits | xpaset ds9 fits mosaic iraf\n    $cat bar.fits | xpaset ds9 fits mosaic wcs\n    $cat rgb.fits | xpaset ds9 fits rgbcube\n    $cat rgb.fits | xpaset ds9 fits rgbimage\n\n'
+VSupport for SkyView image server at HEASARC
 p201
-ssVcd
+sg5
+S'Syntax:\nskyview [<object>]\n        [name <object>]\n        [coord <ra> <dec>] # in wcs fk5\n        [survey sdssi|sdssr|sdssg|sdssu|sdssg]\n        [size <width> <height>] # in pixels\n\nExample:\n$xpaset -p ds9 skyview m31\n$xpaset -p ds9 skyview name m31\n$xpaset -p ds9 skyview coord 00:42:44.404 +41:16:08.78\n$xpaset -p ds9 skyview survey sdssi\n$xpaset -p ds9 skyview size 300 300\n'
 p202
-(dp203
-g3
-VSets/Returns the current working directory.
+sg7
+VSupport for SkyView image server at HEASARC. The first three optionswilldownloadan image based on the name or specified fk5 coordinate. Theremaining options are used to configure downloads.
+p203
+ssVvo
 p204
-sg5
-S'    Sets/Returns the current working directory.\n\n    Syntax:\n    cd [<directory>]\n\n    Example:\n    $xpaget ds9 cd\n    $xpaset -p ds9 cd /home/mrbill\n\n'
-p205
-ssVdata
+(dp205
+g3
+VInvoke an connection to a Virtual Observatory site
 p206
-(dp207
-g3
-VReturn an array of data values given a lower left corner and a width and height in specified coordinate system. The last argument indicates if the coordinates are listed or just the data values.
+sg5
+S'Syntax:\nvo <url>\n\nExample:\n$xpaget ds9 vo\n$xpaset -p ds9 vo chandra-ed.havard.edu\n'
+p207
+sg7
+VInvoke an connection to a Virtual Observatory site.
 p208
-sg5
-S'    Return an array of data values given a lower left corner and a width and\n    height in specified coordinate system. The last argument indicates if the\n    coordinates are listed or just the data values.\n\n    Syntax:\n    data [<coordinate system> [<sky frame>] <x> <y> <w> <h> [yes|no]]\n\n    Example:\n    $xpaget ds9 data image 450 520 3 3 yes\n    $xpaget ds9 data physical 899 1039 6 6 no\n    $xpaget ds9 data fk5 202.47091 47.196811 0.00016516669 0.00016516669 no\n    $xpaget ds9 data wcs fk5 13:29:53.018 +47:11:48.52 0.00016516669\n    0.00016516669 no\n\n'
+ssVlower
 p209
-ssVnameserver
-p210
-(dp211
+(dp210
 g3
-VSupport Name Server functions. Coordinates are in
-p212
+VLower ds9 in the window stacking order
+p211
 sg5
-S'    Support Name Server functions. Coordinates are in fk5.\n\n    Syntax:\n    nameserver [<object>]\n               [name <object>]\n               [server ned-sao|ned-eso|simbad-sao|simbad-eso]\n               [skyformat degrees|sexagesimal]\n\n    Example:\n    $xpaget ds9 nameserver server\n    $xpaget ds9 nameserver skyformat\n\n    $xpaset -p ds9 nameserver m31\n    $xpaset -p ds9 nameserver name m31\n    $xpaset -p ds9 nameserver server ned-sao\n    $xpaset -p ds9 nameserver skyformat sexagesimal\n\n'
+S'Syntax:\nlower\n\nExample:\n$xpaset -p ds9 lower\n'
+p212
+sg7
+VLower ds9 in the window stacking order.
 p213
-ssVabout
+ssVupdate
 p214
 (dp215
 g3
-VGet DS9 credits.
+VUpdates the current frame or region of frame
 p216
 sg5
-S'    Get DS9 credits.\n\n    Syntax:\n    about\n\n    Example:\n    $xpaget ds9 about\n\n'
+S'Syntax:\nupdate []\n       [# x1 y1 x2 y2]\n       [now]\n       [now # x1 y1 x2 y2]\n       [on]\n       [off]\n\nExample:\n$xpaset -p ds9 update\n$xpaset -p ds9 update 1 100 100 300 400\n$xpaset -p ds9 update now\n$xpaset -p ds9 update now 1 100 100 300 400\n$xpaset -p ds9 update off # delay refreash of the screen while loading files\n$xpaset -p ds9 update on # be sure to turn it on when you are finished loading\n'
 p217
-ssVprefs
+sg7
+VUpdates the current frame or region of frame. In the second form, thefirst argument is the number of the fits HDU (starting with 1) and theremaining args are a bounding box in IMAGE coordinates. By default, thescreen is updated the next available idle cycle. However, youmay force an immediate update by specifying the NOW option.
 p218
-(dp219
+ssVsavempeg
+p219
+(dp220
 g3
-VControls various preference settings.
-p220
-sg5
-S'    Controls various preference settings.\n\n    Syntax:\n    prefs [clear]\n          [mosaicfast yes|no]\n          [bgcolor white|black|red|green|blue|cyan|magenta|yellow]\n          [nancolor white|black|red|green|blue|cyan|magenta|yellow]\n\n    Example:\n    $xpaget ds9 prefs mosaicfast\n    $xpaget ds9 prefs bgcolor\n    $xpaget ds9 prefs nancolor\n\n    $xpaset -p ds9 prefs clear\n    $xpaset -p ds9 prefs mosaicfast no\n    $xpaset -p ds9 prefs bgcolor black\n    $xpaset -p ds9 prefs nancolor red\n\n'
+VSave all active frames as a mpeg movie
 p221
-ssVmask
+sg5
+S'Syntax:\nsavempeg [<filename>]\n\nExample:\n$xpaset -p ds9 savempeg ds9.mpg\n'
 p222
-(dp223
-g3
-VControls mask parameters.
+sg7
+VSave all active frames as a mpeg movie.
+p223
+ssVtile
 p224
-sg5
-S'    Controls mask parameters.\n\n    Syntax:\n    mask [yes|no]\n         [clear]\n         [color white|black|red|green|blue|cyan|magenta|yellow]\n\n    Example:\n    $xpaget mask\n    $xpaget mask color\n\n    $xpaset mask yes\n    $xpaset mask clear\n    $xpaset mask color red\n\n'
-p225
-ssVtcl
+(dp225
+g3
+VControls the tile display mode
 p226
-(dp227
-g3
-VExecute one tcl command.
+sg5
+S'Syntax:\ntile []\n     [yes|no]\n     [mode grid|column|row]\n     [grid]\n     [grid mode [automatic|manual]]\n     [grid layout <row> <col>]\n     [grid gap <pixels>]\n     [row]\n     [column]\n\nExample:\n$xpaget ds9 tile\n$xpaget ds9 tile mode\n$xpaget ds9 tile grid mode\n$xpaget ds9 tile grid layout\n$xpaget ds9 tile grid gap\n\n$xpaset -p ds9 tile\n$xpaset -p ds9 tile yes\n$xpaset -p ds9 tile mode row\n$xpaset -p ds9 tile grid\n$xpaset -p ds9 tile grid mode manual\n$xpaset -p ds9 tile grid layout 5 5\n$xpaset -p ds9 tile grid gap 10\n$xpaset -p ds9 tile row\n$xpaset -p ds9 tile column\n'
+p227
+sg7
+VControls the tile display mode.
 p228
-sg5
-S'    Execute one tcl command.\n\n    Syntax:\n    tcl [<tcl command>]\n\n    Example:\n    $echo \'puts "Hello, World"\' | xpaset ds9 tcl\n\n'
+ssVcatalog
 p229
-ssVanalysis
-p230
-(dp231
+(dp230
 g3
-VControl external analysis tasks. Tasks are numbered as they are loaded, starting with 1. Can also be used to display a message and display text in the text dialog window. To plot data, use the
-p232
+VSupport for catalogs
+p231
 sg5
-S"    Control external analysis tasks. Tasks are numbered as they are loaded,\n    starting with 1. Can also be used to display a message and display text in\n    the text dialog window. To plot data, use the plot xpa point. Current tasks\n    can be cleared via the clear command and new tasks can be loaded via the\n    load command.\n\n    Syntax:\n    analysis [<task number>]\n             [clear]\n             [clear][load <filename>]\n             [message ok|okcancel|yesno {<message>}\n             [entry {<message>}]\n             [text]\n\n    Example:\n    $xpaget ds9 analysis\n\n    $xpaset -p ds9 analysis 0 # invoke first analysis task\n    $xpaset -p ds9 analysis clear\n    $xpaset -p ds9 analysis load my.analysis\n    $xpaset -p ds9 analysis clear load my.analysis\n    $xpaset -p ds9 analysis message ok '{This is a test}'\n    $xpaget ds9 analysis entry '{Please enter something}'\n    $cat my.analysis | xpaset ds9 analysis load\n    $cat foo.txt | xpaset ds9 analysis text\n\n"
+S'Syntax:\ncatalog [sdss6|sdss5|sdss4|sdss3|sao|hst|gsc|tycho|ac|ua2|ub1|ucac2|2mass|denis\n|rosat|rosf|first]\n        [cds sdss4|sdss3|sao|hst|gsc|tycho|ac|ua2|ub1|ucac2|2mass|denis|rosat|\nrosf|first]\n        [cds <catalogid>]\n        [sdss sdss5|sdss6]\n        [load <filename>]\n        [load csv <filename>]\n\n        [<catname>] [name <object>]\n        [<catname>] [coordinate <ra> <dec> <coordinate system>]\n        [<catname>] [size <width> <height> degrees|arcmin|arcsec]\n\n        [<catname>] [save <filename>]\n        [<catname>] [header]\n        [<catname>] [filter <string>]\n        [<catname>] [filter load <filename>]\n        [<catname>] [clear]\n        [<catname>] [retrieve]\n        [<catname>] [cancel]\n        [<catname>] [print]\n        [<catname>] [close]\n\n        [<catname>] [server cds|sao|cadc|adac|iucaa|bejing|cambridge|ukirt]\n        [<catname>] [symbol shape {circle point}|{box point}|{diamond point}|\n                    {cross point}|{x point}|{arrow point}|{boxcircle point}|\n                    circle|ellipse|box|text]\n        [<catname>] [symbol [#] condition|shape|color|text|size|\n                    size2|units|angle <value>]\n        [<catname>] [symbol add| [#] remove]\n        [<catname>] [symbol save|load <filename>]\n        [<catname>] [sort <columnname> incr|decr]\n        [<catname>] [maxrows <number>]\n        [<catname>] [allrows]\n        [<catname>] [allcols]\n        [<catname>] [show|hide]\n        [<catname>] [ra <columnname>]\n        [<catname>] [dec <columnname>]\n\nExample:\n$xpaget ds9 catalog\n$xpaget ds9 catalog header\n$xpaget ds9 catalog cat2mass header\n\n$xpaset -p ds9 catalog 2mass\n$xpaset -p ds9 catalog cds 2mass\n$xpaset -p ds9 catalog cds "I/252"\n$xpaset -p ds9 catalog load foo.cat\n$xpaset -p ds9 catalog cat2mass symbol color red\n$xpaset -p ds9 catalog name m51\n$xpaset -p ds9 catalog coordinate 202.48 47.21 fk5\n$xpaset -p ds9 catalog size 22 22 arcmin\n$xpaset -p ds9 catalog save bar.cat\n$xpaset -p ds9 catalog filter "\\$Jmag>10"\n$xpaset -p ds9 catalog filter load foo.flt\n$xpaset -p ds9 catalog clear\n$xpaset -p ds9 catalog retrieve\n$xpaset -p ds9 catalog cancel\n$xpaset -p ds9 catalog print\n$xpaset -p ds9 catalog close\n$xpaset -p ds9 catalog server sao\n$xpaset -p ds9 catalog symbol condition "\\$Jmag>15"\n$xpaset -p ds9 catalog symbol 2 shape "boxcircle point"\n$xpaset -p ds9 catalog symbol color red\n$xpaset -p ds9 catalog symbol add\n$xpaset -p ds9 catalog symbol 2 remove\n$xpaset -p ds9 catalog symbol load foo.sym\n$xpaset -p ds9 catalog symbol save bar.sym\n$xpaset -p ds9 catalog sort "Jmag" incr\n$xpaset -p ds9 catalog maxrows 2000\n$xpaset -p ds9 catalog allrows\n$xpaset -p ds9 catalog allcols\n$xpaset -p ds9 catalog show\n$xpaset -p ds9 catalog hide\n$xpaset -p ds9 catalog ra RA\n$xpaset -p ds9 catalog dec DEC\n'
+p232
+sg7
+VSupport for catalogs. The first three commands will create a newcatalog search. All other commands operated on the last search created,unless indicated otherwise.
 p233
-ssVcursor
+ssVrotate
 p234
 (dp235
 g3
-VMove mouse pointer or crosshair in image pixels in the current frame. Note, this will move selected Regions also.
+VControls the rotation angle (in degrees) of the current frame
 p236
 sg5
-S'    Move mouse pointer or crosshair in image pixels in the current frame. Note,\n    this will move selected Regions also.\n\n    Syntax:\n    cursor [x y]\n\n    Example:\n    $xpaset -p ds9 cursor 10 10\n\n'
+S'Syntax:\nrotate [<value>]\n       [to <value>]\n\nExample:\n$xpaget ds9 rotate\n\n$xpaset -p ds9 rotate 45\n$xpaset -p ds9 rotate to 30\n'
 p237
-ssVzscale
+sg7
+VControls the rotation angle (in degrees) of the current frame.
 p238
-(dp239
+ssVgrid
+p239
+(dp240
 g3
-VSet Scale Limits based  on the
-p240
-sg5
-S'    Set Scale Limits based  on the IRAF algorithm.\n\n    Syntax:\n    zscale []\n           [contrast]\n           [sample]\n           [line]\n\n    Example:\n    $xpaget ds9 zscale contrast\n    $xpaget ds9 zscale sample\n    $xpaget ds9 zscale line\n\n    $xpaset -p ds9 zscale\n    $xpaset -p ds9 zscale contrast .25\n    $xpaset -p ds9 zscale sample 600\n    $xpaset -p ds9 zscale line 120\n\n'
+VControls coordinate grid
 p241
-ssVcmap
+sg5
+S'Syntax:\ngrid []\n     [yes|no]\n     [load <filename>]\n     [save <filename>]\n     [system <coordinate system>]\n     [sky <sky frame>]\n     [skyformat <skyformat>]\n     [type analysis|publication]\n     [type axes interior|exterior]\n     [type numerics interior|exterior]\n     [view grid|axes|title|border|vertical yes|no]\n     [view axes numbers|tickmarks|label yes|no]\n\nExample:\n$xpaget ds9 grid\n$xpaget ds9 grid system\n$xpaget ds9 grid sky\n$xpaget ds9 grid skyformat\n$xpaget ds9 grid type\n$xpaget ds9 grid type axes\n$xpaget ds9 grid type numerics\n$xpaget ds9 grid view grid\n$xpaget ds9 grid view axes\n$xpaget ds9 grid view axes numbers\n$xpaget ds9 grid view axes tickmarks\n$xpaget ds9 grid view axes label\n$xpaget ds9 grid view title\n$xpaget ds9 grid view border\n$xpaget ds9 grid view vertical\n\n$xpaset -p ds9 grid\n$xpaset -p ds9 grid yes\n$xpaset -p ds9 grid load foo.grd\n$xpaset -p ds9 grid save foo.grd\n$xpaset -p ds9 grid system wcs\n$xpaset -p ds9 grid sky fk5\n$xpaset -p ds9 grid skyformat degrees\n$xpaset -p ds9 grid type analysis\n$xpaset -p ds9 grid type axes interior\n$xpaset -p ds9 grid type numerics interior\n$xpaset -p ds9 grid view grid yes\n$xpaset -p ds9 grid view axes yes\n$xpaset -p ds9 grid view axes numbers yes\n$xpaset -p ds9 grid view axes tickmarks yes\n$xpaset -p ds9 grid view axes label yes\n$xpaset -p ds9 grid view title yes\n$xpaset -p ds9 grid view border yes\n$xpaset -p ds9 grid view vertical no\n'
 p242
-(dp243
-g3
-VControls the colormap for the current frame. The colormap name is not case sensitive. A valid contrast value is  from 0 to 10 and bias value from 0 to 1.
+sg7
+VControls coordinate grid.
+p243
+ssVzoom
 p244
-sg5
-S'    Controls the colormap for the current frame. The colormap name is not case\n    sensitive. A valid contrast value is  from 0 to 10 and bias value from 0 to\n    1.\n\n    Syntax:\n    cmap [<colormap>]\n         [file <filename>]\n         [invert yes|no]\n         [value <constrast> <bias>]\n\n    Example:\n    $xpaget ds9 cmap\n    $xpaget ds9 cmap file\n    $xpaget ds9 cmap invert\n    $xpaget ds9 cmap value\n\n    $xpaset -p ds9 cmap Heat\n    $xpaset -p ds9 cmap file foo.sao\n    $xpaset -p ds9 cmap invert yes\n    $xpaset -p ds9 cmap value 5 .5\n\n'
-p245
-ssVcrosshair
+(dp245
+g3
+VControls the current zoom value for the current frame
 p246
-(dp247
-g3
-VControls the current position of the crosshair in the current frame. DS9 is placed in crosshair mode when the crosshair is set.
+sg5
+S'Syntax:\nzoom [<value>]\n     [<value> <value>]\n     [to <value>]\n     [to <value> <value>]\n     [to fit]\n\nExample:\n$xpaget ds9 zoom\n\n$xpaset -p ds9 zoom 2\n$xpaset -p ds9 zoom 2 4\n$xpaset -p ds9 zoom to 4\n$xpaset -p ds9 zoom to 2 4\n$xpaset -p ds9 zoom to fit\n'
+p247
+sg7
+VControls the current zoom value for the current frame.
 p248
-sg5
-S'    Controls the current position of the crosshair in the current frame. DS9 is\n    placed in crosshair mode when the crosshair is set.\n\n    Syntax:\n    crosshair [x y <coordinate system> [<sky frame>][<sky format>]]\n\n    Example:\n    $xpaget ds9 crosshair # get crosshair in physical coords\n    $xpaget ds9 crosshair wcs fk4 sexagesimal # get crosshair in wcs coords\n\n    $xpaset -p ds9 crosshair 100 100 physical # set crosshair in physical\n    $xpaset -p ds9 crosshair 345 58.8 wcs fk5 # set crosshair in wcs coords\n    $xpaset -p ds9 crosshair 23:01:00 +58:52:51 wcs fk5\n\n'
+ssVdatacube
 p249
-ssVmode
-p250
-(dp251
+(dp250
 g3
-VControls the first mouse button mode.
-p252
+VControls FITS datacube
+p251
 sg5
-S'    Controls the first mouse button mode.\n\n    Syntax:\n    mode [none|pointer|crosshair|colorbar|pan|zoom|rotate|catalog|examine]\n\n    Example:\n    $xpaget ds9 mode\n\n    $xpaset -p ds9 mode crosshair\n\n'
+S'Syntax:\ndatacube [play|stop|next|prev|first|last]\n         [#]\n         [interval #]\n\nExample:\n$xpaget ds9 datacube\n$xpaget ds9 datacube interval\n\n$xpaset -p ds9 datacube play\n$xpaset -p ds9 datacube last\n$xpaset -p ds9 datacube 3\n$xpaset -p ds9 datacube interval 2\n'
+p252
+sg7
+VControls FITS datacube.
 p253
-ssVview
+ssVfits
 p254
 (dp255
 g3
-VControls the GUI.
+VLoad a FITS image from stdin into the current frame
 p256
 sg5
-S'    Controls the GUI.\n\n    Syntax:\n    view  [horizontal|vertical]\n          [info yes|no]\n          [panner yes|no]\n          [magnifier yes|no]\n          [buttons yes|no]\n          [colorbar yes|no]\n          [colorbarnumerics yes|no]\n          [horzgraph yes|no]\n          [vertgraph yes|no]\n          [filename yes|no[\n          [object yes|no]\n          [minmax yes|no]\n          [lowhigh yes|no]\n          [frame yes|no]\n          [image|physical|wcs|wcsa...wcsz yes|no]\n          [red yes|no]\n          [green yes|no]\n          [blue yes|no]\n\n    Example:\n    $xpaget ds9 view vertical\n    $xpaget ds9 view info\n    $xpaget ds9 view horzgraph\n    $xpaget ds9 view wcsa\n\n    $xpaset -p ds9 view vertical\n    $xpaset -p ds9 view info yes\n    $xpaset -p ds9 view panner yes\n    $xpaset -p ds9 view magnifier yes\n    $xpaset -p ds9 view buttons yes\n    $xpaset -p ds9 view colorbar yes\n    $xpaset -p ds9 view colorbarnumerics yes\n    $xpaset -p ds9 view horzgraph yes\n    $xpaset -p ds9 view vertgraph yes\n    $xpaset -p ds9 view filename yes\n    $xpaset -p ds9 view object yes\n    $xpaset -p ds9 view minmax yes\n    $xpaset -p ds9 view lowhigh yes\n    $xpaset -p ds9 view frame yes\n    $xpaset -p ds9 view wcsa yes\n    $xpaset -p ds9 view red yes\n    $xpaset -p ds9 view green no\n    $xpaset -p ds9 view blue yes\n\n'
+S'Syntax:\nfits [size|width|height|depth|bitpix]\n     [size [wcs|wcsa...wcsz] [degrees|arcmin|arcsecs]]\n     [type]\n     [header [#] [keyword <string>]]\n     [image|table|resample] [gz]\n     [new|mask][<options>]\n     [new|mask][medatacube <options>]\n     [new|mask][mosaicimage [iraf|wcs|wcsa...wcsz|wfpc2] <options>]\n     [new|mask][mosaic [iraf|wcs|wcsa...wcsz] <options>]\n     [new][rgbcube <options>]\n     [new][rgbimage <options>]\n     [save resample gz <filename>]\n\nExample:\n$xpaget ds9 fits > foo.fits\n$xpaget ds9 fits size\n$xpaget ds9 fits width\n$xpaget ds9 fits height\n$xpaget ds9 fits depth\n$xpaget ds9 fits bitpix\n$xpaget ds9 fits size wcs fk5 arcmin\n$xpaget ds9 fits type\n$xpaget ds9 fits header # primary\n$xpaget ds9 fits header 2 # hdu 2\n$xpaget ds9 fits header -2 # hdu 2 with inherit\n$xpaget ds9 fits header keyword "\'BITPIX\'"\n$xpaget ds9 fits header 1 keyword "\'BITPIX\'"\n$xpaget ds9 fits image > foo.fits\n$xpaget ds9 fits image gz > foo.fits.gz\n$xpaget ds9 fits table > bar.fits\n$xpaget ds9 fits table gz > bar.fits.gz\n$xpaget ds9 fits resample > bar.fits\n$xpaget ds9 fits resample gz > bar.fits.gz\n\n$cat foo.fits | xpaset ds9 fits\n$cat abc.fits | xpaset ds9 fits [2]\n$cat bar.fits | xpaset ds9 fits new [bin=detx,dety]\n$cat foo.fits | xpaset ds9 fits medatacube\n$cat bar.fits | xpaset ds9 fits mosaicimage iraf\n$cat bar.fits | xpaset ds9 fits mosaicimage wcs\n$cat bar.fits | xpaset ds9 fits mosaicimage wcsa\n$cat hst.fits | xpaset ds9 fits mosaicimage wfpc2\n$cat bar.fits | xpaset ds9 fits mosaic iraf\n$cat bar.fits | xpaset ds9 fits mosaic wcs\n$cat rgb.fits | xpaset ds9 fits rgbcube\n$cat rgb.fits | xpaset ds9 fits rgbimage\n'
 p257
-ssVshm
+sg7
+VLoad a FITS image from stdin into the current frame. Options caninclude the FITS extension or binning instructions. xpaget returns the FITS image in the current frame. If new isspecified, a new frame is created before loading.
 p258
-(dp259
+ssVcd
+p259
+(dp260
 g3
-VLoad a shared memory segment into the current frame.
-p260
-sg5
-S'    Load a shared memory segment into the current frame.\n\n    Syntax:\n    shm [<key> [<filename>]]\n        [key <key> [<filename>]]\n        [shmid <id> [<filename>]]\n\n        [fits [key|shmid] <id> [<filename>]]\n        [sfits [key|shmid] <id> <id> [<filename>]]\n        [mosaicimage [iraf|wcs|wcsa...wcsz|wfpc2] [key|shmid] <id>\n    [<filename>]]\n        [mosaicimagenext [wcs|wcsa...wcsz] [key|shmid] <id> [<filename>]]\n        [mosaic [iraf|wcs|wcsa...wcsz] [key|shmid] <id> [<filename>]]\n        [smosaic [iraf|wcs|wcsa...wcsz] [key|shmid] <id> [<filename>]]\n        [rgbcube [key|shmid] <id> [<filename>]\n        [srgbcube [key|shmid] <id> [<filename>]\n        [rgbimage [key|shmid] <id> [<filename>]]\n        [rgbarray [key|shmid] <id> [xdim=<x>,ydim=<y>|dim=<dim>,zdim=3],bitpix=\n    <b>,[skip=<s>]]\n        [array [key|shmid] <id> [xdim=<x>,ydim=<y>|dim=<dim>],bitpix=<b>,[skip=\n    <s>]]\n        [startload|finishload]\n\n    Example:\n    $xpaget ds9 shm\n\n    $xpaset -p ds9 shm 102\n    $xpaset -p ds9 shm key 102\n    $xpaset -p ds9 shm shmid 102 foo\n\n    $xpaset -p ds9 shm fits key 100 foo\n    $xpaset -p ds9 shm sfits key 100 101 foo\n    $xpaset -p ds9 shm mosaicimage iraf key 100 foo\n    $xpaset -p ds9 shm mosaicimage wcs key 100 foo\n    $xpaset -p ds9 shm mosaicimage wcsa key 100 foo\n    $xpaset -p ds9 shm mosaicimage wfpc2 key 100 foo\n    $xpaset -p ds9 shm mosaicimagenext wcs key 100 foo\n    $xpaset -p ds9 shm mosaic iraf key 100 foo\n    $xpaset -p ds9 shm mosaic wcs key 100 foo\n    $xpaset -p ds9 shm smosaic wcs key 100 101 foo\n    $xpaset -p ds9 shm rgbcube key 100 foo\n    $xpaset -p ds9 shm srgbcube key 100 101 foo\n    $xpaset -p ds9 shm rgbimage key 100 foo\n    $xpaset -p ds9 shm rgbarray key 100 [dim=200,zdim=3,bitpix=-32]\n    $xpaset -p ds9 shm array shmid 102 [dim=32,bitpix=-32]\n    $xpaset -p ds9 shm startload # start a multiple load sequence without\n    updating the display\n    $xpaset -p ds9 shm finishload # finish multiple load sequence\n\n'
+VSets/Returns the current working directory
 p261
-ssVfirst
-p262
-(dp263
-g3
-VSupport for VLA First Sky Survey. The first three options will download an image based on the name or specified
-p264
 sg5
-S'    Support for VLA First Sky Survey. The first three options will download an\n    image based on the name or specified fk5 coordinate. The remaining options\n    are used to configure downloads.\n\n    Syntax:\n    first [<object>]\n          [name <object>]\n          [coord <ra> <dec>] # in wcs fk5\n          [size <radius>] # in arcmin\n\n    Example:\n    $xpaget ds9 first name\n    $xpaget ds9 first coord\n    $xpaget ds9 first size\n\n    $xpaset -p ds9 first m51\n    $xpaset -p ds9 first name m51\n    $xpaset -p ds9 first coord 13:29:52.37 +47:11:40.8\n    $xpaset -p ds9 first size 60\n\n'
-p265
+S'Syntax:\ncd [<directory>]\n\nExample:\n$xpaget ds9 cd\n$xpaset -p ds9 cd /home/mrbill\n'
+p262
+sg7
+VSets/Returns the current working directory.
+p263
+ssVdata
+p264
+(dp265
+g3
+VReturn an array of data values given a lower left corner and a widthand height in specified coordinate system
+p266
+sg5
+S'\nSyntax:\ndata [<coordinate system> [<sky frame>] <x> <y> <w> <h> [yes|no]]\n\nExample:\n$xpaget ds9 data image 450 520 3 3 yes\n$xpaget ds9 data physical 899 1039 6 6 no\n$xpaget ds9 data fk5 202.47091 47.196811 0.00016516669 0.00016516669 no\n$xpaget ds9 data wcs fk5 13:29:53.018 +47:11:48.52 0.00016516669 0.00016516669\nno\n'
+p267
+sg7
+VReturn an array of data values given a lower left corner and a widthand height in specified coordinate system. The last argument indicatesif the coordinates are listed or just the data values.
+p268
+ssVnameserver
+p269
+(dp270
+g3
+VSupport Name Server functions
+p271
+sg5
+S'Syntax:\nnameserver [<object>]\n           [name <object>]\n           [server ned-sao|ned-eso|simbad-sao|simbad-eso]\n           [skyformat degrees|sexagesimal]\n\nExample:\n$xpaget ds9 nameserver server\n$xpaget ds9 nameserver skyformat\n\n$xpaset -p ds9 nameserver m31\n$xpaset -p ds9 nameserver name m31\n$xpaset -p ds9 nameserver server ned-sao\n$xpaset -p ds9 nameserver skyformat sexagesimal\n\n'
+p272
+sg7
+VSupport Name Server functions. Coordinates are in fk5 .
+p273
+ssVabout
+p274
+(dp275
+g3
+VGet DS9 credits
+p276
+sg5
+S'Syntax:\nabout\n\nExample:\n$xpaget ds9 about\n'
+p277
+sg7
+VGet DS9 credits.
+p278
+ssVprefs
+p279
+(dp280
+g3
+VControls various preference settings
+p281
+sg5
+S'Syntax:\nprefs [clear]\n      [mosaicfast yes|no]\n      [bgcolor white|black|red|green|blue|cyan|magenta|yellow]\n      [nancolor white|black|red|green|blue|cyan|magenta|yellow]\n\nExample:\n$xpaget ds9 prefs mosaicfast\n$xpaget ds9 prefs bgcolor\n$xpaget ds9 prefs nancolor\n\n$xpaset -p ds9 prefs clear\n$xpaset -p ds9 prefs mosaicfast no\n$xpaset -p ds9 prefs bgcolor black\n$xpaset -p ds9 prefs nancolor red\n'
+p282
+sg7
+VControls various preference settings.
+p283
+ssVmask
+p284
+(dp285
+g3
+VControls mask parameters
+p286
+sg5
+S'Syntax:\nmask [yes|no]\n     [clear]\n     [color white|black|red|green|blue|cyan|magenta|yellow]\n\nExample:\n$xpaget mask\n$xpaget mask color\n\n$xpaset -p ds9 mask yes\n$xpaset -p ds9 mask clear\n$xpaset -p ds9 mask color red\n'
+p287
+sg7
+VControls mask parameters.
+p288
+ssVtcl
+p289
+(dp290
+g3
+VExecute one tcl command
+p291
+sg5
+S'Syntax:\ntcl [<tcl command>]\n\nExample:\n$echo \'puts "Hello, World"\' | xpaset ds9 tcl\n'
+p292
+sg7
+VExecute one tcl command.
+p293
+ssVanalysis
+p294
+(dp295
+g3
+VControl external analysis tasks
+p296
+sg5
+S"Syntax:\nanalysis [<task number>]\n         [clear]\n         [clear][load <filename>]\n         [message ok|okcancel|yesno {<message>}\n         [entry {<message>}]\n         [text]\n\nExample:\n$xpaget ds9 analysis\n\n$xpaset -p ds9 analysis 0 # invoke first analysis task\n$xpaset -p ds9 analysis clear\n$xpaset -p ds9 analysis load my.analysis\n$xpaset -p ds9 analysis clear load my.analysis\n$xpaset -p ds9 analysis message ok '{This is a test}'\n$xpaget ds9 analysis entry '{Please enter something}'\n$cat my.analysis | xpaset ds9 analysis load\n$cat foo.txt | xpaset ds9 analysis text\n\n"
+p297
+sg7
+VControl external analysis tasks. Tasks are numbered as they are loaded,starting with 1. Can also be used to display a message and display textin the text dialog window. To plot data, use the plot xpa point. Current tasks can be cleared via the clear command and newtasks can be loaded via the load command.
+p298
+ssVcursor
+p299
+(dp300
+g3
+VMove mouse pointer or crosshair in image pixels in the current frame
+p301
+sg5
+S'Syntax:\ncursor [x y]\n\nExample:\n$xpaset -p ds9 cursor 10 10\n'
+p302
+sg7
+VMove mouse pointer or crosshair in image pixels in the current frame.Note, this will move selected Regions also.
+p303
+ssVzscale
+p304
+(dp305
+g3
+VSet Scale Limits based on the IRAF algorithm
+p306
+sg5
+S'Syntax:\nzscale []\n       [contrast]\n       [sample]\n       [line]\n\nExample:\n$xpaget ds9 zscale contrast\n$xpaget ds9 zscale sample\n$xpaget ds9 zscale line\n\n$xpaset -p ds9 zscale\n$xpaset -p ds9 zscale contrast .25\n$xpaset -p ds9 zscale sample 600\n$xpaset -p ds9 zscale line 120\n'
+p307
+sg7
+VSet Scale Limits based on the IRAF algorithm.
+p308
+ssVcmap
+p309
+(dp310
+g3
+VControls the colormap for the current frame
+p311
+sg5
+S'Syntax:\ncmap [<colormap>]\n     [file <filename>]\n     [invert yes|no]\n     [value <constrast> <bias>]\n\nExample:\n$xpaget ds9 cmap\n$xpaget ds9 cmap file\n$xpaget ds9 cmap invert\n$xpaget ds9 cmap value\n\n$xpaset -p ds9 cmap Heat\n$xpaset -p ds9 cmap file foo.sao\n$xpaset -p ds9 cmap invert yes\n$xpaset -p ds9 cmap value 5 .5\n'
+p312
+sg7
+VControls the colormap for the current frame. The colormap name is notcase sensitive. A valid contrast value is from 0 to 10 and biasvalue from 0 to 1.
+p313
+ssVcrosshair
+p314
+(dp315
+g3
+VControls the current position of the crosshair in the current frame
+p316
+sg5
+S'Syntax:\ncrosshair [x y <coordinate system> [<sky frame>][<sky format>]]\n\nExample:\n$xpaget ds9 crosshair # get crosshair in physical coords\n$xpaget ds9 crosshair wcs fk4 sexagesimal # get crosshair in wcs coords\n\n$xpaset -p ds9 crosshair 100 100 physical # set crosshair in physical\n$xpaset -p ds9 crosshair 345 58.8 wcs fk5 # set crosshair in wcs coords\n$xpaset -p ds9 crosshair 23:01:00 +58:52:51 wcs fk5\n'
+p317
+sg7
+VControls the current position of the crosshair in the current frame.DS9 is placed in crosshair mode when the crosshair is set.
+p318
+ssVmode
+p319
+(dp320
+g3
+VControls the first mousebutton mode
+p321
+sg5
+S'Syntax:\nmode [none|pointer|crosshair|colorbar|pan|zoom|rotate|catalog|examine]\n\nExample:\n$xpaget ds9 mode\n\n$xpaset -p ds9 mode crosshair\n'
+p322
+sg7
+VControls the first mousebutton mode.
+p323
+ssVview
+p324
+(dp325
+g3
+VControls the GUI
+p326
+sg5
+S'Syntax:\nview  [horizontal|vertical]\n      [info yes|no]\n      [panner yes|no]\n      [magnifier yes|no]\n      [buttons yes|no]\n      [colorbar yes|no]\n      [colorbarnumerics yes|no]\n      [horzgraph yes|no]\n      [vertgraph yes|no]\n      [filename yes|no[\n      [object yes|no]\n      [minmax yes|no]\n      [lowhigh yes|no]\n      [frame yes|no]\n      [image|physical|wcs|wcsa...wcsz yes|no]\n      [red yes|no]\n      [green yes|no]\n      [blue yes|no]\n\nExample:\n$xpaget ds9 view vertical\n$xpaget ds9 view info\n$xpaget ds9 view horzgraph\n$xpaget ds9 view wcsa\n\n$xpaset -p ds9 view vertical\n$xpaset -p ds9 view info yes\n$xpaset -p ds9 view panner yes\n$xpaset -p ds9 view magnifier yes\n$xpaset -p ds9 view buttons yes\n$xpaset -p ds9 view colorbar yes\n$xpaset -p ds9 view colorbarnumerics yes\n$xpaset -p ds9 view horzgraph yes\n$xpaset -p ds9 view vertgraph yes\n$xpaset -p ds9 view filename yes\n$xpaset -p ds9 view object yes\n$xpaset -p ds9 view minmax yes\n$xpaset -p ds9 view lowhigh yes\n$xpaset -p ds9 view frame yes\n$xpaset -p ds9 view wcsa yes\n$xpaset -p ds9 view red yes\n$xpaset -p ds9 view green no\n$xpaset -p ds9 view blue yes\n'
+p327
+sg7
+VControls the GUI.
+p328
+ssVshm
+p329
+(dp330
+g3
+VLoad a shared memory segment into the current frame
+p331
+sg5
+S'Syntax:\nshm [<key> [<filename>]]\n    [key <key> [<filename>]]\n    [shmid <id> [<filename>]]\n\n    [fits [key|shmid] <id> [<filename>]]\n    [sfits [key|shmid] <id> <id> [<filename>]]\n    [mosaicimage [iraf|wcs|wcsa...wcsz|wfpc2] [key|shmid] <id> [<filename>]]\n    [mosaicimagenext [wcs|wcsa...wcsz] [key|shmid] <id> [<filename>]]\n    [mosaic [iraf|wcs|wcsa...wcsz] [key|shmid] <id> [<filename>]]\n    [smosaic [iraf|wcs|wcsa...wcsz] [key|shmid] <id> [<filename>]]\n    [rgbcube [key|shmid] <id> [<filename>]\n    [srgbcube [key|shmid] <id> [<filename>]\n    [rgbimage [key|shmid] <id> [<filename>]]\n    [rgbarray [key|shmid] <id> [xdim=<x>,ydim=<y>|dim=<dim>,zdim=3],bitpix=<b>,\n[skip=<s>]]\n    [array [key|shmid] <id> [xdim=<x>,ydim=<y>|dim=<dim>],bitpix=<b>,[skip=\n<s>]]\n    [startload|finishload]\n\nExample:\n$xpaget ds9 shm\n\n$xpaset -p ds9 shm 102\n$xpaset -p ds9 shm key 102\n$xpaset -p ds9 shm shmid 102 foo\n\n$xpaset -p ds9 shm fits key 100 foo\n$xpaset -p ds9 shm sfits key 100 101 foo\n$xpaset -p ds9 shm mosaicimage iraf key 100 foo\n$xpaset -p ds9 shm mosaicimage wcs key 100 foo\n$xpaset -p ds9 shm mosaicimage wcsa key 100 foo\n$xpaset -p ds9 shm mosaicimage wfpc2 key 100 foo\n$xpaset -p ds9 shm mosaicimagenext wcs key 100 foo\n$xpaset -p ds9 shm mosaic iraf key 100 foo\n$xpaset -p ds9 shm mosaic wcs key 100 foo\n$xpaset -p ds9 shm smosaic wcs key 100 101 foo\n$xpaset -p ds9 shm rgbcube key 100 foo\n$xpaset -p ds9 shm srgbcube key 100 101 foo\n$xpaset -p ds9 shm rgbimage key 100 foo\n$xpaset -p ds9 shm rgbarray key 100 [dim=200,zdim=3,bitpix=-32]\n$xpaset -p ds9 shm array shmid 102 [dim=32,bitpix=-32]\n$xpaset -p ds9 shm startload # start a multiple load sequence without updating\nthe display\n$xpaset -p ds9 shm finishload # finish multiple load sequence\n'
+p332
+sg7
+VLoad a shared memory segment into the current frame.
+p333
+ssVfirst
+p334
+(dp335
+g3
+VSupport for VLA First Sky Survey
+p336
+sg5
+S'Syntax:\nfirst [<object>]\n      [name <object>]\n      [coord <ra> <dec>] # in wcs fk5\n      [size <radius>] # in arcmin\n\nExample:\n$xpaget ds9 first name\n$xpaget ds9 first coord\n$xpaget ds9 first size\n\n$xpaset -p ds9 first m51\n$xpaset -p ds9 first name m51\n$xpaset -p ds9 first coord 13:29:52.37 +47:11:40.8\n$xpaset -p ds9 first size 60\n'
+p337
+sg7
+VSupport for VLA First Sky Survey. The first three options willdownloadan image based on the name or specified fk5 coordinate. Theremaining options are used to configure downloads.
+p338
 ss.

@@ -22,13 +22,15 @@ def _help_summary():
     xpa_command_names.sort()
 
     for comm in xpa_command_names:
-        sd = _pkl[comm]["short"]
-        if len(sd) > 60:
-            sd = sd[:60] + "..."
-        print comm, ":", sd
+        sd = _pkl[comm]["short_expl"]
+        #if len(sd) > 60:
+        #    sd = sd[:60] + "..."
+        print "[%s] %s" % (comm, sd)
 
 def _help_command(xpa_command_name):
     if xpa_command_name not in _pkl:
         raise Invalid_Ds9_Xpa_command()
 
-    print _pkl[xpa_command_name]["long"]
+    print _pkl[xpa_command_name]["expl"]
+    print
+    print _pkl[xpa_command_name]["syntax"]
