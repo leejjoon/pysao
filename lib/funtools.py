@@ -3,6 +3,9 @@ import numpy
 import os
 import os.path
 
+class WrongImageShape(Exception):
+    pass
+
 def make_mask_from_region(img, region, header=None):
     """ image : numarray image
         region : region description in image coordinate """
@@ -10,15 +13,19 @@ def make_mask_from_region(img, region, header=None):
     hdul = pyfits.HDUList()
     hdu = pyfits.PrimaryHDU()
     if header:
-        hdu.header = header
+        # copying the header is necessary because
+        # writeto method can modify the header.
+        
+        hdu.header = header.copy()
     if hasattr(img, "shape"):
         shape = img.shape
     elif isinstance(img, tuple):
         shape = img
     else:
-        raise "img (1st argument) must be shape (tuple) of image"
+        raise WrongImageShape("needs two dimensional array")
         
     hdu.data = numpy.ones(shape[-2:], dtype=numpy.uint8)
+    hdu.update_header()
     hdul.append(hdu)
 
     from tempfile import mkdtemp
