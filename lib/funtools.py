@@ -56,6 +56,27 @@ def make_mask_from_region(img, region, header=None):
     return m
 
 
+
+
+def mask_from_region(fitsname, region_string):
+
+    temp_path = mkdtemp()
+
+    regname = os.path.join(temp_path, "tmp.reg")
+    maskname = os.path.join(temp_path, "mask.fits")
+
+    try:
+        open(regname, "w").write(region_string)
+
+        os.system("funimage %s[@%s] %s" % (fitsname, regname, maskname))
+        mask = pyfits.open(maskname)[0].data
+    finally:
+        shutil.rmtree(temp_path)
+
+    return mask
+
+
+
 def ds9_get_mask_from_curent_region(ds9):
     shape = map(int, ds9.get("fits size").split())
     reg = ds9.get("regions -format ds9 -system image")

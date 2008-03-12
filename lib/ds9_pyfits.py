@@ -62,7 +62,7 @@ class ds9(ds9_basic.ds9):
                         header = img.header
                     self.view_array(img.data, header)
             else:
-                if asFits:
+                if header is not None and asFits:
                     hdu=ImageBaseHDU(img, header)
                     self.view_fits(hdu)
                 else:
