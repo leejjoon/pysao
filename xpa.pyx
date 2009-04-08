@@ -68,6 +68,9 @@ def nslookup(template="*"):
     return l
 
 
+class XpaException(Exception):
+    pass
+
 #class _pyXPA:
 #    XPARec *xpa
 #    def __init__(self):
@@ -92,14 +95,14 @@ cdef _get(XPARec *xpa, char *template, char *param):
             mesg = PyString_FromString( messages[0] )
             free(messages[0]);
         else:
-            mesg = "XPA$ERROR   XPAGet returned 0!"
+            mesg = "Unknown XPA Error : XPAGet returned 0!"
 
         if ( names[0] ):
             free(names[0])
         if( bufs[0] ):
             free(bufs[0])
  
-        raise mesg
+        raise XpaException(mesg)
 
     return buf
     
@@ -132,12 +135,13 @@ cdef _set(XPARec *xpa, char *template, char *param, buf):
             mesg = PyString_FromString( messages[0] )
             free(messages[0]);
         else:
-            mesg = "XPA$ERROR   XPAGet returned 0!"
+            mesg = "Unknown XPA Error (XPAGet returned 0)!"
 
         if ( names[0] ):
             free(names[0])
  
-        raise mesg
+        raise XpaException(mesg)
+
 
 def set(template="*", param="", buf=None):
     _set(NULL, template, param, buf)

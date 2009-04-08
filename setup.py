@@ -4,23 +4,6 @@ from distutils.extension import Extension
 
 import sys
  
-#if not hasattr(sys, 'version_info') or sys.version_info < (2,3,0,'alpha',0):
-#    raise SystemExit, "Python 2.3 or later required to build pysao."
-
-# def dolocal():
-#     """Adds a command line option --local=<install-dir> which is an abbreviation for
-#     'put all of pyfits in <install-dir>/pyfits'."""
-#     if "--help" in sys.argv:
-#         print >>sys.stderr
-#         print >>sys.stderr, " options:"
-#         print >>sys.stderr, "--local=<install-dir>    same as --install-lib=<install-dir>"
-#     for a in sys.argv:
-#         if a.startswith("--local="):
-#             dir = a.split("=")[1]
-#             sys.argv.extend([
-#                 "--install-lib="+dir,
-#                 ])
-#             sys.argv.remove(a)
 
 def main():
     #dolocal()
@@ -35,7 +18,7 @@ def main():
           package_dir={'pysao':'lib'},
           package_data={'pysao': ["ds9_xpa_help.pickle"]},
           
-          ext_modules=[ Extension("xpa",       ["xpa.c"],
+          ext_modules=[ Extension("pysao.xpa",       ["xpa.c"],
                                   include_dirs=['./xpalib'],
                                   library_dirs=['./xpalib'],
                                   libraries=['xpa']),

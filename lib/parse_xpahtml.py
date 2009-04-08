@@ -1,10 +1,11 @@
+from pysao.verbose import verbose
 
 import StringIO
-
 import formatter
 
 
 import re
+
 p_sy = re.compile("Syntax:\s*")
 p_ex = re.compile("Example:\s*")
 
@@ -70,7 +71,8 @@ def _convert_syntax(l):
     else:
         if l:
             if not l[0] == "#":
-                print "WARNING : failed to convert (%s)" % l
+                verbose.report("WARNING : failed to convert (%s)" % l,
+                               "helpful")
         r = l
 
     if c:
@@ -138,9 +140,10 @@ class parser(htmllib.HTMLParser):
 
                 # replace "nbsp"
                 syntax = syntax.replace("\240", " ")
+                example = example.replace("\240", " ")
 
 
-                ex_ = [_convert_syntax(l) for l in example.split("\n")]
+                ex_ = [_convert_syntax(l.strip()) for l in example.split("\n")]
                 example = "\n".join(ex_)
 
                 r[k] = dict(expl=expl, syntax=syntax, example=example)
@@ -159,3 +162,7 @@ def parse_xpa_help(s):
 
     return r
 
+if __name__ == "__main__":
+    s = open("xpa.html").read()
+    r = parse_xpa_help(s)
+    

@@ -1,16 +1,9 @@
-import ds9_xpa_help
 import os
 import tempfile
 
 class Invalid_Ds9_Xpa_command:
     pass
 
-#import pickle
-#import os.path
-#_pkl_name = os.path.join(os.path.dirname(ds9_xpa_help.__file__),
-#                         "ds9_xpa_help.pickle")
-
-#_pkl = pickle.load(open(_pkl_name))
 
 __help_dict = {}
 

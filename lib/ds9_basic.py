@@ -1,14 +1,15 @@
 
 import os
 import time
-from sets import Set
-
+#from sets import Set
+import weakref
 
 import displaydev_lite as displaydev
 
 
-import xpa
-import ds9_xpa_help
+import pysao.xpa as xpa
+import pysao.ds9_xpa_help as ds9_xpa_help
+from pysao.verbose import verbose
 
 class UnsupportedDatatypeException(Exception):
     pass
@@ -18,11 +19,30 @@ class UnsupportedImageShapeException(Exception):
         
 
 from subprocess import Popen
-import os.path
+#import os.path
 
 import numpy
 
 from tempfile import mkdtemp
+
+def _find_ds9():
+    import os.path
+    import os
+    path="ds9"
+    for dirname in os.getenv("PATH").split(":"):
+        possible = os.path.join(dirname, path)
+        if os.path.isfile(possible):
+            return possible
+
+def _extract_xpa_html(path):
+    import zipfile
+    ds9_zip = zipfile.ZipFile(path)
+    for zf in ds9_zip.namelist():
+        if zf.endswith("xpa.html"):
+            return ds9_zip.read(zf)
+
+    raise RuntimeError("No ds9 is found in your path.")
+
 
 class ds9(object):
 
@@ -34,38 +54,99 @@ class ds9(object):
                 'int64': 64,
                 'uint8': 8}
 
+    _tmp_dir_list = set()
+    _ds9_instance_list = []
+
+    @classmethod
+    def _purge_tmp_dirs(cls):
+        """
+        When used with ipython (pylab mode), it seems that the objects
+        are not prperly deleted, i.e., temporary directories are not
+        deleted. This is a work around for that.
+        """
+        import shutil
+        for tds9_ref in cls._ds9_instance_list:
+            verbose.report("purging remaning ds9 instances", "debug")
+            tds9 = tds9_ref()
+            if tds9 is not None:
+                verbose.report("deleting  ds9", "debug")
+                tds9._purge()
+                
+        if cls._tmp_dir_list:
+            verbose.report("purging remaning temporary dirs", "debug")
+            for d in cls._tmp_dir_list:
+                shutil.rmtree(d)
+
+
     def __init__(self, path="ds9", wait_time=10, quit_ds9_on_del=True):
-        """ path :path of the ds9
-            wait_time : waiting time before error"""
+        """
+        path :path of the ds9
+        wait_time : waiting time before error is raised
+        quit_ds9_on_del : If True, try to quit ds9 when this instance is deleted.
+        """
 
         # determine whther to quit ds9 also when object deleted.
         self.quit_ds9_on_del = quit_ds9_on_del
-        
-        self.path = path
+        self._need_to_be_purged = False
+
+        if path is None:
+            self.path = _find_ds9()
+        else:
+            self.path = path
+            
         self.xpa_name, self.ds9_unix_name = self.run_unixonly_ds9_v2(wait_time)
         self.xpa = xpa.xpa(self.xpa_name)
 
         # numdisp setup
         self.numdisp_dev = "unix:%s" % self.ds9_unix_name
+
+        verbose.report("establish numdisplay connection (%s)" % (self.numdisp_dev,), level="debug")
         self.numdisp = displaydev.ImageDisplayProxy(self.numdisp_dev)
 
         self._ds9_version = self.get("version").strip()
         self._helper = ds9_xpa_help.get(self)
 
-    def __str__(self):
-        pass
-    
-    def __del__(self):
-        if self.quit_ds9_on_del:
-
-            if self.numdisp:
-                self.numdisp.close()
-            
-            self.set("quit")
-            
-            os.rmdir(self._tmpd_name)
+        self._need_to_be_purged = True
         
 
+    def __str__(self):
+        pass
+
+    def _purge(self):
+        if not self._need_to_be_purged:
+            return
+
+        if not self.quit_ds9_on_del:
+            verbose.report("You need to manually delete tmp. dir (%s)" % (self._tmpd_name), level="helpful")
+            self._need_to_be_purged = False
+            return
+        
+        if self.numdisp:
+            self.numdisp.close()
+
+        try:
+            if self._ds9_process.poll() is None:
+                self.set("quit")
+        except xpa.XpaException, err:
+            verbose.report("Warning : " + err.message)
+
+        try:
+            os.rmdir(self._tmpd_name)
+            self._tmp_dir_list.remove(self._tmpd_name)
+        except OSError:
+            verbose.report("Warning : couldn't delete the temporary directory (%s)" % (self._tmpd_name,))
+        else:
+            verbose.report("temporary directory deleted", level="debug")
+
+        self._need_to_be_purged = False
+        
+    
+    def __del__(self):
+
+        verbose.report("deleteing pysao.ds9", level="debug")
+        self._purge()
+            
+        
     def show_logo(self):
         self.xpa.set("fits", _ds9_python_logo)
 
@@ -74,6 +155,7 @@ class ds9(object):
         #ds9_xpa_help.help(xpa_command)
         self._helper(xpa_command)
         
+
     def run_unixonly_ds9_v2(self, wait_time):
         """ start ds9 """
     
@@ -92,24 +174,33 @@ class ds9(object):
 
         self._tmpd_name = mkdtemp(prefix="xpa_"+env.get("USER",""),
                                   dir="/tmp")
+        verbose.report("temporary directory created (%s)" % (self._tmpd_name,), level="debug")
 
         #print self._tmpd_name
         
         env["XPA_TMPDIR"] = self._tmpd_name
-
+        
         iraf_unix = "%s/.IMT" % self._tmpd_name
 
         try:
-            p = Popen(" ".join([self.path,
-                                "-xpa local",
-                                "-xpa noxpans",
-                                "-unix_only",
-                                "-unix %s &" % iraf_unix]),
-                      shell=True, env=env)
+            verbose.report("starting ds9 (path=%s)" % (self.path,), level="debug")
+            #p = Popen(" ".join([self.path,
+            #                    "-xpa local",
+            #                    "-xpa noxpans",
+            #                    "-unix_only",
+            #                    "-unix %s &" % iraf_unix]),
+            #          shell=True, env=env)
+            p = Popen([self.path,
+                       "-xpa", "local",
+                       "-xpa", "noxpans",
+                       "-unix_only",
+                       "-unix",  "%s" % iraf_unix],
+                      shell=False, env=env)
 
-            sts = os.waitpid(p.pid, 0)
+            #sts = os.waitpid(p.pid, 0)
 
             # wait until ds9 starts
+            
             while wait_time > 0:
                 file_list = os.listdir(self._tmpd_name)
                 if len(file_list)>1:
@@ -118,13 +209,22 @@ class ds9(object):
                 time.sleep(0.5)
                 wait_time -= 0.5
             else:
-                raise "error running ds9"
+                from signal import SIGTERM
+                os.kill(p.pid, SIGTERM)
+                raise OSError("Connection timeout with the ds9. Try to increase the *wait_time* parameter (current value is  %d s)" % (wait_time,))
 
         except:
+            verbose.report("running  ds9 failed", level="debug")
             os.rmdir(self._tmpd_name)
+            verbose.report("temporary directory deleted", level="debug")
 
             raise
 
+        else:
+            self._tmp_dir_list.add(self._tmpd_name)
+            self._ds9_instance_list.append(weakref.ref(self))
+            self._ds9_process = p
+            
         file_list.remove(".IMT")
         xpaname = os.path.join(self._tmpd_name, file_list[0])
 
@@ -134,29 +234,47 @@ class ds9(object):
 
 
     def set_iraf_display(self):
+        """
+        Set the environemnt variable IMTDEV to the sokect address of
+        the current pysao.ds9 instance. For example, your pyraf
+        commands will use this ds9 for display.
+        """
         os.environ["IMTDEV"] = "unix:%s" % (self.ds9_unix_name)
 
 
-    def set(self, param, buf=None):
-        """ XPA set method to ds9 instance
+    def _check_ds9_process(self):
+        ret = self._ds9_process.poll()
+        if ret is not None:
+            raise RuntimeError("The ds9 process is externally killed.")
 
-    set(param, buf=None)
-       param : parameter string (eg. "fits" "regions")
-       buf : aux data string (sometime string needed to be ended with CR)
-    """
+    
+    def set(self, param, buf=None):
+        """
+        XPA set method to ds9 instance
+
+        set(param, buf=None)
+        param : parameter string (eg. "fits" "regions")
+        buf : aux data string (sometime string needed to be ended with CR)
+        """
+        self._check_ds9_process()
         self.xpa.set(param, buf)
 
-    def get(self, param):
-        """ XPA get method to ds9 instance
 
-    get(param)
-       param : parameter string (eg. "fits" "regions")
-       returns received string
-    """
+    def get(self, param):
+        """
+        XPA get method to ds9 instance
+
+        get(param)
+        param : parameter string (eg. "fits" "regions")
+        returns received string
+        """
+        self._check_ds9_process()
         return self.xpa.get(param)
         
+
     def view(self, img, header=None, frame=None, asFits=False):
-        """ Display numpy image
+        """
+        Display numpy image
         """
 
         _frame_num = self.frame()
@@ -282,6 +400,9 @@ class ds9(object):
     def zoomto(self, zoom):
         self.set("zoom to %e" % (zoom))
 
+
+import atexit
+atexit.register(ds9._purge_tmp_dirs)
 
 
 def _load_logo():
