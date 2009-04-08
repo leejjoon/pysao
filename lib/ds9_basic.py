@@ -16,7 +16,7 @@ class UnsupportedDatatypeException(Exception):
 
 class UnsupportedImageShapeException(Exception):
     pass
-        
+
 
 from subprocess import Popen
 #import os.path
@@ -71,14 +71,14 @@ class ds9(object):
             if tds9 is not None:
                 verbose.report("deleting  ds9", "debug")
                 tds9._purge()
-                
+
         if cls._tmp_dir_list:
             verbose.report("purging remaning temporary dirs", "debug")
             for d in cls._tmp_dir_list:
                 shutil.rmtree(d)
 
 
-    def __init__(self, path="ds9", wait_time=10, quit_ds9_on_del=True):
+    def __init__(self, path=None, wait_time=10, quit_ds9_on_del=True):
         """
         path :path of the ds9
         wait_time : waiting time before error is raised
@@ -93,7 +93,7 @@ class ds9(object):
             self.path = _find_ds9()
         else:
             self.path = path
-            
+
         self.xpa_name, self.ds9_unix_name = self.run_unixonly_ds9_v2(wait_time)
         self.xpa = xpa.xpa(self.xpa_name)
 
@@ -107,7 +107,7 @@ class ds9(object):
         self._helper = ds9_xpa_help.get(self)
 
         self._need_to_be_purged = True
-        
+
 
     def __str__(self):
         pass
@@ -120,7 +120,7 @@ class ds9(object):
             verbose.report("You need to manually delete tmp. dir (%s)" % (self._tmpd_name), level="helpful")
             self._need_to_be_purged = False
             return
-        
+
         if self.numdisp:
             self.numdisp.close()
 
@@ -139,14 +139,14 @@ class ds9(object):
             verbose.report("temporary directory deleted", level="debug")
 
         self._need_to_be_purged = False
-        
-    
+
+
     def __del__(self):
 
         verbose.report("deleteing pysao.ds9", level="debug")
         self._purge()
-            
-        
+
+
     def show_logo(self):
         self.xpa.set("fits", _ds9_python_logo)
 
@@ -154,11 +154,11 @@ class ds9(object):
     def xpa_help(self, xpa_command=None):
         #ds9_xpa_help.help(xpa_command)
         self._helper(xpa_command)
-        
+
 
     def run_unixonly_ds9_v2(self, wait_time):
         """ start ds9 """
-    
+
 
         # when xpaname is parsed for local,
         # the prefix should match the XPA_TMPDIR
@@ -167,7 +167,7 @@ class ds9(object):
 
         # The env variable "XPA_TMPDIR" is set to correct value when ds9 is
         # runned, and also xpa command is called (ie, python process).
-        
+
         # This is a bit of problem when we have multiple instance of ds9.
         #env = os.environ.copy()
         env = os.environ
@@ -177,9 +177,9 @@ class ds9(object):
         verbose.report("temporary directory created (%s)" % (self._tmpd_name,), level="debug")
 
         #print self._tmpd_name
-        
+
         env["XPA_TMPDIR"] = self._tmpd_name
-        
+
         iraf_unix = "%s/.IMT" % self._tmpd_name
 
         try:
@@ -200,7 +200,7 @@ class ds9(object):
             #sts = os.waitpid(p.pid, 0)
 
             # wait until ds9 starts
-            
+
             while wait_time > 0:
                 file_list = os.listdir(self._tmpd_name)
                 if len(file_list)>1:
@@ -224,7 +224,7 @@ class ds9(object):
             self._tmp_dir_list.add(self._tmpd_name)
             self._ds9_instance_list.append(weakref.ref(self))
             self._ds9_process = p
-            
+
         file_list.remove(".IMT")
         xpaname = os.path.join(self._tmpd_name, file_list[0])
 
@@ -247,7 +247,7 @@ class ds9(object):
         if ret is not None:
             raise RuntimeError("The ds9 process is externally killed.")
 
-    
+
     def set(self, param, buf=None):
         """
         XPA set method to ds9 instance
@@ -270,7 +270,7 @@ class ds9(object):
         """
         self._check_ds9_process()
         return self.xpa.get(param)
-        
+
 
     def view(self, img, header=None, frame=None, asFits=False):
         """
@@ -282,21 +282,21 @@ class ds9(object):
         try:
             if frame:
                 self.frame(frame)
-            
+
             self.view_array(img)
 
         except:
             self.frame(_frame_num)
             raise
 
-            
+
 
     def view_array(self, img):
 
         img = numpy.array(img)
         if img.dtype.type == numpy.bool8:
             img = img.astype(numpy.uint8)
-                
+
         try:
             img.shape = img.shape[-2:]
         except:
@@ -310,17 +310,17 @@ class ds9(object):
             byteorder=">"
         else:
             byteorder=img.dtype.byteorder
-            
+
         endianness = {">":",arch=bigendian",
                       "<":",arch=littleendian"}[byteorder]
         #,
         #              "=":"",
         #              "|":""}
-            
+
         (ydim, xdim) = img.shape
         arr_str = img.tostring()
 
-         
+
 
         itemsize = img.itemsize * 8
         try:
@@ -346,9 +346,9 @@ class ds9(object):
         x, y, f, k = r.strip().split()
         x, y = float(x), float(y)
         f = int(f)/100
-        
+
         return x, y, f, k
-    
+
 
     def mark(self, x, y, size, coord="image", group_name=None):
 
@@ -365,10 +365,10 @@ class ds9(object):
                   (coord, x, y, size, tag)
 
         regions = [myregion(x1, y1, size1, coord, group_name) for x1, y1, size1 in _xysize]
-        
+
         self.set_region("\n".join(regions + [""]))
-        
-        
+
+
 
     def load_region(self, region_name):
         #self.set_region(open(region_name).read())
@@ -389,11 +389,11 @@ class ds9(object):
 
     def load_fits(self, fname):
         self.set("file fits %s" % fname)
-            
+
     def panto(self, x, y):
         self.panto_image(x, y)
 
-    def panto_image(self, x, y): 
+    def panto_image(self, x, y):
         """x, y in image coord"""
         self.set("pan to %10.8f %10.8f image" % (x, y)) # (ra, dec))
 
@@ -425,8 +425,8 @@ def test():
     time.sleep(1)
     del ds9
 
-    
+
 if __name__ == "__main__":
     test()
-    
+
 

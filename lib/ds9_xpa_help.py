@@ -14,7 +14,7 @@ _get_xpahelp_tcl_source_tmpl = """
     set xpastr [read $tc]
     close $tc
     unset tc
-    
+
     set tc [open %s "w"]
     puts  $tc $xpastr
     close $tc
@@ -23,8 +23,11 @@ _get_xpahelp_tcl_source_tmpl = """
 
 """
 
-
 def get(ds9):
+    return get_from_zip(ds9)
+
+
+def get_from_tcl(ds9):
     ver = ds9._ds9_version
     if ver not in __help_dict:
         tmpdir = ds9._tmpd_name
@@ -41,11 +44,29 @@ def get(ds9):
 
         ds9.set("source %s" % (f.name))
         f.close()
-        
+
         s = open(html_name).read()
         os.remove(html_name)
 
         __help_dict[ver] = ds9_help(s)
+
+    return __help_dict[ver]
+
+def get_from_zip(ds9):
+    ver = ds9._ds9_version
+    if ver not in __help_dict:
+        path = ds9.path
+        import zipfile
+        zf = zipfile.ZipFile(path)
+        for n in zf.namelist():
+            if n.endswith("xpa.html"):
+                break
+        else:
+            raise RuntimeError("couldn't find xpa.html with in the executable")
+
+        html = zf.read(n)
+
+        __help_dict[ver] = ds9_help(html)
 
     return __help_dict[ver]
 
@@ -55,7 +76,7 @@ import parse_xpahtml
 class ds9_help(object):
     def __init__(self, html_string):
         self._help_data = parse_xpahtml.parse_xpa_help(html_string)
-    
+
     def __call__(self, xpa_command=None):
 
         if xpa_command is None:
