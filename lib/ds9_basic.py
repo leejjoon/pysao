@@ -78,7 +78,8 @@ class ds9(object):
                 shutil.rmtree(d)
 
 
-    def __init__(self, path=None, wait_time=10, quit_ds9_on_del=True):
+    def __init__(self, path=None, wait_time=10, quit_ds9_on_del=True,
+                 load_help_file=True):
         """
         path :path of the ds9
         wait_time : waiting time before error is raised
@@ -104,7 +105,10 @@ class ds9(object):
         self.numdisp = displaydev.ImageDisplayProxy(self.numdisp_dev)
 
         self._ds9_version = self.get("version").strip()
-        self._helper = ds9_xpa_help.get(self)
+        if load_help_file:
+            self._helper = ds9_xpa_help.get(self)
+        else:
+            self._helper = None
 
         self._need_to_be_purged = True
 
