@@ -1,5 +1,6 @@
 import os
 import tempfile
+import pysao.xpa as xpa
 
 class Invalid_Ds9_Xpa_command(Exception):
     pass
@@ -32,9 +33,11 @@ def get(ds9):
         if html is None:
             html = get_from_tcl(ds9)
 
+    if html is None:
+        return None
+    else:
         __help_dict[ver] = ds9_help(html)
-
-    return __help_dict[ver]
+        return __help_dict[ver]
 
 
 
@@ -51,20 +54,28 @@ def get_from_tcl(ds9):
     f.write(_get_xpahelp_tcl_source_tmpl % (html_name))
     f.flush()
 
-    ds9.set("source %s" % (f.name))
-    f.close()
+    try:
+        ds9.set("source %s" % (f.name))
+    except xpa.XpaException:
+        s = None
+    else:
+        s = open(html_name).read()
+    finally:
+        f.close()
 
-    s = open(html_name).read()
-    os.remove(html_name)
+    if os.path.exists(html_name):
+        os.remove(html_name)
 
     return s
 
 
-import os.path
 def check_zip(path):
     if os.path.exists(path):
         import zipfile
-        zf = zipfile.ZipFile(path)
+        try:
+            zf = zipfile.ZipFile(path)
+        except zipfile.BadZipfile:
+            return None
         for n in zf.namelist():
             if n.endswith("xpa.html"):
                 return zf.read(n)
