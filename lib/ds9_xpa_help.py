@@ -33,11 +33,12 @@ def get(ds9):
         if html is None:
             html = get_from_tcl(ds9)
 
-    if html is None:
-        return None
-    else:
+        if html is None:
+            return None
+
         __help_dict[ver] = ds9_help(html)
-        return __help_dict[ver]
+
+    return __help_dict[ver]
 
 
 
