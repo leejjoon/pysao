@@ -77,7 +77,7 @@ def mask_from_region(fitsname, region_string):
 
 
 
-def ds9_get_mask_from_curent_region(ds9):
+def ds9_get_mask_from_current_region(ds9):
     shape = map(int, ds9.get("fits size").split())
     reg = ds9.get("regions -format ds9 -system image")
 
