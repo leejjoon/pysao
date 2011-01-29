@@ -30,14 +30,15 @@ p_xpaset_wo_ds9 = re.compile(r"\$xpaset\s+([\s\w\d\-\+:.{}]*)(\s*(#.*)?)")
 
 p_xpaset_w_echo = re.compile(r"\$echo\s+(.+)\s+\|\s+xpaset\s+ds9\s+(.*)")
 
-p_xpaset_w_cat = re.compile(r"\$cat\s+(.+)\s+\|\s+xpaset\s+ds9\s+(.*)")
+# We use "xpa[sg]et" due to the bug in the xpa.html
+p_xpaset_w_cat = re.compile(r"\$cat\s+(.+)\s+\|\s+xpa[sg]et\s+ds9\s+(.*)")
 
 
 from tokenize import generate_tokens, COMMENT
 
 # comments are detected using tokenize.generate_tokens
 def takeout_comment(s):
-    
+
     g = generate_tokens(StringIO.StringIO(s).readline)
     c = [tokval for toknum, tokval, _, _, _  in g if toknum == COMMENT]
     if c:
@@ -93,14 +94,19 @@ class parser(htmllib.HTMLParser):
         self.help_strings = dict()
 
         self.fmtr.writer = self.nullwriter
-        
+
         self._current_help = ""
         self.h4 = False
-        
+
+
+    # For older version of ds9 (e.g., ds9_v5.6), the xpa.html uses
+    # <h4>, but in the later versions (e.g., v6.2), they use <a
+    # name="#..">.
+
     def start_h4(self, attrs):
         self.h4 = True
         self.h4_title = ""
-        
+
     def end_h4(self):
         #print self.h4_title
 
@@ -108,8 +114,19 @@ class parser(htmllib.HTMLParser):
             f = StringIO.StringIO("")
             self.help_strings[self.h4_title] = f
             self.fmtr.writer = formatter.DumbWriter(f, 800)
-            
+
         self.h4 = False
+
+
+    def start_a(self, attrs):
+        dattrs = dict(attrs)
+        if "name" in dattrs:
+
+            h4_title = dattrs["name"]
+
+            f = StringIO.StringIO("")
+            self.help_strings[h4_title] = f
+            self.fmtr.writer = formatter.DumbWriter(f, 800)
 
 
     def handle_data(self, d):
@@ -120,22 +137,27 @@ class parser(htmllib.HTMLParser):
 
     def get_help(self):
         r = dict()
-        
+
         for k, v in self.help_strings.items():
             s = v.getvalue()
             v.close()
 
-            ## Syntax : 
+            ## Syntax :
             ss = p_sy.split(s)
-            if len(ss) != 2:
-                print k
-                r[k] = s
-            else:
+
+            if len(ss) == 1:
+                # a special case for "psprint" with only description.
+                #print "whats going on?", k, ss
+                expl = ss[0].replace("\240", " ")
+                syntax = ""
+                example = ""
+
+            elif len(ss) == 2:
                 expl, _rest = ss
                 # replace "nbsp"
                 expl = expl.replace("\240", " ")
-                
-                ## Example : 
+
+                ## Example :
                 syntax, example = p_ex.split(_rest)
 
                 # replace "nbsp"
@@ -146,8 +168,17 @@ class parser(htmllib.HTMLParser):
                 ex_ = [_convert_syntax(l.strip()) for l in example.split("\n")]
                 example = "\n".join(ex_)
 
-                r[k] = dict(expl=expl, syntax=syntax, example=example)
-                              
+
+            else:
+                print "ignoring %s : failed to pars." % k
+                continue
+
+            # fix expl
+            filtered_expl = [l for l in expl.split("\n") if l.strip() and l.strip() != k]
+
+            #expl
+            r[k] = dict(expl="\n".join(filtered_expl), syntax=syntax, example=example)
+
             #print h.help_strings["header"].getvalue().replace("\240"," ")
         return r
 
@@ -163,6 +194,6 @@ def parse_xpa_help(s):
     return r
 
 if __name__ == "__main__":
-    s = open("xpa.html").read()
+    s = open("xpa_v5.6.html").read()
     r = parse_xpa_help(s)
-    
+

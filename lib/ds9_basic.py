@@ -26,8 +26,6 @@ import numpy
 from tempfile import mkdtemp
 
 def _find_ds9():
-    import os.path
-    import os
     path="ds9"
     for dirname in os.getenv("PATH").split(":"):
         possible = os.path.join(dirname, path)
