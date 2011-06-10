@@ -77,7 +77,7 @@ class ds9(object):
 
 
     def __init__(self, path=None, wait_time=10, quit_ds9_on_del=True,
-                 load_help_file=True):
+                 load_help_file=None):
         """
         path :path of the ds9
         wait_time : waiting time before error is raised
@@ -109,6 +109,15 @@ class ds9(object):
         self.numdisp = displaydev.ImageDisplayProxy(self.numdisp_dev)
 
         self._ds9_version = self.get("version").strip()
+
+        if load_help_file is None:
+            import sys
+            if sys.version_info[0] >= 3:
+                load_help_file = False
+            else:
+                load_help_file = True
+                
+        
         if load_help_file:
             self._helper = unicode(ds9_xpa_help.get(self))
         else:
