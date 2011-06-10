@@ -36,7 +36,7 @@ def get(ds9):
         if html is None:
             return None
 
-        __help_dict[ver] = ds9_help(html)
+        __help_dict[ver] = ds9_help(unicode(html))
 
     return __help_dict[ver]
 

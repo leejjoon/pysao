@@ -119,19 +119,25 @@ def _open(imtdev=None):
             except:
                 pass
         raise IOError("Cannot attach to display program. Verify that one is running...")
+
+    try:
+       imtdev = imtdev.encode()
+    except AttributeError:
+       pass
+
     # substitute user id in name (multiple times) if necessary
-    nd = len(imtdev.split("%d"))
+    nd = len(imtdev.split(b"%d"))
     if nd > 1:
         dev = imtdev % ((abs(os.getpid()),)*(nd-1))
     else:
         dev = imtdev
-    fields = dev.split(":")
+    fields = dev.split(b":")
     domain = fields[0]
-    if domain == "unix" and len(fields) == 2:
+    if domain == b"unix" and len(fields) == 2:
         return UnixImageDisplay(fields[1])
-    elif domain == "fifo" and len(fields) == 3:
+    elif domain == b"fifo" and len(fields) == 3:
         return FifoImageDisplay(fields[1],fields[2])
-    elif domain == "inet" and (2 <= len(fields) <= 3):
+    elif domain == b"inet" and (2 <= len(fields) <= 3):
         try:
             port = int(fields[1])
             if len(fields) == 3:

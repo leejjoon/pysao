@@ -81,8 +81,10 @@ def _convert_syntax(l):
 
     return r
 
-
-import htmllib
+try:
+    import html.parser as htmllib
+except ImportError:
+    import htmllib
 
 class parser(htmllib.HTMLParser):
     def __init__(self):
