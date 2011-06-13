@@ -16,8 +16,8 @@ elif hasattr(pyfits.core, "_padLength"):
     padLength = pyfits.core._padLength
 elif hasattr(pyfits.core, "_padLength"):
     padLength = pyfits.core._padLength
-elif hasattr(pyfits.card, "_pad"):
-    padLength = pyfits.card._pad
+elif hasattr(pyfits.util, "_pad_length"):
+    padLength = pyfits.util._pad_length
 else:
     raise ImportError
 
