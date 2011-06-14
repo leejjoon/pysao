@@ -1,6 +1,7 @@
 import os
 import tempfile
-import pysao.xpa as xpa
+#import pysao.xpa as xpa
+import pysao.xpa_pyds9 as xpa
 
 class Invalid_Ds9_Xpa_command(Exception):
     pass

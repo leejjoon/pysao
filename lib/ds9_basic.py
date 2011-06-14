@@ -7,7 +7,8 @@ import weakref
 import displaydev_lite as displaydev
 
 
-import pysao.xpa as xpa
+#import pysao.xpa as xpa
+import pysao.xpa_pyds9 as xpa
 import pysao.ds9_xpa_help as ds9_xpa_help
 from pysao.verbose import verbose
 
