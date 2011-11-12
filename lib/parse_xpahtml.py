@@ -1,7 +1,15 @@
-from pysao.verbose import verbose
+from verbose import verbose
 
-import StringIO
+#import StringIO
 import formatter
+
+import sys
+if sys.version_info[0] >= 3:
+    import io as StringIO
+    #self._pswriter = io.StringIO()
+else:
+    import StringIO
+    #self._pswriter = cStringIO.StringIO()
 
 
 import re
@@ -82,7 +90,11 @@ def _convert_syntax(l):
     return r
 
 
-import htmllib
+import sys
+if sys.version_info[0] < 3:
+    import htmllib
+else:
+    import html.parser as htmllib
 
 class parser(htmllib.HTMLParser):
     def __init__(self):
@@ -194,6 +206,6 @@ def parse_xpa_help(s):
     return r
 
 if __name__ == "__main__":
-    s = open("xpa_v5.6.html").read()
+    s = open("../tt.html").read()
     r = parse_xpa_help(s)
 

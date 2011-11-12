@@ -1,7 +1,12 @@
-from distutils.core import setup
-from distutils.extension import Extension
+from distribute_setup import use_setuptools
+use_setuptools()
 
-import sys
+from setuptools import setup, Extension
+
+#from distutils.core import setup
+#from distutils.extension import Extension
+
+#import sys
  
 
 def main():
@@ -19,11 +24,12 @@ def main():
           package_dir={'pysao':'lib'},
           #package_data={'pysao': ["ds9_xpa_help.pickle"]},
           
-          ext_modules=[ Extension("pysao.xpa",       ["xpa.c"],
+          ext_modules=[ Extension("pysao.xpa",       ["xpa.pyx"],
                                   include_dirs=['./xpalib'],
                                   library_dirs=['./xpalib'],
                                   libraries=['xpa']),
                         ],
+          use_2to3 = True,
           )
 
 if __name__ == "__main__":

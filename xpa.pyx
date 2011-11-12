@@ -5,10 +5,17 @@ cdef extern from "stdio.h":
 cdef extern from "stdlib.h":
     void free(void *)
 
+cdef extern from "string.h":
+    void *memcpy(void *s1, void *s2, int n)
+ 
 cdef extern from "Python.h":
-    object PyString_FromStringAndSize(char *s, int len)
-    object PyString_FromString(char *s)
-    int PyString_Size(object s)
+    object PyBytes_FromStringAndSize(char *s, int len)
+    object PyBytes_FromString(char *s)
+    int PyBytes_Size(object s)
+
+    ctypedef int size_t
+    void* PyMem_Malloc(size_t n)
+    void PyMem_Free(void* buf)
 
 
 cdef extern from "xpa.h":
@@ -51,7 +58,7 @@ def nslookup(template="*"):
         
     for i from 0 <= i < n:
         #print "%s %s %s %s" % (classes[i], names[i], methods[i], infos[i])
-        s = PyString_FromString(methods[i])
+        s = PyBytes_FromString(methods[i])
         l.append(s)
         free(classes[i])
         free(names[i])
@@ -82,17 +89,17 @@ cdef _get(XPARec *xpa, char *template, char *param):
     cdef char *bufs[1]
     cdef char *names[1]
     cdef char *messages[1]
-    
-    got = XPAGet(NULL, template, param, NULL, bufs, lens, names, messages, 1);
+
+    got = XPAGet(NULL, template, param, NULL, bufs, lens, names, messages, 1)
 
     if got == 1 and messages[0] == NULL:
-        buf = PyString_FromStringAndSize( bufs[0], lens[0] )
+        buf = PyBytes_FromStringAndSize( bufs[0], lens[0] )
         #print buf
         free(bufs[0])
-        free(names[0]);
+        free(names[0])
     else:
         if messages[0] != NULL:
-            mesg = PyString_FromString( messages[0] )
+            mesg = PyBytes_FromString( messages[0] )
             free(messages[0]);
         else:
             mesg = "Unknown XPA Error : XPAGet returned 0!"
@@ -118,24 +125,24 @@ cdef _set(XPARec *xpa, char *template, char *param, buf):
     cdef char *messages[1]
 
     if buf:
-        length = PyString_Size(buf)
+        length = PyBytes_Size(buf)
     else:
         buf = ""
         length = 0
         
-    got = XPASet(xpa, template, param, NULL, buf, length, names, messages, 1);
+    got = XPASet(xpa, template, param, NULL, buf, length, names, messages, 1)
 
     if got == 1 and messages[0] == NULL:
-        #buf = PyString_FromStringAndSize( bufs[0], lens[0] )
+        #buf = PyBytes_FromStringAndSize( bufs[0], lens[0] )
         ##print buf
         #free(bufs[0])
-        free(names[0]);
+        free(names[0])
     else:
         if messages[0] != NULL:
-            mesg = PyString_FromString( messages[0] )
+            mesg = PyBytes_FromString( messages[0] )
             free(messages[0]);
         else:
-            mesg = "Unknown XPA Error (XPAGet returned 0)!"
+            mesg = "Unknown XPA Error (XPASet returned 0)!"
 
         if ( names[0] ):
             free(names[0])
@@ -149,13 +156,20 @@ def set(template="*", param="", buf=None):
 cdef class xpa:
     cdef XPARec *_xpa
     cdef char *_template
-    
+
+    cdef _set_template(self, template):
+        cdef int n
+        n = PyBytes_Size(template)
+        self._template = <char *>PyMem_Malloc(n+1)
+        memcpy(self._template, <char *>template, n+1)
+        
     def __init__(self, template):
-        self._template = template
+        self._set_template(template)
         self._xpa = XPAOpen("")
 
     def __del__(self):
         XPAClose(self._xpa)
+        PyMem_Free(self._template)
         
     def get(self, param=""):
         return _get(self._xpa, self._template, param)

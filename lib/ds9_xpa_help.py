@@ -84,6 +84,8 @@ def check_zip(path):
     return None
 
 
+import sys
+
 def get_from_zip(ds9):
     path = ds9.path
 
@@ -91,7 +93,10 @@ def get_from_zip(ds9):
     if html is None:
         html = check_zip(path)
 
-    return html
+    if sys.version_info[0] >= 3:
+        return html.decode()
+    else:
+        return html
 
 
 

@@ -16,6 +16,8 @@ elif hasattr(pyfits, "_ImageBaseHDU"):
     ImageBaseHDU = pyfits._ImageBaseHDU
 elif hasattr(pyfits.core, "_ImageBaseHDU"):
     ImageBaseHDU = pyfits.core._ImageBaseHDU
+elif hasattr(pyfits.hdu.image, "_ImageBaseHDU"):
+    ImageBaseHDU = pyfits.hdu.image._ImageBaseHDU
 else:
     raise ImportError
 
