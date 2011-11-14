@@ -8,30 +8,13 @@ import pyfits
 
 Card = pyfits.Card
 
-if hasattr(pyfits, "padLength"):
-    padLength = pyfits.padLength
-elif hasattr(pyfits, "_padLength"):
-    padLength = pyfits._padLength
-elif hasattr(pyfits.core, "_padLength"):
-    padLength = pyfits.core._padLength
-elif hasattr(pyfits.core, "_padLength"):
-    padLength = pyfits.core._padLength
-elif hasattr(pyfits.util, "_pad_length"):
-    padLength = pyfits.util._pad_length
-else:
-    raise ImportError
 
-if hasattr(pyfits, "ImageBaseHDU"):
-    ImageBaseHDU = pyfits.ImageBaseHDU
-elif hasattr(pyfits, "_ImageBaseHDU"):
-    ImageBaseHDU = pyfits._ImageBaseHDU
-elif hasattr(pyfits.core, "_ImageBaseHDU"):
-    ImageBaseHDU = pyfits.core._ImageBaseHDU
-elif hasattr(pyfits.hdu.image, "_ImageBaseHDU"):
-    ImageBaseHDU = pyfits.hdu.image._ImageBaseHDU
-else:
-    raise ImportError
+# copied from pyftis/util.py
+BLOCK_SIZE = 2880 # the FITS block size
+def _pad_length(stringlen):
+    """Bytes needed to pad the input stringlen to the next FITS block."""
 
+    return (BLOCK_SIZE - (stringlen % BLOCK_SIZE)) % BLOCK_SIZE
 
 def _pad(input):
     """Pad balnk space to the input string to be multiple of 80."""
@@ -57,35 +40,24 @@ def fits2string(hdu):
     
     blocks = []
     blocks.append( repr(hdu.header.ascard).encode() + _pad(b'END') )
-    blocks.append( padLength(len(blocks[0]))*b' ')
+    blocks.append( _pad_length(len(blocks[0]))*b' ')
 
     if hdu.data is not None:
 
         # if image, need to deal with byte order
-        if isinstance(hdu, ImageBaseHDU):
-            #output = hdu.data.newbyteorder('big')
-
-            if 1: #numpy
-                dt = hdu.data.dtype.newbyteorder(">")
-                output = hdu.data.astype(dt)
-
-            #print output.dtype.byteorder
-            #if hdu.data.dtype.base.byteorder == "<":
-            #    output = hdu.data.byteswap(False) # False : returns copy
-            ##elif hdu.data.dtype.byteorder == ">":
-            #else:
-            #    output = hdu.data
+        if isinstance(hdu, pyfits.ImageHDU) or isinstance(hdu, pyfits.PrimaryHDU):
+            dt = hdu.data.dtype.newbyteorder(">")
+            output = hdu.data.astype(dt)
 
         else:
-            raise "input should be an instance of ImageBaseHDU"
+            raise ValueError("input should be an instance of ImageHDU or PrimaryHDU")
 
         blocks.append( output.tostring() )
-        #_size = output.nelements() * output._itemsize
         _size = output.nbytes
 
         # pad the FITS data block
         if _size > 0:
-            blocks.append(padLength(_size)*b'\0')
+            blocks.append(_pad_length(_size)*b'\0')
 
     return b"".join(blocks)
 
