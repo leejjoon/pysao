@@ -5,7 +5,8 @@ class XPA(xpa):
         xpa.__init__(self, template.encode("ascii"))
 
     def get(self, param=""):
-        return xpa.get(self, param.encode("ascii"))
+        r = xpa.get(self, param.encode("ascii"))
+        return r.decode()
 
 
     def set(self, param="", buf=None):

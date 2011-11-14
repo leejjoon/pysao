@@ -127,7 +127,7 @@ cdef _set(XPARec *xpa, char *template, char *param, buf):
     if buf:
         length = PyBytes_Size(buf)
     else:
-        buf = ""
+        buf = b""
         length = 0
         
     got = XPASet(xpa, template, param, NULL, buf, length, names, messages, 1)
@@ -171,11 +171,11 @@ cdef class xpa:
         XPAClose(self._xpa)
         PyMem_Free(self._template)
         
-    def get(self, param=""):
+    def get(self, param=b""):
         return _get(self._xpa, self._template, param)
 
 
-    def set(self, param="", buf=None):
+    def set(self, param=b"", buf=None):
         _set(self._xpa, self._template, param, buf)
 
 

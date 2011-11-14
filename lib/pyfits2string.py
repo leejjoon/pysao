@@ -14,9 +14,10 @@ elif hasattr(pyfits, "_padLength"):
     padLength = pyfits._padLength
 elif hasattr(pyfits.core, "_padLength"):
     padLength = pyfits.core._padLength
+elif hasattr(pyfits.core, "_padLength"):
+    padLength = pyfits.core._padLength
 elif hasattr(pyfits.util, "_pad_length"):
     padLength = pyfits.util._pad_length
-
 else:
     raise ImportError
 
@@ -42,12 +43,12 @@ def _pad(input):
         if strlen == 0:
             return input
         else:
-            return input + ' ' * (Card.length-strlen)
+            return input + b' ' * (Card.length-strlen)
 
     # minimum length is 80
     else:
         strlen = _len % Card.length
-        return input + ' ' * (Card.length-strlen)
+        return input + b' ' * (Card.length-strlen)
     
 def fits2string(hdu):
     """ convert fits HDU into string"""
@@ -55,8 +56,8 @@ def fits2string(hdu):
     hdu.update_header()
     
     blocks = []
-    blocks.append( repr(hdu.header.ascard) + _pad('END') )
-    blocks.append( padLength(len(blocks[0]))*' ')
+    blocks.append( repr(hdu.header.ascard).encode() + _pad(b'END') )
+    blocks.append( padLength(len(blocks[0]))*b' ')
 
     if hdu.data is not None:
 
@@ -84,7 +85,7 @@ def fits2string(hdu):
 
         # pad the FITS data block
         if _size > 0:
-            blocks.append(padLength(_size)*'\0')
+            blocks.append(padLength(_size)*b'\0')
 
-    return "".join(blocks)
+    return b"".join(blocks)
 
