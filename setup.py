@@ -22,13 +22,24 @@ else:
 import os.path
 XPALIB_DIR = "xpa-2.1.13"
 
-xpalib_files = """xpa.c xpaio.c command.c acl.c remote.c
-                  clipboard.c port.c tcp.c client.c word.c
-                  xalloc.c find.c xlaunch.c timedconn.c
+xpalib_files = """xpa.c
+                  xpaio.c
+                  command.c
+                  acl.c
+                  remote.c
+                  clipboard.c
+                  port.c
+                  tcp.c
+                  client.c
+                  word.c
+                  xalloc.c
+                  find.c
+                  xlaunch.c
+                  timedconn.c
                   """.split()
 
 xpa_sources = ["xpa.pyx"]  + [os.path.join(XPALIB_DIR, c) \
-                              for c in open("files.txt").read().split()]
+                              for c in xpalib_files]
 
 xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
                                         HAVE_STDLIB_H
