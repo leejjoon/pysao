@@ -30,7 +30,7 @@ def get_wcs_headers(h):
 
 
 
-import ds9_basic
+import pysao.ds9_basic as ds9_basic
 
 class ds9(ds9_basic.ds9):
 

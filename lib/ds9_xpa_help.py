@@ -1,3 +1,4 @@
+from __future__ import print_function
 import os
 import tempfile
 import pysao.xpa as xpa
@@ -100,7 +101,7 @@ def get_from_zip(ds9):
 
 
 
-import parse_xpahtml
+import pysao.parse_xpahtml as parse_xpahtml
 
 class ds9_help(object):
     def __init__(self, html_string):
@@ -121,22 +122,22 @@ class ds9_help(object):
         for comm in xpa_command_names:
             expl = self._help_data[comm]["expl"]
             sd = expl.split(".")[0].strip()
-            print "[%s] %s" % (comm, sd)
+            print("[%s] %s" % (comm, sd))
 
     def _help_all(self):
         xpa_command_names = sorted(self._help_data.keys())
 
         for comm in xpa_command_names:
-            print "[%s]" % (comm)
+            print("[%s]" % (comm))
             self._help_command(comm)
 
     def _help_command(self, xpa_command_name):
         if xpa_command_name not in self._help_data:
             raise Invalid_Ds9_Xpa_command()
 
-        print ""
-        print self._help_data[xpa_command_name]["expl"]
-        print "<Syntax>"
-        print self._help_data[xpa_command_name]["syntax"]
-        print "<Example>"
-        print self._help_data[xpa_command_name]["example"]
+        print("")
+        print(self._help_data[xpa_command_name]["expl"])
+        print("<Syntax>")
+        print(self._help_data[xpa_command_name]["syntax"])
+        print("<Example>")
+        print(self._help_data[xpa_command_name]["example"])

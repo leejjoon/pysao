@@ -1,3 +1,4 @@
+from __future__ import print_function
 """
 Copied from matplotlib.
 """
@@ -55,7 +56,8 @@ class Verbose:
 
         """
         if self.ge(level):
-            print >>self.fileo, s
+            #print >>self.fileo, s
+            self.fileo.write(s+"\n")
             return True
         return False
 

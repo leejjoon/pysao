@@ -1,16 +1,15 @@
-
 import os
 import time
 #from sets import Set
 import weakref
 
-import displaydev_lite as displaydev
+import pysao.displaydev_lite as displaydev
 
 
 #import pysao.xpa as xpa
 import pysao.xpa_wrap as xpa
 import pysao.ds9_xpa_help as ds9_xpa_help
-from pysao.verbose import verbose
+from pysao.verbose import verbose as verbose
 
 class UnsupportedDatatypeException(Exception):
     pass
@@ -25,6 +24,7 @@ from subprocess import Popen
 import numpy
 
 from tempfile import mkdtemp
+import shutil
 
 def _find_ds9():
     path="ds9"
@@ -63,7 +63,6 @@ class ds9(object):
         are not prperly deleted, i.e., temporary directories are not
         deleted. This is a work around for that.
         """
-        import shutil
         for tds9_ref in cls._ds9_instance_list:
             verbose.report("purging remaning ds9 instances", "debug")
             tds9 = tds9_ref()
@@ -130,11 +129,12 @@ class ds9(object):
         try:
             if self._ds9_process.poll() is None:
                 self.set("quit")
-        except xpa.XpaException, err:
+        except xpa.XpaException as err:
             verbose.report("Warning : " + err.message)
 
         try:
-            os.rmdir(self._tmpd_name)
+            shutil.rmtree(self._tmpd_name)
+            #os.rmdir(self._tmpd_name)
             self._tmp_dir_list.remove(self._tmpd_name)
         except OSError:
             verbose.report("Warning : couldn't delete the temporary directory (%s)" % (self._tmpd_name,))
@@ -303,7 +303,7 @@ class ds9(object):
         try:
             img.shape = img.shape[-2:]
         except:
-            raise UnsupportedImageShapeException, repr(img.shape)
+            raise UnsupportedImageShapeException(repr(img.shape))
 
 
         if img.dtype.byteorder in ["=", "|"]:
@@ -330,7 +330,7 @@ class ds9(object):
             bitpix = self._ImgCode[img.dtype.name]
 
             #bitpix = pyfits.core._ImageBaseHDU.ImgCode[img.dtype.name]
-        except KeyError, a:
+        except KeyError as a:
             raise UnsupportedDatatypeException(a)
 
 
@@ -420,16 +420,14 @@ _ds9_python_logo = _load_logo()
 
 
 def test():
-    ds9 = ds9()
+    _ds9 = ds9()
     import time
     time.sleep(1)
-    d = reshape(numpy.arange(100), (10,10))
-    ds9.view(d)
+    d = numpy.reshape(numpy.arange(100), (10,10))
+    _ds9.view(d)
     time.sleep(1)
-    del ds9
+    del _ds9
 
 
 if __name__ == "__main__":
     test()
-
-

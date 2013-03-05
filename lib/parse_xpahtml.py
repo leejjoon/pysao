@@ -1,4 +1,4 @@
-from verbose import verbose
+from pysao.verbose import verbose
 
 #import StringIO
 import formatter
@@ -6,10 +6,8 @@ import formatter
 import sys
 if sys.version_info[0] >= 3:
     import io as StringIO
-    #self._pswriter = io.StringIO()
 else:
     import StringIO
-    #self._pswriter = cStringIO.StringIO()
 
 
 import re
@@ -54,7 +52,7 @@ def takeout_comment(s):
     else:
         return s, ""
 
-def _convert_syntax(l):
+def _convert_example(l):
 
     l, c = takeout_comment(l)
     # SET
@@ -90,26 +88,79 @@ def _convert_syntax(l):
     return r
 
 
-import sys
-if sys.version_info[0] < 3:
-    import htmllib
-else:
-    import html.parser as htmllib
+def _reindent_syntax(syntax, k):
+    ll = []
+    indent = " " * (len(k)+1)
+    for l1 in syntax.split("\n"):
+        l1 = l1.lstrip()
+        if l1.startswith(k):
+            ll.append(l1)
+        else:
+            ll.append(indent+l1)
+    return "\n".join(ll)
 
-class parser(htmllib.HTMLParser):
-    def __init__(self):
+
+import sys
+
+if sys.version_info[0] < 3:
+    #import htmllib
+    import HTMLParser
+    from htmlentitydefs import name2codepoint
+else:
+    import html.parser as HTMLParser
+    from html.entities import name2codepoint
+
+
+class Parser(HTMLParser.HTMLParser):
+    def __init__(self, **kwargs):
 
         self.nullwriter = formatter.NullWriter()
-        self.fmtr = formatter.AbstractFormatter(self.nullwriter)
-        htmllib.HTMLParser.__init__(self, self.fmtr)
+        self.formatter = formatter.AbstractFormatter(self.nullwriter)
+        HTMLParser.HTMLParser.__init__(self,  **kwargs)
 
         self.help_strings = dict()
 
-        self.fmtr.writer = self.nullwriter
+        self.formatter.writer = self.nullwriter
 
         self._current_help = ""
         self.h4 = False
 
+        self.saved_data = ""
+
+    def handle_starttag(self, tag, attrs):
+        if tag == "h4":
+            self.start_h4(attrs)
+        elif tag == "a":
+            self.start_a(attrs)
+        elif tag == "pre":
+            self.start_pre(attrs)
+        elif tag == "br":
+            self.do_br(attrs)
+
+    def handle_endtag(self, tag):
+        if tag == "h4":
+            self.end_h4()
+        elif tag == "pre":
+            self.end_pre()
+        elif tag in ["p", "tt"]:
+            d = self.flush_data()
+            self.formatter.add_literal_data(d)
+            self.formatter.add_literal_data("\n")
+
+        #self.saved_data = ""
+
+    def handle_entityref(self, name):
+        if name == "nbsp":
+            c = " "
+        else:
+            c = chr(name2codepoint[name])
+        self.saved_data += c
+
+    def handle_data(self, d):
+        if self.h4:
+            self.h4_title = self.h4_title + d.strip()
+        else:
+            self.saved_data += d
 
     # For older version of ds9 (e.g., ds9_v5.6), the xpa.html uses
     # <h4>, but in the later versions (e.g., v6.2), they use <a
@@ -119,8 +170,18 @@ class parser(htmllib.HTMLParser):
         self.h4 = True
         self.h4_title = ""
 
+
+    def flush_data(self):
+        d = self.saved_data
+        self.saved_data = ""
+        return d
+
+    def do_br(self, attrs):
+        d = self.flush_data()
+        self.formatter.add_flowing_data(d)
+        self.formatter.end_paragraph(0)
+
     def end_h4(self):
-        #print self.h4_title
 
         if self.h4_title:
             f = StringIO.StringIO("")
@@ -138,14 +199,7 @@ class parser(htmllib.HTMLParser):
 
             f = StringIO.StringIO("")
             self.help_strings[h4_title] = f
-            self.fmtr.writer = formatter.DumbWriter(f, 800)
-
-
-    def handle_data(self, d):
-        if self.h4:
-            self.h4_title = self.h4_title + d.strip()
-        else:
-            htmllib.HTMLParser.handle_data(self, d)
+            self.formatter.writer = formatter.DumbWriter(f, 800)
 
     def get_help(self):
         r = dict()
@@ -166,46 +220,38 @@ class parser(htmllib.HTMLParser):
 
             elif len(ss) == 2:
                 expl, _rest = ss
-                # replace "nbsp"
-                expl = expl.replace("\240", " ")
 
                 ## Example :
                 syntax, example = p_ex.split(_rest)
 
-                # replace "nbsp"
-                syntax = syntax.replace("\240", " ")
-                example = example.replace("\240", " ")
+                syntax = _reindent_syntax(syntax, k)
 
-
-                ex_ = [_convert_syntax(l.strip()) for l in example.split("\n")]
+                ex_ = [_convert_example(l.strip()) for l
+                       in example.split("\n") if l.strip()]
                 example = "\n".join(ex_)
 
 
             else:
-                print "ignoring %s : failed to pars." % k
+                verbose.report("ignoring %s : failed to parse." % k)
                 continue
 
             # fix expl
-            filtered_expl = [l for l in expl.split("\n") if l.strip() and l.strip() != k]
+            extra_kewords = ["cat", "quit", "pmagnifier"]
+            filtered_expl = [l1 for l in expl.split("\n")
+                             for l1 in [l.strip()]
+                             if l1 and l1 != k and l1 not in extra_kewords]
 
             #expl
-            r[k] = dict(expl="\n".join(filtered_expl), syntax=syntax, example=example)
+            r[k] = dict(expl=" ".join(filtered_expl), syntax=syntax, example=example)
 
-            #print h.help_strings["header"].getvalue().replace("\240"," ")
         return r
 
 
-#open("xpa.html").read()
 def parse_xpa_help(s):
-    h = parser()
+    h = Parser()
 
     h.feed(s)
     h.close()
     r = h.get_help()
 
     return r
-
-if __name__ == "__main__":
-    s = open("../tt.html").read()
-    r = parse_xpa_help(s)
-

@@ -7,7 +7,7 @@ from setuptools import setup, Extension
 #from distutils.extension import Extension
 
 #import sys
- 
+
 
 def main():
     #dolocal()
@@ -23,13 +23,13 @@ def main():
           packages = ['pysao'],
           package_dir={'pysao':'lib'},
           #package_data={'pysao': ["ds9_xpa_help.pickle"]},
-          
+
           ext_modules=[ Extension("pysao.xpa",       ["xpa.pyx"],
                                   include_dirs=['./xpalib'],
                                   library_dirs=['./xpalib'],
                                   libraries=['xpa']),
                         ],
-          use_2to3 = True,
+          #use_2to3 = True,
           )
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
-"""displaydev_lite.py: 
+from __future__ import print_function
+"""displaydev_lite.py:
     strip-down version of displaydev.py from numdisplay module
 """
 
@@ -39,6 +40,7 @@ import os, socket, struct
 import numpy as n
 import string
 
+
 try:
     # Only try to import this on Unix-compatible systems,
     # since Win platforms does not have the 'fcntl' library.
@@ -49,7 +51,7 @@ try:
         FCNTL = fcntl
     else:
         import FCNTL
-except ImportError, error:
+except ImportError as error:
     fcntl = None
     # set a default that will be compatible with Win platform
     os.O_NDELAY = 0
@@ -58,14 +60,14 @@ iraffunctions = None
 
 try:
     SOCKTYPE = socket.AF_UNIX
-except AttributeError, error:
+except AttributeError as error:
     SOCKTYPE = socket.AF_INET
 
 SZ_BLOCK = 16384
 
 _default_imtdev = ("unix:/tmp/.IMT%d", "fifo:/dev/imt1i:/dev/imt1o","inet:5137")
 _default_fbconfig = 3
-   
+
 
 def _open(imtdev=None):
 
@@ -150,21 +152,21 @@ class ImageDisplay:
     """Interface to IRAF-compatible image display"""
 
     # constants for IIS Protocol header packets
-    _IIS_READ =   0100000
-    _IIS_WRITE =  0400000
-    _COMMAND =    0100000
-    _PACKED =     0040000
-    _IMC_SAMPLE = 0040000
-    
-    _MEMORY = 01
-    _LUT = 02
-    _FEEDBACK = 05
-    _IMCURSOR = 020
-    _WCS = 021
-    
+    _IIS_READ =   0o100000
+    _IIS_WRITE =  0o400000
+    _COMMAND =    0o100000
+    _PACKED =     0o040000
+    _IMC_SAMPLE = 0o040000
+
+    _MEMORY = 0o1
+    _LUT = 0o2
+    _FEEDBACK = 0o5
+    _IMCURSOR = 0o20
+    _WCS = 0o21
+
     _SZ_IMCURVAL = 160
     _SZ_WCSBUF = 320
-    
+
     def __init__(self):
         # Flag indicating that readCursor request is active.
         # This is used to handle interruption of readCursor before
@@ -172,10 +174,10 @@ class ImageDisplay:
         # leave image display in a bad state.
         self._inCursorMode = 0
 
-        
-        self.frame = 1        
-        
-        
+
+        self.frame = 1
+
+
     def readCursor(self,sample=0):
 
         """Read image cursor value for this image display
@@ -198,16 +200,16 @@ class ImageDisplay:
 
 
     def setCursor(self,x,y,wcs):
-    
+
         """ Moves cursor to specified position in frame. """
-    
+
         self._writeHeader(self._IIS_WRITE, self._IMCURSOR,0,x,y,wcs,0)
 
-            
+
     def _writeHeader(self,tid,subunit,thingct,x,y,z,t):
 
         """Write request to image display"""
-        
+
         a = n.array([tid,thingct,subunit,0,x,y,z,t],dtype=n.uint16)
         # Compute the checksum
         sum = n.add.reduce(a)
@@ -267,7 +269,7 @@ class UnixImageDisplay(ImageDisplay):
             self._socket = socket.socket(family, type)
             self._socket.connect(filename)
             self._fdin = self._fdout = self._socket.fileno()
-        except socket.error, error:
+        except socket.error as error:
             raise IOError("Cannot open image display")
 
     def close(self):
@@ -309,7 +311,7 @@ class ImageDisplayProxy(ImageDisplay):
             self._display.close()
             self._display = None
 
-            
+
     def readCursor(self,sample=0):
 
         """Read image cursor value for the active image display
@@ -325,8 +327,8 @@ class ImageDisplayProxy(ImageDisplay):
             value = self._display.readCursor(sample)
             # Null value indicates display was probably closed
             if value:
-                return value 
-        except IOError, error:
+                return value
+        except IOError as error:
                 pass
         # This error can occur if image display was closed.
         # If a new display has been started then closing and
@@ -338,12 +340,10 @@ class ImageDisplayProxy(ImageDisplay):
     def setCursor(self,x,y,wcs):
         if not self._display:
             self.open()
-            
+
         self._display.setCursor(x,y,wcs)
- 
+
 
 # Print help information
 def help():
-    print __doc__
-
-                
+    print(__doc__)

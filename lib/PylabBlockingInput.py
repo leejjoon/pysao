@@ -5,18 +5,18 @@ import threading
 class BlockingInputHelperThread(threading.Thread):
     """ A helper thread inside which the blocking function will be run.
     """
-    
+
     def __init__(self, blocking_function):
         self.blocking_function = blocking_function
         threading.Thread.__init__(self)
 
         self.exception = None
-        
+
     def run(self):
 
         try:
             self.returnvalue = self.blocking_function()
-        except Exception, e:
+        except Exception as e:
             self.exception = e
 
 
@@ -34,7 +34,7 @@ class BlockingInput(object):
             self.fig = gcf()
         else:
             self.fig = fig
-            
+
         self.blocking_func = blocking_func
 
 
@@ -60,5 +60,3 @@ class BlockingInput(object):
             raise thr.exception
         else:
             return thr.returnvalue
-
-
