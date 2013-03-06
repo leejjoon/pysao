@@ -52,12 +52,28 @@ def takeout_comment(s):
     else:
         return s, ""
 
+
+example_typo = {"$xpaget -p ds9 lock frame":"$xpaget ds9 lock frame",
+                "$xpaget -p ds9 lock crosshair":"$xpaget ds9 lock crosshair",
+                "$xpaget -p ds9 lock crop":"$xpaget ds9 lock crop",
+                "$xpaget -p ds9 lock slice":"$xpaget ds9 lock slice",
+                "$xpaget -p ds9 lock bin":"$xpaget ds9 lock bin",
+                "$xpaget -p ds9 lock scale":"$xpaget ds9 lock scale",
+                "$xpaget -p ds9 lock colorbar":"$xpaget ds9 lock colorbar",
+                "$xpaget -p ds9 lock smooth":"$xpaget ds9 lock smooth",
+                "$xpaget -p ds9 lock color":"$xpaget ds9 lock color",
+                }
+
+
 def _convert_example(l):
 
     l, c = takeout_comment(l)
+
+    if l.strip() in example_typo:
+        l = example_typo[l.strip()]
+
     # SET
     if p_xpaset_w_echo.search(l):
-        #print l
         r = p_xpaset_w_echo.subn(r"ds9.set('\2', \1)", l)[0]
     elif p_xpaset_w_cat.search(l):
         s = r"r=open('\1').read(); ds9.set('\2', r)"
@@ -142,12 +158,14 @@ class Parser(HTMLParser.HTMLParser):
             self.end_h4()
         elif tag == "pre":
             self.end_pre()
-        elif tag in ["p", "tt"]:
+        elif tag in ["tt"]:
             d = self.flush_data()
             self.formatter.add_literal_data(d)
-            self.formatter.add_literal_data("\n")
+        elif tag in ["p"]:
+            d = self.flush_data()
+            self.formatter.add_literal_data(d)
+            self.formatter.end_paragraph(0)
 
-        #self.saved_data = ""
 
     def handle_entityref(self, name):
         if name == "nbsp":
@@ -172,7 +190,7 @@ class Parser(HTMLParser.HTMLParser):
 
 
     def flush_data(self):
-        d = self.saved_data
+        d = " ".join([l1.lstrip() for l1 in self.saved_data.split("\n")])
         self.saved_data = ""
         return d
 
@@ -186,7 +204,7 @@ class Parser(HTMLParser.HTMLParser):
         if self.h4_title:
             f = StringIO.StringIO("")
             self.help_strings[self.h4_title] = f
-            self.fmtr.writer = formatter.DumbWriter(f, 800)
+            self.formatter.writer = formatter.DumbWriter(f, 800)
 
         self.h4 = False
 
