@@ -10,16 +10,6 @@ from pysao.pyfits2string import fits2string
 
 import pyfits
 
-if hasattr(pyfits, "ImageBaseHDU"):
-    ImageBaseHDU = pyfits.ImageBaseHDU
-elif hasattr(pyfits, "_ImageBaseHDU"):
-    ImageBaseHDU = pyfits._ImageBaseHDU
-elif hasattr(pyfits.core, "_ImageBaseHDU"):
-    ImageBaseHDU = pyfits.core._ImageBaseHDU
-else:
-    raise ImportError
-
-
 import re
 
 # LTV,LTV seems to be related with physical coordinates
@@ -57,7 +47,7 @@ class ds9(ds9_basic.ds9):
             if frame:
                 self.frame(frame)
 
-            if isinstance(img, ImageBaseHDU):
+            if isinstance(img, pyfits.ImageHDU) or isinstance(img, pyfits.PrimaryHDU):
                 if asFits:
                     self.view_fits(img)
                 else:
@@ -66,7 +56,7 @@ class ds9(ds9_basic.ds9):
                     self.view_array(img.data, header)
             else:
                 if header is not None and asFits:
-                    hdu=ImageBaseHDU(img, header)
+                    hdu=pyfits.ImageHDU(img, header)
                     self.view_fits(hdu)
                 else:
                     self.view_array(img, header)
