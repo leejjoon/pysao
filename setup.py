@@ -12,12 +12,13 @@ for pyrex_impl in pyrex_impls:
         break
     except:
         pass
-have_pyrex = 'build_ext' in globals()
 
-if have_pyrex:
-    PYREX_SOURCE = "src/_region_filter.pyx"
+if 'build_ext' in globals(): # pyrex or cython installed
+    PYREX_SOURCE = "xpa.pyx"
 else:
-    PYREX_SOURCE = "src/_region_filter.c"
+    PYREX_SOURCE = "xpa.c"
+    from setuptools.command.build_ext import build_ext
+
 
 import os.path
 XPALIB_DIR = "xpa-2.1.13"
@@ -38,8 +39,8 @@ xpalib_files = """xpa.c
                   timedconn.c
                   """.split()
 
-xpa_sources = ["xpa.pyx"]  + [os.path.join(XPALIB_DIR, c) \
-                              for c in xpalib_files]
+xpa_sources = [PYREX_SOURCE]  + [os.path.join(XPALIB_DIR, c) \
+                                 for c in xpalib_files]
 
 xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
                                         HAVE_STDLIB_H
@@ -61,24 +62,6 @@ xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
                                         HAVE_SNPRINTF
                                         HAVE_SETENV""".split()]
 
-
-
-# this may not likely the best way to do.
-
-class build_ext_withxpalib(build_ext):
-    def build_xpalib(self):
-        import subprocess, sys
-        if sys.platform=='darwin':
-            cflags = "CFLAGS=-fPIC -O2 -force_cpusubtype_ALL -arch ppc -arch i386 -arch x86_64"
-        else:
-            cflags = "CFLAGS=-fPIC -O2"
-        subprocess.check_call(["./configure", cflags], cwd=XPALIB_DIR)
-        subprocess.check_call(["make", "clean"], cwd=XPALIB_DIR)
-        subprocess.check_call(["make"], cwd=XPALIB_DIR)
-
-    def run(self):
-        self.build_xpalib()
-        build_ext.run(self)
 
 
 def main():
@@ -103,8 +86,8 @@ def main():
                                   #libraries=['xpa']
                                   ),
                         ],
-          #cmdclass = {'build_ext': build_ext_withxpalib},
-          use_2to3 = True,
+          cmdclass = {'build_ext': build_ext},
+          #use_2to3 = True,
           )
 
 if __name__ == "__main__":
