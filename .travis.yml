@@ -6,9 +6,9 @@ python:
   - "2.7"
   - "3.2"
 
-env:
-  - WITH_CYTHON=1
-  - WITH_CYTHON=0
+# env:
+#   - WITH_CYTHON=1
+#   - WITH_CYTHON=0
 
 install:
   # # For Python 3 travis-ci apparently doesn't have numpy pre-installed at the moment
