@@ -12,7 +12,7 @@ env:
 
 install:
   # # For Python 3 travis-ci apparently doesn't have numpy pre-installed at the moment
-  # - if [[ ${WITH_CYTHON} -eq 1 ]]; then time pip install --use-mirrors cython; fi
+  - if [[ ${WITH_CYTHON} -eq 1 ]]; then time pip install --use-mirrors cython; fi
 
 script:
   # - time pip install --use-mirrors astropy
