@@ -1,3 +1,4 @@
+include README
 include LICENSE_AURA.txt
 include LICENSE_MIT.txt
 include distribute_setup.py

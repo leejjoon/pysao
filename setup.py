@@ -73,11 +73,11 @@ def main():
 
     setup(name = "pysao",
           version = __version__,
-          description = "python wrapper around some SAO tools",
+          description = "python wrapper around SAO XPA and DS9",
           author = "Jae-Joon Lee",
           author_email = "lee.j.joon@gmail.com",
           maintainer_email = "lee.j.joon@gmail.com",
-          url = "",
+          url = "http://github.com/leejjoon/pysao",
           license = "MIT",
           platforms = ["Linux","Mac OS X"], # "Solaris"?
           packages = ['pysao'],
@@ -93,6 +93,16 @@ def main():
                         ],
           cmdclass = {'build_ext': build_ext},
           #use_2to3 = True,
+          classifiers=['Development Status :: 5 - Production/Stable',
+                       'Intended Audience :: Science/Research',
+                       'License :: OSI Approved :: MIT License',
+                       'Operating System :: MacOS :: MacOS X',
+                       'Operating System :: POSIX :: Linux',
+                       'Programming Language :: Cython',
+                       'Programming Language :: Python',
+                       'Programming Language :: Python :: 3',
+                       'Topic :: Scientific/Engineering :: Astronomy',
+                       ]
           )
 
 if __name__ == "__main__":
