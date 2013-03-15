@@ -121,6 +121,8 @@ if { [info exists name] == 0 } {
 }
 puts [format "name: %s" $name]
 
+if { [info exists initxpa] } {
+
 puts "initializing xpa access points ..."
 
 set xpa  [xpanew [format "%s" $class] [format "%s" $name] "xpa1 help" \
@@ -150,6 +152,8 @@ puts [format "cmd4=%s" $cmd4]
 
 set xpai [xpainfonew XPA [format "%si" $name] infocb "xpai" $imode]
 puts [format "xpai=%s" $xpai]
+
+}
 
 proc getloop { xpa loops } {
   for {set i 0} {$i < $loops} {incr i} {

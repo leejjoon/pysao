@@ -76,7 +76,7 @@
 /* #undef _REENTRANT */
 
 /* Define as 1 if you have Tcl  */
-/* #undef HAVE_TCL */
+#define HAVE_TCL 1
 
 /* Define as 1 if you have Xt */
 #define HAVE_XT 1

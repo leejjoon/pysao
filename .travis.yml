@@ -20,3 +20,4 @@ script:
   # Install
   - python setup.py install
   # - python test.py
+  - python -c "import pysao"

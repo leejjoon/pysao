@@ -6,9 +6,9 @@
 
 
 
+from .astropy_helper import pyfits
 from pysao.pyfits2string import fits2string
 
-import pyfits
 
 import re
 
@@ -105,7 +105,7 @@ def test():
     t_fits_name = os.path.join(dds9._tmpd_name, "test.fits")
     open(t_fits_name, "w").write(ds9_basic._ds9_python_logo)
 
-    import pyfits
+    from .astropy_helper import pyfits
 
     try:
         f = pyfits.open(t_fits_name)

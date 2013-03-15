@@ -1,7 +1,7 @@
 #	This file is an input file used by the GNU "autoconf" program to
 #	generate the file "configure", which is run during XPA installation
 #	to configure the system for the local environment.
-AC_INIT(xpa, 2.1.13, saord@cfa.harvard.edu, xpa)
+AC_INIT(xpa, 2.1.14, saord@cfa.harvard.edu, xpa)
 
 AC_CONFIG_HEADERS([conf.h])
 AC_CONFIG_SRCDIR(./xpa.h)
@@ -89,6 +89,7 @@ if test "$fun_ok" != "no"; then
     LLIB='$(LIB)'
   fi
 else
+  DOSHARED=""
   LLIB='$(LIB)'
 fi
 AC_SUBST(LLIB)
@@ -113,7 +114,14 @@ if test x"${no_tcl}" = x ; then
     SC_LOAD_TCLCONFIG
     if test -r $TCL_PREFIX/include/tcl.h; then
       TCL_CFLAGS="$TCL_INCLUDE_SPEC"
-      TCL_LIBS="$TCL_LIB_SPEC"
+      if test x"$DOSHARED" != x -a x"$TCL_SUPPORTS_STUBS" = x1; then
+        TCL_LIBS="$TCL_STUB_LIB_SPEC"
+        TCL_CFLAGS="$TCL_CFLAGS -DUSE_TCL_STUBS=1"
+        AC_MSG_RESULT([Tcl support will utilize stubs library: $TCL_LIBS])
+      else
+        TCL_LIBS="$TCL_LIB_SPEC"
+        AC_MSG_RESULT([Tcl support will utilize library: $TCL_LIBS])
+      fi
       AC_DEFINE(HAVE_TCL)
     else
       if test x"${with_tclconfig}" != x ; then

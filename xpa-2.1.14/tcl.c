@@ -223,10 +223,8 @@ static int XPATclHandler(client_data, call_data, paramlist, buf, len, nargs)
   }
 
   /* clean up */
-  if( s )
-    xfree(s);
-  if( t )
-    xfree(t);
+  if( s ) xfree(s);
+  if( t ) xfree(t);
 
   /* translate Tcl status into XPA status */
   if( result == TCL_OK ){
@@ -397,7 +395,7 @@ static int XPANew_Tcl(clientData, interp, objc, objv)
   }
   else{
     sproc = XPATclSend;
-    sptr = (XPATclClientData)xmalloc(sizeof(XPATclClientDataRec));
+    sptr = (XPATclClientData)xcalloc(1, sizeof(XPATclClientDataRec));
     sptr->interp = interp;
     sptr->callback = xstrdup(send_cb);
     sptr->client_data = xstrdup(sdata);
@@ -408,7 +406,7 @@ static int XPANew_Tcl(clientData, interp, objc, objv)
   }
   else{
     rproc = XPATclReceive;
-    rptr = (XPATclClientData)xmalloc(sizeof(XPATclClientDataRec));
+    rptr = (XPATclClientData)xcalloc(1, sizeof(XPATclClientDataRec));
     rptr->interp = interp;
     rptr->callback = xstrdup(rec_cb);
     rptr->client_data = xstrdup(rdata);
@@ -572,7 +570,7 @@ static int XPAInfoNew_Tcl(clientData, interp, objc, objv)
   }
   else{
     iproc = XPATclInfo;
-    iptr = (XPATclClientData)xmalloc(sizeof(XPATclClientDataRec));
+    iptr = (XPATclClientData)xcalloc(1, sizeof(XPATclClientDataRec));
     iptr->interp = interp;
     iptr->callback = xstrdup(info_cb);
     iptr->client_data = xstrdup(idata);
@@ -734,7 +732,7 @@ static int XPACmdAdd_Tcl(clientData, interp, objc, objv)
   }
   else{
     sproc = XPATclSend;
-    sptr = (XPATclClientData)xmalloc(sizeof(XPATclClientDataRec));
+    sptr = (XPATclClientData)xcalloc(1, sizeof(XPATclClientDataRec));
     sptr->interp = interp;
     sptr->callback = xstrdup(send_cb);
     sptr->client_data = xstrdup(sdata);
@@ -745,7 +743,7 @@ static int XPACmdAdd_Tcl(clientData, interp, objc, objv)
   }
   else{
     rproc = XPATclReceive;
-    rptr = (XPATclClientData)xmalloc(sizeof(XPATclClientDataRec));
+    rptr = (XPATclClientData)xcalloc(1, sizeof(XPATclClientDataRec));
     rptr->interp = interp;
     rptr->callback = xstrdup(rec_cb);
     rptr->client_data = xstrdup(rdata);
@@ -835,10 +833,8 @@ static int XPACmdDel_Tcl(clientData, interp, objc, objv)
   /* call the XPACmdDel routine */
   if( XPACmdDel(xpa, cmd) == 0 ){
     /* free the associated tcl record, stored in the client data */
-    if( cmd->send_data )
-      xfree(cmd->send_data);
-    if( cmd->receive_data )
-      xfree(cmd->receive_data);
+    if( cmd->send_data )    xfree(cmd->send_data);
+    if( cmd->receive_data ) xfree(cmd->receive_data);
     return(TCL_OK);
   }
   else{
@@ -1319,17 +1315,17 @@ static int XPAGet_Tcl(clientData, interp, objc, objv)
   }
 
   /* allocate return buffers */
-  cbufs  = (char **)xmalloc(n*sizeof(char *));
-  bufsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
-  clens  =   (int *)xmalloc(n*sizeof(int));
-  lensObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+  cbufs  = (char **)xcalloc(n, sizeof(char *));
+  bufsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
+  clens  =   (int *)xcalloc(n, sizeof(int));
+  lensObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   if( !TCL_NULLSTR(names) ){
-    cnames = (char **)xmalloc(n*sizeof(char *));
-    namesObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cnames = (char **)xcalloc(n, sizeof(char *));
+    namesObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
   if( !TCL_NULLSTR(errs) ){
-    cerrs  = (char **)xmalloc(n*sizeof(char *));
-    errsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cerrs  = (char **)xcalloc(n, sizeof(char *));
+    errsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
 
   /* reset before we make C call */
@@ -1398,10 +1394,14 @@ static int XPAGet_Tcl(clientData, interp, objc, objv)
     if( cnames[i] ) xfree((char *)cnames[i]);
     if( cerrs[i]  ) xfree((char *)cerrs[i]);
   }
-  if( cbufs  ) xfree((char *)cbufs);
-  if( clens  ) xfree((char *)clens);
-  if( cnames ) xfree((char *)cnames);
-  if( cerrs  ) xfree((char *)cerrs);
+  if( cbufs  )    xfree((char *)cbufs);
+  if( clens  )    xfree((char *)clens);
+  if( cnames )    xfree((char *)cnames);
+  if( cerrs  )    xfree((char *)cerrs);
+  if( bufsObjv )  xfree((char *)bufsObjv);
+  if( lensObjv )  xfree((char *)lensObjv);
+  if( namesObjv ) xfree((char *)namesObjv);
+  if( errsObjv  ) xfree((char *)errsObjv);
 
   /* return the number of accesses as the tcl function result */
   resultPtr = Tcl_GetObjResult(interp);
@@ -1495,7 +1495,7 @@ static int XPAGetFd_Tcl(clientData, interp, objc, objv)
 
   /* get file descriptors */
   if( n < 0 ){
-    cfds  = (int *)xmalloc(sizeof(int));
+    cfds  = (int *)xcalloc(1, sizeof(int));
     if( Tcl_ListObjIndex(interp, objv[5], 0, &fdPtr) != TCL_OK ){
       Tcl_SetStringObj(resultPtr, 
 	       "XPA$ERROR: invalid channel list passed to xpagetfd", -1);
@@ -1518,7 +1518,7 @@ static int XPAGetFd_Tcl(clientData, interp, objc, objv)
     }
   }
   else{
-    cfds  = (int *)xmalloc(n*sizeof(int));
+    cfds  = (int *)xcalloc(n, sizeof(int));
     for(i=0; i<n; i++){
       if( Tcl_ListObjIndex(interp, objv[5], i, &fdPtr) != TCL_OK ){
 	Tcl_SetStringObj(resultPtr, 
@@ -1545,12 +1545,12 @@ static int XPAGetFd_Tcl(clientData, interp, objc, objv)
 
   /* allocate return buffers */
   if( !TCL_NULLSTR(names) ){
-    cnames = (char **)xmalloc(n*sizeof(char *));
-    namesObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cnames = (char **)xcalloc(n, sizeof(char *));
+    namesObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
   if( !TCL_NULLSTR(errs) ){
-    cerrs  = (char **)xmalloc(n*sizeof(char *));
-    errsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cerrs  = (char **)xcalloc(n, sizeof(char *));
+    errsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
 
   /* reset before we make C call */
@@ -1601,9 +1601,11 @@ static int XPAGetFd_Tcl(clientData, interp, objc, objv)
     if( cnames[i] ) xfree((char *)cnames[i]);
     if( cerrs[i]  ) xfree((char *)cerrs[i]);
   }
-  if( cfds   ) xfree((char *)cfds);
-  if( cnames ) xfree((char *)cnames);
-  if( cerrs  ) xfree((char *)cerrs);
+  if( cfds   )    xfree((char *)cfds);
+  if( cnames )    xfree((char *)cnames);
+  if( cerrs  )    xfree((char *)cerrs);
+  if( namesObjv ) xfree((char *)namesObjv);
+  if( errsObjv  ) xfree((char *)errsObjv);
 
   /* return the number of accesses as the tcl function result */
   Tcl_SetIntObj(resultPtr, got);
@@ -1699,12 +1701,12 @@ static int XPASet_Tcl(clientData, interp, objc, objv)
 
   /* allocate return buffers */
   if( !TCL_NULLSTR(names) ){
-    cnames = (char **)xmalloc(n*sizeof(char *));
-    namesObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cnames = (char **)xcalloc(n, sizeof(char *));
+    namesObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
   if( !TCL_NULLSTR(errs) ){
-    cerrs  = (char **)xmalloc(n*sizeof(char *));
-    errsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cerrs  = (char **)xcalloc(n, sizeof(char *));
+    errsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
 
   /* reset before we make C call */
@@ -1754,8 +1756,10 @@ static int XPASet_Tcl(clientData, interp, objc, objv)
     if( cnames[i] ) xfree((char *)cnames[i]);
     if( cerrs[i]  ) xfree((char *)cerrs[i]);
   }
-  if( cnames ) xfree((char *)cnames);
-  if( cerrs  ) xfree((char *)cerrs);
+  if( cnames )    xfree((char *)cnames);
+  if( cerrs  )    xfree((char *)cerrs);
+  if( namesObjv ) xfree((char *)namesObjv);
+  if( errsObjv  ) xfree((char *)errsObjv);
 
   /* return the number of accesses as the tcl function result */
   Tcl_SetIntObj(resultPtr, got);
@@ -1847,12 +1851,12 @@ static int XPASetFd_Tcl(clientData, interp, objc, objv)
 
   /* allocate return buffers */
   if( !TCL_NULLSTR(names) ){
-    cnames = (char **)xmalloc(n*sizeof(char *));
-    namesObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cnames = (char **)xcalloc(n, sizeof(char *));
+    namesObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
   if( !TCL_NULLSTR(errs) ){
-    cerrs  = (char **)xmalloc(n*sizeof(char *));
-    errsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cerrs  = (char **)xcalloc(n, sizeof(char *));
+    errsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
 
   /* get file descriptor */
@@ -1916,8 +1920,10 @@ static int XPASetFd_Tcl(clientData, interp, objc, objv)
     if( cnames[i] ) xfree((char *)cnames[i]);
     if( cerrs[i]  ) xfree((char *)cerrs[i]);
   }
-  if( cnames ) xfree((char *)cnames);
-  if( cerrs  ) xfree((char *)cerrs);
+  if( cnames )    xfree((char *)cnames);
+  if( cerrs  )    xfree((char *)cerrs);
+  if( namesObjv ) xfree((char *)namesObjv);
+  if( errsObjv  ) xfree((char *)errsObjv);
 
   /* return the number of accesses as the tcl function result */
   Tcl_SetIntObj(resultPtr, got);
@@ -2006,12 +2012,12 @@ static int XPAInfo_Tcl(clientData, interp, objc, objv)
 
   /* allocate return buffers */
   if( !TCL_NULLSTR(names) ){
-    cnames = (char **)xmalloc(n*sizeof(char *));
-    namesObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cnames = (char **)xcalloc(n, sizeof(char *));
+    namesObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
   if( !TCL_NULLSTR(errs) ){
-    cerrs  = (char **)xmalloc(n*sizeof(char *));
-    errsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cerrs  = (char **)xcalloc(n, sizeof(char *));
+    errsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
 
   /* reset before we make C call */
@@ -2062,8 +2068,10 @@ static int XPAInfo_Tcl(clientData, interp, objc, objv)
     if( cnames[i] ) xfree((char *)cnames[i]);
     if( cerrs[i]  ) xfree((char *)cerrs[i]);
   }
-  if( cnames ) xfree((char *)cnames);
-  if( cerrs  ) xfree((char *)cerrs);
+  if( cnames )    xfree((char *)cnames);
+  if( cerrs  )    xfree((char *)cerrs);
+  if( namesObjv ) xfree((char *)namesObjv);
+  if( errsObjv  ) xfree((char *)errsObjv);
 
   /* return the number of accesses as the tcl function result */
   Tcl_SetIntObj(resultPtr, got);
@@ -2151,12 +2159,12 @@ static int XPAAccess_Tcl(clientData, interp, objc, objv)
   }
 
   if( !TCL_NULLSTR(names) ){
-    cnames = (char **)xmalloc(n*sizeof(char *));
-    namesObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cnames = (char **)xcalloc(n, sizeof(char *));
+    namesObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
   if( !TCL_NULLSTR(errs) ){
-    cerrs  = (char **)xmalloc(n*sizeof(char *));
-    errsObjv = (Tcl_Obj **)xmalloc(n*sizeof(Tcl_Obj *));
+    cerrs  = (char **)xcalloc(n, sizeof(char *));
+    errsObjv = (Tcl_Obj **)xcalloc(n, sizeof(Tcl_Obj *));
   }
 
   /* reset before we make C call */
@@ -2206,8 +2214,10 @@ static int XPAAccess_Tcl(clientData, interp, objc, objv)
     if( cnames[i] ) xfree((char *)cnames[i]);
     if( cerrs[i]  ) xfree((char *)cerrs[i]);
   }
-  if( cnames ) xfree((char *)cnames);
-  if( cerrs  ) xfree((char *)cerrs);
+  if( cnames )    xfree((char *)cnames);
+  if( cerrs  )    xfree((char *)cerrs);
+  if( namesObjv ) xfree((char *)namesObjv);
+  if( errsObjv  ) xfree((char *)errsObjv);
 
   /* return the number of accesses as the tcl function result */
   Tcl_SetIntObj(resultPtr, got);
@@ -2299,10 +2309,10 @@ static int XPANSLookup_Tcl(clientData, interp, objc, objv)
   /* if we got anything, fill in the blanks */
   if( got > 0 ){
     /* allocate just enough pointers */
-    classesObjv = (Tcl_Obj **)xmalloc(got*sizeof(Tcl_Obj *));
-    namesObjv = (Tcl_Obj **)xmalloc(got*sizeof(Tcl_Obj *));
-    methodsObjv = (Tcl_Obj **)xmalloc(got*sizeof(Tcl_Obj *));
-    infosObjv = (Tcl_Obj **)xmalloc(got*sizeof(Tcl_Obj *));
+    classesObjv = (Tcl_Obj **)xcalloc(got, sizeof(Tcl_Obj *));
+    namesObjv = (Tcl_Obj **)xcalloc(got, sizeof(Tcl_Obj *));
+    methodsObjv = (Tcl_Obj **)xcalloc(got, sizeof(Tcl_Obj *));
+    infosObjv = (Tcl_Obj **)xcalloc(got, sizeof(Tcl_Obj *));
 
     /* generate a Tcl object for each return argument */
     for(i=0; i<got; i++){
@@ -2346,6 +2356,10 @@ static int XPANSLookup_Tcl(clientData, interp, objc, objv)
       xfree(names);
       xfree(methods);
       xfree(infos);
+      xfree(classesObjv);
+      xfree(namesObjv);
+      xfree(methodsObjv);
+      xfree(infosObjv);
     }
   }
   else{
@@ -2666,6 +2680,16 @@ int Tclxpa_Init (vinterp)
 {
   Tcl_Interp *interp = (Tcl_Interp *)vinterp;
 
+  if(
+#ifdef USE_TCL_STUBS
+     Tcl_InitStubs(interp, "8.4", 0)
+#else
+     Tcl_PkgRequire(interp, "Tcl", "8.4", 0)
+#endif
+     == NULL) {
+    return TCL_ERROR;
+  }
+
   /* add xpa commands to this interpreter */
   Tcl_CreateObjCommand(interp, "xpanew", XPANew_Tcl,
 		       (ClientData)NULL, (Tcl_CmdDeleteProc *)NULL);
@@ -2733,6 +2757,12 @@ int Tclxpa_Init (vinterp)
   Tcl_PkgProvide(interp, "tclxpa", "2.1");
   return(TCL_OK);
 }
+
+/* required for tclkit 8.6 */
+Tclxpa_Unload() {}
+Tclxpa_SafeUnload() {}
+Tclxpa_SafeInit() {}
+
 
 int xpa_tclbinding = 1;
 

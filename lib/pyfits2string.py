@@ -4,7 +4,7 @@
 # try to import pyfits pyfits2sting function.
 # disaply fits directly is not supported if failed.
 
-import pyfits
+from .astropy_helper import pyfits
 
 Card = pyfits.Card
 
@@ -32,12 +32,12 @@ def _pad(input):
     else:
         strlen = _len % Card.length
         return input + b' ' * (Card.length-strlen)
-    
+
 def fits2string(hdu):
     """ convert fits HDU into string"""
 
     hdu.update_header()
-    
+
     blocks = []
     blocks.append( repr(hdu.header.ascard).encode() + _pad(b'END') )
     blocks.append( _pad_length(len(blocks[0]))*b' ')
@@ -60,4 +60,3 @@ def fits2string(hdu):
             blocks.append(_pad_length(_size)*b'\0')
 
     return b"".join(blocks)
-

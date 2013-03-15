@@ -1,9 +1,8 @@
+from .version import __version__
 from pysao.verbose import verbose
 
-
-
 try:
-    import pyfits
+    from .astropy_helper import pyfits
 
 except ImportError:
     verbose.report("Loading pyfits failed. pysao.ds9 would not support fits-related tasks in this mode.", level="debug")
@@ -17,4 +16,3 @@ ds9 = _ds9.ds9
 
 #import sla
 #import slav
-

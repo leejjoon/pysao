@@ -21,22 +21,22 @@ else:
 
 
 import os.path
-XPALIB_DIR = "xpa-2.1.13"
+XPALIB_DIR = "xpa-2.1.14"
 
-xpalib_files = """xpa.c
-                  xpaio.c
-                  command.c
-                  acl.c
-                  remote.c
-                  clipboard.c
-                  port.c
-                  tcp.c
+xpalib_files = """acl.c
                   client.c
+                  clipboard.c
+                  command.c
+                  find.c
+                  port.c
+                  remote.c
+                  tcp.c
+                  timedconn.c
                   word.c
                   xalloc.c
-                  find.c
                   xlaunch.c
-                  timedconn.c
+                  xpa.c
+                  xpaio.c
                   """.split()
 
 xpa_sources = [PYREX_SOURCE]  + [os.path.join(XPALIB_DIR, c) \
@@ -66,8 +66,13 @@ xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
 
 def main():
     #dolocal()
+
+    for line in open('lib/version.py').readlines():
+        if (line.startswith('__version__')):
+            exec(line.strip())
+
     setup(name = "pysao",
-          version = "0.1b2",
+          version = __version__,
           description = "python wrapper around some SAO tools",
           author = "Jae-Joon Lee",
           author_email = "lee.j.joon@gmail.com",
