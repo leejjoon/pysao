@@ -63,13 +63,13 @@ xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
                                         HAVE_SETENV""".split()]
 
 
+for line in open('lib/version.py').readlines():
+    if (line.startswith('__version__')):
+        exec(line.strip())
+
 
 def main():
     #dolocal()
-
-    for line in open('lib/version.py').readlines():
-        if (line.startswith('__version__')):
-            exec(line.strip())
 
     setup(name = "pysao",
           version = __version__,
