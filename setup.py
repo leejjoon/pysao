@@ -19,9 +19,15 @@ else:
     PYREX_SOURCE = "xpa.c"
     from setuptools.command.build_ext import build_ext
 
-
 import os.path
 XPALIB_DIR = "xpa-2.1.14"
+
+class build_ext_subclass( build_ext ):
+    def build_extensions(self):
+        import os
+        if not os.path.exists(os.path.join(XPALIB_DIR, "conf.h")):
+            os.system("(cd %s; ./configure)" % XPALIB_DIR)
+        build_ext.build_extensions(self)
 
 xpalib_files = """acl.c
                   client.c
@@ -93,7 +99,7 @@ def main():
                                   #libraries=['xpa']
                                   ),
                         ],
-          cmdclass = {'build_ext': build_ext},
+          cmdclass = {'build_ext': build_ext_subclass},
           #use_2to3 = True,
           classifiers=['Development Status :: 5 - Production/Stable',
                        'Intended Audience :: Science/Research',
