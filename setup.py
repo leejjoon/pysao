@@ -42,26 +42,28 @@ xpalib_files = """acl.c
 xpa_sources = [PYREX_SOURCE]  + [os.path.join(XPALIB_DIR, c) \
                                  for c in xpalib_files]
 
-xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
-                                        HAVE_STDLIB_H
-                                        HAVE_MALLOC_H
-                                        HAVE_UNISTD_H
-                                        HAVE_GETOPT_H
-                                        HAVE_MEMCPY
-                                        HAVE_PWD_H
-                                        HAVE_VALUES_H
-                                        HAVE_DLFCN_H
-                                        HAVE_SYS_UN_H
-                                        HAVE_SYS_SHM_H
-                                        HAVE_SYS_MMAN_H
-                                        HAVE_SYS_IPC_H
-                                        HAVE_SETJMP_H
-                                        HAVE_SOCKLEN_T
-                                        HAVE_STRCHR
-                                        HAVE_MEMCPY
-                                        HAVE_SNPRINTF
-                                        HAVE_SETENV""".split()]
+# xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
+#                                         HAVE_STDLIB_H
+#                                         HAVE_MALLOC_H
+#                                         HAVE_UNISTD_H
+#                                         HAVE_GETOPT_H
+#                                         HAVE_MEMCPY
+#                                         HAVE_PWD_H
+#                                         HAVE_VALUES_H
+#                                         HAVE_DLFCN_H
+#                                         HAVE_SYS_UN_H
+#                                         HAVE_SYS_SHM_H
+#                                         HAVE_SYS_MMAN_H
+#                                         HAVE_SYS_IPC_H
+#                                         HAVE_SETJMP_H
+#                                         HAVE_SOCKLEN_T
+#                                         HAVE_STRCHR
+#                                         HAVE_MEMCPY
+#                                         HAVE_SNPRINTF
+#                                         HAVE_SETENV""".split()]
 
+
+xpalib_defines  = [("HAVE_CONFIG_H", "1")]
 
 for line in open('lib/version.py').readlines():
     if (line.startswith('__version__')):
