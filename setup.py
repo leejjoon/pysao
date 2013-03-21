@@ -21,13 +21,25 @@ else:
 
 import os.path
 XPALIB_DIR = "xpa-2.1.14"
+CONF_H_NAME = os.path.join(XPALIB_DIR, "conf.h")
 
-class build_ext_subclass( build_ext ):
+class build_ext_with_configure( build_ext ):
     def build_extensions(self):
-        import os
-        if not os.path.exists(os.path.join(XPALIB_DIR, "conf.h")):
-            os.system("(cd %s; ./configure)" % XPALIB_DIR)
+        import subprocess
+        if not os.path.exists(CONF_H_NAME):
+            subprocess.check_call(["./configure"],
+                                  cwd=XPALIB_DIR)
         build_ext.build_extensions(self)
+
+from distutils.command.clean import clean as _clean
+class clean( _clean ):
+    def run(self):
+        import subprocess
+        subprocess.call(["make", "-f", "Makefile", "clean"],
+                        cwd=XPALIB_DIR)
+        if os.path.exists(CONF_H_NAME):
+            os.remove(CONF_H_NAME)
+        _clean.run(self)
 
 xpalib_files = """acl.c
                   client.c
@@ -47,27 +59,6 @@ xpalib_files = """acl.c
 
 xpa_sources = [PYREX_SOURCE]  + [os.path.join(XPALIB_DIR, c) \
                                  for c in xpalib_files]
-
-# xpalib_defines  = [(s, "1") for s in """HAVE_STRING_H
-#                                         HAVE_STDLIB_H
-#                                         HAVE_MALLOC_H
-#                                         HAVE_UNISTD_H
-#                                         HAVE_GETOPT_H
-#                                         HAVE_MEMCPY
-#                                         HAVE_PWD_H
-#                                         HAVE_VALUES_H
-#                                         HAVE_DLFCN_H
-#                                         HAVE_SYS_UN_H
-#                                         HAVE_SYS_SHM_H
-#                                         HAVE_SYS_MMAN_H
-#                                         HAVE_SYS_IPC_H
-#                                         HAVE_SETJMP_H
-#                                         HAVE_SOCKLEN_T
-#                                         HAVE_STRCHR
-#                                         HAVE_MEMCPY
-#                                         HAVE_SNPRINTF
-#                                         HAVE_SETENV""".split()]
-
 
 xpalib_defines  = [("HAVE_CONFIG_H", "1")]
 
@@ -94,12 +85,12 @@ def main():
 
           ext_modules=[ Extension("pysao.xpa", xpa_sources,
                                   include_dirs=[XPALIB_DIR],
-                                  define_macros = xpalib_defines,
-                                  #library_dirs=[XPALIB_DIR],
-                                  #libraries=['xpa']
+                                  define_macros=xpalib_defines,
+                                  depends=[CONF_H_NAME],
                                   ),
                         ],
-          cmdclass = {'build_ext': build_ext_subclass},
+          cmdclass = {'build_ext': build_ext_with_configure,
+                      'clean': clean},
           #use_2to3 = True,
           classifiers=['Development Status :: 5 - Production/Stable',
                        'Intended Audience :: Science/Research',
