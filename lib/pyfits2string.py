@@ -17,7 +17,7 @@ def _pad_length(stringlen):
     return (BLOCK_SIZE - (stringlen % BLOCK_SIZE)) % BLOCK_SIZE
 
 def _pad(input):
-    """Pad balnk space to the input string to be multiple of 80."""
+    """Pad blank space to the input string to be multiple of 80."""
     _len = len(input)
     if _len == Card.length:
         return input
@@ -36,21 +36,27 @@ def _pad(input):
 def fits2string(hdu):
     """ convert fits HDU into string"""
 
+    if not (isinstance(hdu, pyfits.ImageHDU)
+            or isinstance(hdu, pyfits.PrimaryHDU)):
+        raise ValueError("input should be an instance of ImageHDU or PrimaryHDU")
+
+    header, data = hdu.header, hdu.data
+
+    # we copy the header to minimize any sideeffects.
+    hdu = type(hdu)(header=header.copy(), data=data)
     hdu.update_header()
 
-    blocks = []
-    blocks.append( repr(hdu.header.ascard).encode() + _pad(b'END') )
-    blocks.append( _pad_length(len(blocks[0]))*b' ')
+    # repr(hdu.header.ascrd) seems to return padded output with
+    # "END". So, appending _pad(b"END") is no nore needed.
+    hdr_string = repr(hdu.header.ascard).encode()
+    # and maybe this is not needed.
+    hdr_pad = _pad_length(len(hdr_string))*b' '
+
+    blocks = [hdr_string, hdr_pad]
 
     if hdu.data is not None:
-
-        # if image, need to deal with byte order
-        if isinstance(hdu, pyfits.ImageHDU) or isinstance(hdu, pyfits.PrimaryHDU):
-            dt = hdu.data.dtype.newbyteorder(">")
-            output = hdu.data.astype(dt)
-
-        else:
-            raise ValueError("input should be an instance of ImageHDU or PrimaryHDU")
+        dt = hdu.data.dtype.newbyteorder(">")
+        output = hdu.data.astype(dt)
 
         blocks.append( output.tostring() )
         _size = output.nbytes
