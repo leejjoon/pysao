@@ -27,7 +27,7 @@ class build_ext_with_configure( build_ext ):
     def build_extensions(self):
         import subprocess
         if not os.path.exists(CONF_H_NAME):
-            subprocess.check_call(["./configure"],
+            subprocess.check_call(["sh", "./configure"],
                                   cwd=XPALIB_DIR)
         build_ext.build_extensions(self)
 
