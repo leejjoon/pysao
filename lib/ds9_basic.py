@@ -77,11 +77,21 @@ class ds9(object):
 
 
     def __init__(self, path=None, wait_time=10, quit_ds9_on_del=True,
-                 load_help_file=True):
+                 load_help_file=True, **kwargs):
         """
         path :path of the ds9
         wait_time : waiting time before error is raised
         quit_ds9_on_del : If True, try to quit ds9 when this instance is deleted.
+
+        Any additional keyword arguments will be passed a command 
+        line arguments to execute ds9. For example,
+
+            pysao.ds9(title="test")
+
+        will add following arguments when executing the ds9.
+
+            '-title test'
+
         """
 
         # determine whther to quit ds9 also when object deleted.
@@ -93,7 +103,8 @@ class ds9(object):
         else:
             self.path = path
 
-        self.xpa_name, self.ds9_unix_name = self.run_unixonly_ds9_v2(wait_time)
+        self.xpa_name, self.ds9_unix_name = self.run_unixonly_ds9_v2(wait_time,
+                                                                     kwargs)
         self.xpa = xpa.XPA(self.xpa_name)
 
         # numdisp setup
@@ -159,7 +170,7 @@ class ds9(object):
         self._helper(xpa_command)
 
 
-    def run_unixonly_ds9_v2(self, wait_time):
+    def run_unixonly_ds9_v2(self, wait_time, cmd_args_dict=None):
         """ start ds9 """
 
 
@@ -187,17 +198,16 @@ class ds9(object):
 
         try:
             verbose.report("starting ds9 (path=%s)" % (self.path,), level="debug")
-            #p = Popen(" ".join([self.path,
-            #                    "-xpa local",
-            #                    "-xpa noxpans",
-            #                    "-unix_only",
-            #                    "-unix %s &" % iraf_unix]),
-            #          shell=True, env=env)
-            p = Popen([self.path,
-                       "-xpa", "local",
-                       "-xpa", "noxpans",
-                       "-unix_only",
-                       "-unix",  "%s" % iraf_unix],
+
+            cmd_args = ["-xpa", "local",
+                        "-xpa", "noxpans",
+                        "-unix_only",
+                        "-unix",  "%s" % iraf_unix]
+
+            for k, v in cmd_args_dict.viewitems():
+                cmd_args.extend(["-%s" % k, v])
+
+            p = Popen([self.path] + cmd_args,
                       shell=False, env=env)
 
             #sts = os.waitpid(p.pid, 0)
