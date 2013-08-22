@@ -11,8 +11,9 @@ python:
 #   - WITH_CYTHON=0
 
 install:
-  # # For Python 3 travis-ci apparently doesn't have numpy pre-installed at the moment
-  # - if [[ ${WITH_CYTHON} -eq 1 ]]; then time pip install --use-mirrors cython; fi
+  # For Python 3 travis-ci apparently doesn't have numpy pre-installed at the moment
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.2' ]]; then pip install --use-mirrors numpy; fi
+  - if [[ $TRAVIS_PYTHON_VERSION == '3.3' ]]; then pip install --use-mirrors numpy; fi
 
 script:
   # - time pip install --use-mirrors astropy
