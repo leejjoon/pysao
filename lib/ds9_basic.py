@@ -204,7 +204,7 @@ class ds9(object):
                         "-unix_only",
                         "-unix",  "%s" % iraf_unix]
 
-            for k, v in cmd_args_dict.viewitems():
+            for k, v in cmd_args_dict.items():
                 cmd_args.extend(["-%s" % k, v])
 
             p = Popen([self.path] + cmd_args,

@@ -212,7 +212,7 @@ class ImageDisplay:
 
         a = n.array([tid,thingct,subunit,0,x,y,z,t],dtype=n.uint16)
         # Compute the checksum
-        sum = n.add.reduce(a)
+        sum = int(n.add.reduce(a))
         sum = 0xffff - (sum & 0xffff)
         a[3] = sum
         self._write(a.tostring())

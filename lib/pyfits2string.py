@@ -48,7 +48,11 @@ def fits2string(hdu):
 
     # repr(hdu.header.ascrd) seems to return padded output with
     # "END". So, appending _pad(b"END") is no nore needed.
-    hdr_string = repr(hdu.header.ascard).encode()
+    if hasattr(hdu.header, "tostring"):
+        hdr_string = hdu.header.tostring().encode()
+    else:
+        hdr_string = repr(hdu.header.ascard).encode()
+
     # and maybe this is not needed.
     hdr_pad = _pad_length(len(hdr_string))*b' '
 
