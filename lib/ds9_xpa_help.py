@@ -52,7 +52,8 @@ def get_from_tcl(ds9):
 
     html_name = tmpdir + "/temp_for_helpfile"
 
-    f = tempfile.NamedTemporaryFile(dir=tmpdir, suffix=".tcl")
+    f = tempfile.NamedTemporaryFile(dir=tmpdir, suffix=".tcl",
+                                    mode="w+t")
     f.write(_get_xpahelp_tcl_source_tmpl % (html_name))
     f.flush()
 
@@ -93,6 +94,9 @@ def get_from_zip(ds9):
     html = check_zip(path + ".zip")
     if html is None:
         html = check_zip(path)
+
+    if html is None:
+        return None
 
     if sys.version_info[0] >= 3:
         return html.decode()
