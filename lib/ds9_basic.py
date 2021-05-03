@@ -390,7 +390,7 @@ class ds9(object):
 
     def set_region(self, region_string):
         if region_string[-1] != "\n":
-            region_string = region_string + "\n"
+            region_string = region_string + b"\n"
 
         self.set("regions", region_string)
 
