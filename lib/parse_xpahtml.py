@@ -37,16 +37,24 @@ p_xpaset_w_echo = re.compile(r"\$echo\s+(.+)\s+\|\s+xpaset\s+ds9\s+(.*)")
 p_xpaset_w_cat = re.compile(r"\$cat\s+(.+)\s+\|\s+xpa[sg]et\s+ds9\s+(.*)")
 
 
-from tokenize import generate_tokens, COMMENT
+from tokenize import generate_tokens, COMMENT, TokenError
 
 # comments are detected using tokenize.generate_tokens
 def takeout_comment(s):
 
-    g = generate_tokens(StringIO.StringIO(s).readline)
-    c = [tokval for toknum, tokval, _, _, _  in g if toknum == COMMENT]
+    try:
+        g = generate_tokens(StringIO.StringIO(s).readline)
+        c = [tokval for toknum, tokval, _, _, _  in g if toknum == COMMENT]
+    except (TokenError, SyntaxError):
+        c = None
+
     if c:
         return s.replace(c[0],"").strip(), c[0]
     else:
+        # manual fallback
+        if "#" in s:
+            parts = s.split("#", 1)
+            return parts[0].strip(), "#" + parts[1]
         return s, ""
 
 
@@ -128,11 +136,17 @@ class Parser(HTMLParser.HTMLParser):
         HTMLParser.HTMLParser.__init__(self, **kwargs)
 
         self.help_strings = dict()
-        self._current_help = None
         self._current_f = None
         self.h4 = False
         self.h4_title = ""
-        self.saved_data = ""
+
+    def _set_current_help(self, title):
+        title = title.strip()
+        if not title:
+            return
+        if title not in self.help_strings:
+            self.help_strings[title] = StringIO.StringIO("")
+        self._current_f = self.help_strings[title]
 
     def handle_starttag(self, tag, attrs):
         if tag == "h4":
@@ -141,11 +155,7 @@ class Parser(HTMLParser.HTMLParser):
         elif tag == "a":
             dattrs = dict(attrs)
             if "name" in dattrs:
-                h4_title = dattrs["name"]
-                self._current_f = StringIO.StringIO("")
-                self.help_strings[h4_title] = self._current_f
-        elif tag == "pre":
-            pass
+                self._set_current_help(dattrs["name"])
         elif tag == "br":
             if self._current_f:
                 self._current_f.write("\n")
@@ -153,8 +163,7 @@ class Parser(HTMLParser.HTMLParser):
     def handle_endtag(self, tag):
         if tag == "h4":
             if self.h4_title:
-                self._current_f = StringIO.StringIO("")
-                self.help_strings[self.h4_title] = self._current_f
+                self._set_current_help(self.h4_title)
             self.h4 = False
         elif tag == "p":
             if self._current_f:
@@ -168,6 +177,7 @@ class Parser(HTMLParser.HTMLParser):
                 c = chr(name2codepoint[name])
             except KeyError:
                 c = "&%s;" % name
+        
         if self.h4:
             self.h4_title += c
         elif self._current_f:
