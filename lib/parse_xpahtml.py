@@ -1,8 +1,5 @@
 from pysao.verbose import verbose
 
-#import StringIO
-import formatter
-
 import sys
 if sys.version_info[0] >= 3:
     import io as StringIO
@@ -119,7 +116,6 @@ def _reindent_syntax(syntax, k):
 import sys
 
 if sys.version_info[0] < 3:
-    #import htmllib
     import HTMLParser
     from htmlentitydefs import name2codepoint
 else:
@@ -129,95 +125,59 @@ else:
 
 class Parser(HTMLParser.HTMLParser):
     def __init__(self, **kwargs):
-
-        self.nullwriter = formatter.NullWriter()
-        self.formatter = formatter.AbstractFormatter(self.nullwriter)
-        HTMLParser.HTMLParser.__init__(self,  **kwargs)
+        HTMLParser.HTMLParser.__init__(self, **kwargs)
 
         self.help_strings = dict()
-
-        self.formatter.writer = self.nullwriter
-
-        self._current_help = ""
+        self._current_help = None
+        self._current_f = None
         self.h4 = False
-
+        self.h4_title = ""
         self.saved_data = ""
 
     def handle_starttag(self, tag, attrs):
         if tag == "h4":
-            self.start_h4(attrs)
+            self.h4 = True
+            self.h4_title = ""
         elif tag == "a":
-            self.start_a(attrs)
+            dattrs = dict(attrs)
+            if "name" in dattrs:
+                h4_title = dattrs["name"]
+                self._current_f = StringIO.StringIO("")
+                self.help_strings[h4_title] = self._current_f
         elif tag == "pre":
-            self.start_pre(attrs)
+            pass
         elif tag == "br":
-            self.do_br(attrs)
+            if self._current_f:
+                self._current_f.write("\n")
 
     def handle_endtag(self, tag):
         if tag == "h4":
-            self.end_h4()
-        elif tag == "pre":
-            self.end_pre()
-        elif tag in ["tt"]:
-            d = self.flush_data()
-            self.formatter.add_literal_data(d)
-        elif tag in ["p"]:
-            d = self.flush_data()
-            self.formatter.add_literal_data(d)
-            self.formatter.end_paragraph(0)
-
+            if self.h4_title:
+                self._current_f = StringIO.StringIO("")
+                self.help_strings[self.h4_title] = self._current_f
+            self.h4 = False
+        elif tag == "p":
+            if self._current_f:
+                self._current_f.write("\n\n")
 
     def handle_entityref(self, name):
         if name == "nbsp":
             c = " "
         else:
-            c = chr(name2codepoint[name])
-        self.saved_data += c
+            try:
+                c = chr(name2codepoint[name])
+            except KeyError:
+                c = "&%s;" % name
+        if self.h4:
+            self.h4_title += c
+        elif self._current_f:
+            self._current_f.write(c)
 
     def handle_data(self, d):
         if self.h4:
-            self.h4_title = self.h4_title + d.strip()
-        else:
-            self.saved_data += d
-
-    # For older version of ds9 (e.g., ds9_v5.6), the xpa.html uses
-    # <h4>, but in the later versions (e.g., v6.2), they use <a
-    # name="#..">.
-
-    def start_h4(self, attrs):
-        self.h4 = True
-        self.h4_title = ""
-
-
-    def flush_data(self):
-        d = " ".join([l1.lstrip() for l1 in self.saved_data.split("\n")])
-        self.saved_data = ""
-        return d
-
-    def do_br(self, attrs):
-        d = self.flush_data()
-        self.formatter.add_flowing_data(d)
-        self.formatter.end_paragraph(0)
-
-    def end_h4(self):
-
-        if self.h4_title:
-            f = StringIO.StringIO("")
-            self.help_strings[self.h4_title] = f
-            self.formatter.writer = formatter.DumbWriter(f, 800)
-
-        self.h4 = False
-
-
-    def start_a(self, attrs):
-        dattrs = dict(attrs)
-        if "name" in dattrs:
-
-            h4_title = dattrs["name"]
-
-            f = StringIO.StringIO("")
-            self.help_strings[h4_title] = f
-            self.formatter.writer = formatter.DumbWriter(f, 800)
+            self.h4_title += d
+        elif self._current_f:
+            self._current_f.write(d)
 
     def get_help(self):
         r = dict()
@@ -230,24 +190,28 @@ class Parser(HTMLParser.HTMLParser):
             ss = p_sy.split(s)
 
             if len(ss) == 1:
-                # a special case for "psprint" with only description.
-                #print "whats going on?", k, ss
                 expl = ss[0].replace("\240", " ")
                 syntax = ""
                 example = ""
 
-            elif len(ss) == 2:
-                expl, _rest = ss
+            elif len(ss) >= 2:
+                expl = ss[0]
+                _rest = " ".join(ss[1:])
 
                 ## Example :
-                syntax, example = p_ex.split(_rest)
+                ee = p_ex.split(_rest)
+                if len(ee) >= 2:
+                    syntax = ee[0]
+                    example = " ".join(ee[1:])
+                else:
+                    syntax = _rest
+                    example = ""
 
                 syntax = _reindent_syntax(syntax, k)
 
                 ex_ = [_convert_example(l.strip()) for l
                        in example.split("\n") if l.strip()]
                 example = "\n".join(ex_)
-
 
             else:
                 verbose.report("ignoring %s : failed to parse." % k)
@@ -259,7 +223,6 @@ class Parser(HTMLParser.HTMLParser):
                              for l1 in [l.strip()]
                              if l1 and l1 != k and l1 not in extra_kewords]
 
-            #expl
             r[k] = dict(expl=" ".join(filtered_expl), syntax=syntax, example=example)
 
         return r
