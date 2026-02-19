@@ -1,0 +1,40 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Meson
+.mesonpy-*
+_build/
+builddir/
+
+# XPA build artifacts
+xpa-2.1.14/Makefile
+xpa-2.1.14/conf.h
+xpa-2.1.14/config.log
+xpa-2.1.14/config.status
+xpa-2.1.14/*.o
+
+# Cython generated C files
+xpa.c

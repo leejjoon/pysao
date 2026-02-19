@@ -1,8 +1,7 @@
 include README
 include LICENSE_AURA.txt
 include LICENSE_MIT.txt
-include distribute_setup.py
-include xpa.pyx xpa.c
+include xpa.pyx
 include xpa-2.1.14/conf.h.in
 include xpa-2.1.14/configure
 include xpa-2.1.14/configure.ac
