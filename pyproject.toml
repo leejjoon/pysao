@@ -1,3 +1,28 @@
 [build-system]
-requires = ["setuptools", "wheel", "Cython"]
-build-backend = "setuptools.build_meta"
+requires = ["meson-python", "Cython", "meson", "ninja"]
+build-backend = "mesonpy"
+
+[project]
+name = "pysao"
+version = "1.0.1"
+description = "python wrapper around SAO XPA and DS9"
+authors = [
+  { name = "Jae-Joon Lee", email = "lee.j.joon@gmail.com" }
+]
+license = { text = "MIT" }
+readme = {file = "README", content-type = "text/plain"}
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Cython",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Astronomy",
+]
+
+[tool.meson-python.args]
+install = []
