@@ -215,7 +215,7 @@ class ImageDisplay:
         sum = int(n.add.reduce(a))
         sum = 0xffff - (sum & 0xffff)
         a[3] = sum
-        self._write(a.tostring())
+        self._write(a.tobytes())
 
     def close(self, os_close=os.close):
 

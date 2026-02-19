@@ -62,7 +62,7 @@ def fits2string(hdu):
         dt = hdu.data.dtype.newbyteorder(">")
         output = hdu.data.astype(dt)
 
-        blocks.append( output.tostring() )
+        blocks.append( output.tobytes() )
         _size = output.nbytes
 
         # pad the FITS data block

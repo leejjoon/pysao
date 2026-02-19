@@ -307,7 +307,7 @@ class ds9(object):
     def view_array(self, img):
 
         img = numpy.array(img)
-        if img.dtype.type == numpy.bool8:
+        if img.dtype.type == numpy.bool_:
             img = img.astype(numpy.uint8)
 
         try:
@@ -331,7 +331,7 @@ class ds9(object):
         #              "|":""}
 
         (ydim, xdim) = img.shape
-        arr_str = img.tostring()
+        arr_str = img.tobytes()
 
 
 
