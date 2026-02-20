@@ -36,7 +36,7 @@ xpa_sources = files(
 # Run configure if conf.h is missing
 fs = import('fs')
 if not fs.exists(xpa_dir / 'conf.h')
-  run_command('sh', 'configure', check: true, workdir: meson.current_source_dir() / xpa_dir)
+  run_command('sh', '-c', 'cd ' + (meson.current_source_dir() / xpa_dir) + ' && ./configure', check: true)
 endif
 
 pysao_xpa = py.extension_module(
