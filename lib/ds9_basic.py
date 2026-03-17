@@ -213,14 +213,15 @@ class ds9(object):
             #sts = os.waitpid(p.pid, 0)
 
             # wait until ds9 starts
-
-            while wait_time > 0:
+            
+            countdown = wait_time
+            while countdown > 0:
                 file_list = os.listdir(self._tmpd_name)
                 if len(file_list)>1:
                     #print file_list
                     break
                 time.sleep(0.5)
-                wait_time -= 0.5
+                countdown -= 0.5
             else:
                 from signal import SIGTERM
                 os.kill(p.pid, SIGTERM)
